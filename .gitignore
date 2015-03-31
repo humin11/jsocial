@@ -1,0 +1,6 @@
+.idea
+node_modules
+prebuild/scaffold
+public/css/app
+public/css/fonts
+public/video
