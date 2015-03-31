@@ -9,3 +9,9 @@ social by react&amp;nodejs
 <p>cd project root</p>
 <p>run gulp cmd</p>
 
+<h3>Dev: </h3>
+<p>views: src/views/app</p>
+<p>controller: src/controllers</p>
+<p>routes: src/routes.js</p>
+<p>server: server.js</p>
+
