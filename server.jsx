@@ -77,32 +77,7 @@ var renderApp = function(req, res, cb) {
 };
 
 
-/** BEGIN X-EDITABLE ROUTES */
-
-app.get('/xeditable/groups', function(req, res) {
-  res.send([
-    {value: 0, text: 'Guest'},
-    {value: 1, text: 'Service'},
-    {value: 2, text: 'Customer'},
-    {value: 3, text: 'Operator'},
-    {value: 4, text: 'Support'},
-    {value: 5, text: 'Admin'}
-  ]);
-});
-
-app.get('/xeditable/status', function(req, res) {
-  res.sendStatus(500);
-});
-
-app.post('/xeditable/address', function(req, res) {
-  res.sendStatus(200);
-});
-
-app.post('/dropzone/file-upload', function(req, res) {
-  res.sendStatus(200);
-});
-
-/** END X-EDITABLE ROUTES */
+require('./src/controllers/post_controller').routes(app);
 
 /** CATCH-ALL ROUTE **/
 app.get('*', function(req, res, next) {

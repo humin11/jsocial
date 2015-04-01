@@ -16,9 +16,6 @@ var login = require('./views/app/login.jsx');
 var signup = require('./views/app/signup.jsx');
 var lock = require('./views/app/lock.jsx');
 
-/* Controllers */
-var post_controller = require('./controllers/post_controller');
-
 
 /* ROUTES */
 module.exports = (
@@ -34,6 +31,5 @@ module.exports = (
     <Route path='/lock' handler={lock} />
     <NotFoundRoute handler={notfound} />
 
-    <Route path='/post/create' handler={post_controller.create} />
   </Route>
 );

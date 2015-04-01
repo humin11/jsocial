@@ -44,7 +44,7 @@ var whost = argv.whost ? argv.whost : 'localhost';
 var paths = {
   index: ['src/views/index.html', 'launch.js', 'service.jsx'],
   l20n: ['src/views/global/vendor/l20n/*.jsx'],
-  jsx: ['src/*.jsx', 'src/views/global/requires/*.js', 'src/views/**/*.jsx',
+  jsx: ['src/*.jsx', 'src/controllers/*.jsx', 'src/views/global/requires/*.js', 'src/views/**/*.jsx',
       'src/views/**/**/*.jsx', 'src/views/**/**/**/*.jsx', '!src/views/global/vendor/l20n/*.jsx',
       '!src/views/global/vendor/bootstrap/*.jsx'],
   scss: ['public/fonts/web/*.ttf', 'src/views/sass/*.scss', 'src/views/sass/**/*.scss', 'src/views/sass/**/**/*.scss',

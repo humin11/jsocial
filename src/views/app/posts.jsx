@@ -71,9 +71,10 @@ var NewPost = React.createClass({
     var content = this.refs.postContent.getDOMNode().value;
     $.ajax({
       url: '/post/create',
+      type: "POST",
       data : JSON.stringify({content:content}),
-      success: function(){
-        alert('ok');
+      success: function(data){
+        alert(data);
       }
     });
   },

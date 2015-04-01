@@ -12,7 +12,17 @@ var PostController = {
     return {};
   },
   create: function(){
+    console.log('aaa')
     return "ok";
+  },
+  routes: function(app){
+    app.post('/post/create', function(req, res, next) {
+      res.send(this.create());
+    }.bind(this));
+    app.post('/post/list', function(req, res, next) {
+      res.send(this.list());
+    }.bind(this));
+    return app;
   }
 }
 
