@@ -5,11 +5,13 @@ var path = require('path');
 var express = require('express');
 var compression = require('compression');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var expressBeautify = require('express-beautify')();
 
 var app = express();
 app.use(compression());
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(expressBeautify);
 

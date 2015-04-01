@@ -1,7 +1,6 @@
 /**
  * Created by steven on 15/3/31.
  */
-
 var PostController = {
   list: function(){
     var data = [{author:"admin",content:"adfasdfasdfasdf",create_at:"20150331164200"},
@@ -12,11 +11,11 @@ var PostController = {
     return {};
   },
   create: function(){
-    console.log('aaa')
     return "ok";
   },
   routes: function(app){
     app.post('/post/create', function(req, res, next) {
+      console.log(req.body.content);
       res.send(this.create());
     }.bind(this));
     app.post('/post/list', function(req, res, next) {

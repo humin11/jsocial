@@ -72,6 +72,7 @@ var NewPost = React.createClass({
     $.ajax({
       url: '/post/create',
       type: "POST",
+      contentType: "application/json",
       data : JSON.stringify({content:content}),
       success: function(data){
         alert(data);
