@@ -73,10 +73,10 @@ var NewPost = React.createClass({
   },
   handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
-    //AppDispatcher.dispatch({
-    //  type: ActionTypes.POST_CREATE,
-    //  data: {content:content}
-    //});
+    AppDispatcher.dispatch({
+      type: ActionTypes.POST_CREATE,
+      data: {content:content}
+    });
   },
   render: function () {
     return (
