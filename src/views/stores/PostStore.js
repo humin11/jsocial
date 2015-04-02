@@ -4,7 +4,9 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/PostConstants');
+var PostController = require('../../controllers/PostController');
 var PostStore = new EventEmitter2({maxListeners: 99999});
+PostStore.data = PostController.list();
 
 AppDispatcher.register(function(action) {
 
@@ -16,8 +18,9 @@ AppDispatcher.register(function(action) {
         type: "POST",
         contentType: "application/json",
         data : JSON.stringify(action.data),
-        success: function(data){
-          PostStore.emit('added',data);
+        success: function(obj){
+          PostStore.data.push(obj);
+          PostStore.emit('change');
         }
       });
       break;

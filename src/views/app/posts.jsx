@@ -193,33 +193,42 @@ var PostSummary = React.createClass({
 });
 
 var Body = React.createClass({
+  getInitialState: function() {
+    return {data: PostStore.data};
+  },
   componentDidMount: function() {
     $('html').addClass('social');
-    PostStore.on('added',this._afterAdded);
+    PostStore.on('change',this._onChange);
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
+    PostStore.off('change',this._onChange);
   },
-  _afterAdded: function(newPost) {
-    React.render(
-      <PostSummary
-        author={newPost.author}
-        location='Beijing, China'
-        avator='/imgs/avatars/avatar0.png'
-        date='2 hours ago'
-        img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
-        {newPost.content}
-      </PostSummary>
-      ,this.refs.leftStream.getDOMNode());
-    alert(newPost.author);
+  _onChange: function() {
+    this.setState({data: PostStore.data});
   },
   render: function() {
+    var rightStream = [];
+    this.state.data.forEach(function(obj){
+      rightStream.push(
+        <PostSummary
+          author={obj.author}
+          location="BJ"
+          avator="/imgs/avatars/avatar0.png"
+          date={obj.create_at}
+          img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
+          {obj.content}
+        </PostSummary>);
+    });
+    if(rightStream.length == 0){
+      rightStream.push(<span></span>);
+    }
     return (
       <Container id='body' className='social'>
         <SocialBanner />
         <Grid>
           <Row>
-            <Col sm={6} collapseRight ref="leftStream">
+            <Col sm={6} collapseRight >
               <NewPost></NewPost>
               <PostSummary
                 author='Toby King'
@@ -229,17 +238,9 @@ var Body = React.createClass({
                 img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
                   {"I'll be out of my mind and you'll be out of ideas pretty soon. So let's spend the afternoon in a cold hot air balloon. Leave your jacket behind. Lean out and touch the tree tops over town. I can't wait to kiss the ground wherever we touch back down."}
               </PostSummary>
-
             </Col>
-            <Col sm={6}>
-              <PostSummary
-                author='Toby King'
-                location='Beijing, China'
-                avator='/imgs/avatars/avatar0.png'
-                date='2 hours ago'
-                img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
-                  {"I'll be out of my mind and you'll be out of ideas pretty soon. So let's spend the afternoon in a cold hot air balloon. Leave your jacket behind. Lean out and touch the tree tops over town. I can't wait to kiss the ground wherever we touch back down."}
-              </PostSummary>
+            <Col sm={6} >
+              {rightStream}
             </Col>
           </Row>
         </Grid>
