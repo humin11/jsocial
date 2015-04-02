@@ -195,7 +195,7 @@ var PostSummary = React.createClass({
 var Body = React.createClass({
   componentDidMount: function() {
     $('html').addClass('social');
-    //PostStore.on('added',this._afterAdded);
+    PostStore.on('added',this._afterAdded);
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
