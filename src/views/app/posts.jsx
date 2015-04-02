@@ -2,6 +2,10 @@ var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
 
+var AppDispatcher = require('../dispatcher/AppDispatcher');
+var ActionTypes = require('../constants/PostConstants');
+var PostStore = require('../stores/PostStore');
+
 var SocialBanner = React.createClass({
   getInitialState: function() {
     return {
@@ -69,15 +73,10 @@ var NewPost = React.createClass({
   },
   handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
-    $.ajax({
-      url: '/post/create',
-      type: "POST",
-      contentType: "application/json",
-      data : JSON.stringify({content:content}),
-      success: function(data){
-        alert(data);
-      }
-    });
+    //AppDispatcher.dispatch({
+    //  type: ActionTypes.POST_CREATE,
+    //  data: {content:content}
+    //});
   },
   render: function () {
     return (
@@ -196,9 +195,13 @@ var PostSummary = React.createClass({
 var Body = React.createClass({
   componentDidMount: function() {
     $('html').addClass('social');
+    //PostStore.on('added',this._afterAdded);
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
+  },
+  _afterAdded: function() {
+    alert('_afterAdded');
   },
   render: function() {
     return (

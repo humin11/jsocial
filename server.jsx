@@ -79,7 +79,7 @@ var renderApp = function(req, res, cb) {
 };
 
 
-require('./src/controllers/post_controller').routes(app);
+require('./src/controllers/PostController').routes(app);
 
 /** CATCH-ALL ROUTE **/
 app.get('*', function(req, res, next) {

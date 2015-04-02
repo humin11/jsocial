@@ -23,8 +23,8 @@ module.exports = (
     <DefaultRoute handler={posts} />
     <Route path='/' handler={posts} />
     <Route path='/gallery' handler={gallery} />
-    <Route path='/post/list' handler={posts} />
-    <Route path='/blog/list' handler={blogs} />
+    <Route path='/posts' handler={posts} />
+    <Route path='/blogs' handler={blogs} />
     <Route path='/blog' handler={blog} />
     <Route path='/login' handler={login} />
     <Route path='/signup' handler={signup} />
