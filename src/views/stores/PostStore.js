@@ -17,10 +17,9 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(data){
-          alert(data);
+          PostStore.emit('added',data);
         }
       });
-      PostStore.emit('added');
       break;
 
     case ActionTypes.COMMENT_CREATE:

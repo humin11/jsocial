@@ -200,8 +200,18 @@ var Body = React.createClass({
   componentWillUnmount: function() {
     $('html').removeClass('social');
   },
-  _afterAdded: function() {
-    alert('_afterAdded');
+  _afterAdded: function(newPost) {
+    React.render(
+      <PostSummary
+        author={newPost.author}
+        location='Beijing, China'
+        avator='/imgs/avatars/avatar0.png'
+        date='2 hours ago'
+        img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
+        {newPost.content}
+      </PostSummary>
+      ,this.refs.leftStream.getDOMNode());
+    alert(newPost.author);
   },
   render: function() {
     return (
@@ -209,7 +219,7 @@ var Body = React.createClass({
         <SocialBanner />
         <Grid>
           <Row>
-            <Col sm={6} collapseRight>
+            <Col sm={6} collapseRight ref="leftStream">
               <NewPost></NewPost>
               <PostSummary
                 author='Toby King'
