@@ -4,7 +4,7 @@
 
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var PostController = require('../../controllers/posts');
+var PostController = require('../../controllers/posts_controller');
 var PostStore = new EventEmitter2({maxListeners: 99999});
 PostStore.data = PostController.list();
 

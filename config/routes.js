@@ -1,8 +1,8 @@
 /**
  * Created by steven on 15/4/3.
  */
-var postController = require('../src/controllers/posts');
-var authController = require("../src/controllers/auth");
+var postController = require('../src/controllers/posts_controller');
+var authController = require("../src/controllers/auth_controller");
 var routes = require('../src/routes.jsx');
 var html = require('./template');
 
@@ -22,7 +22,6 @@ var renderApp = function(req, res, cb) {
       cb({notFound: true}, React.renderToStaticMarkup(React.createElement(Handler)));
       return;
     }
-
     cb(null, React.renderToStaticMarkup(React.createElement(Handler)));
   });
 };
@@ -51,7 +50,8 @@ module.exports = function(app, passport) {
       }
     });
   });
-
+  //app.get("/auth", authController.getCurrentUser);
+  app.post("/auth", authController.signIn);
   // secured routes
   app.post("/post/create", postController.create);
   app.post("/post/list", secured, postController.list);

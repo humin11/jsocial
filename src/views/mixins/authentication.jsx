@@ -1,10 +1,12 @@
-var AuthStore = require("../stores/auth.jsx");
+var AuthStore = require("../stores/auth_store.jsx");
+var Login = require("../app/login.jsx");
 
 var Authentication = {
   statics: {
     willTransitionTo: function (transition) {
       if (!AuthStore.isLoggedIn()) {
-        transition.redirect("/auth");
+        Login.attemptedTransition = transition;
+        transition.redirect("/login");
       }
     }
   }
