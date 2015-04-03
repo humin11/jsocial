@@ -34,24 +34,6 @@ var AuthStore = {
   signIn: function (username, password, done) {
     _postAndHandleParseUser(URLS.AUTH, username, password, done);
   },
-  signUp: function (username, password, done) {
-    _postAndHandleParseUser(URLS.SIGN_UP  , username, password, done);
-  },
-  signOut: function (done) {
-    _user = null;
-    $.ajax({
-      url: URLS.SIGN_OUT,
-      type: "GET",
-      contentType: "application/json",
-      data : JSON.stringify(action.data),
-      success: function(obj){
-        AuthStore.notifyChange();
-        if (done) {
-          done(null, res);
-        }
-      }
-    });
-  },
   isLoggedIn: function () {
     return _user !== null;
   },
@@ -73,12 +55,12 @@ var AuthStore = {
   },
 };
 
-function _postAndHandleParseUser (url, username, password, done) {
+function _postAndHandleParseUser(url, email, password, done) {
   $.ajax({
     url: url,
     type: "POST",
     contentType: "application/json",
-    data : JSON.stringify({ username: username, password: password }),
+    data : JSON.stringify({ email: email, password: password }),
     success: function(obj){
       _user = obj;
       AuthStore.notifyChange();

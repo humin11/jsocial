@@ -14,12 +14,15 @@ var deserialize = function(user, done) {
 module.exports = function(passport) {
   passport.serializeUser(serialize);
   passport.deserializeUser(deserialize);
-  passport.use('local', new LocalStrategy(
+  passport.use('local', new LocalStrategy({
+      usernameField: 'email',
+      passwordField: 'password'
+    },
     function (username, password, done) {
       var user = {
         id: '1',
-        username: 'admin',
-        password: 'pass'
+        username: 'admin@gmail.com',
+        password: '123'
       };
       if (username !== user.username) {
         return done(null, false, { message: 'Incorrect username.' });

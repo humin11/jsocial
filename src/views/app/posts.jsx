@@ -254,7 +254,7 @@ var Body = React.createClass({
 
 var classSet = React.addons.classSet;
 var Posts = React.createClass({
-  mixins: [SidebarMixin],
+  mixins: [SidebarMixin,Authentication],
   render: function() {
     var classes = classSet({
       'container-open': this.state.open

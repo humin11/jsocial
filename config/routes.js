@@ -22,7 +22,6 @@ var renderApp = function(req, res, cb) {
       cb({notFound: true}, React.renderToStaticMarkup(React.createElement(Handler)));
       return;
     }
-
     cb(null, React.renderToStaticMarkup(React.createElement(Handler)));
   });
 };
@@ -51,7 +50,7 @@ module.exports = function(app, passport) {
       }
     });
   });
-  app.get("/auth", authController.getCurrentUser);
+  //app.get("/auth", authController.getCurrentUser);
   app.post("/auth", authController.signIn);
   // secured routes
   app.post("/post/create", postController.create);
