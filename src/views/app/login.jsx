@@ -4,10 +4,12 @@ var Footer = require('../common/footer.jsx');
 
 var Body = React.createClass({
   mixins: [ReactRouter.State, ReactRouter.Navigation],
-  back: function(e) {
+  _handleSubmit: function(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.transitionTo('/posts');
+    this.transitionTo('/auth');
+    var username = this.refs.username.getValue();
+    var password = this.refs.password.getValue();
   },
   componentDidMount: function() {
     $('html').addClass('authentication');
@@ -38,7 +40,7 @@ var Body = React.createClass({
                             </Button>
                           </div>
                           <div>
-                            <a id='twitter-link' href='#' onClick={this.back}><Icon glyph='icon-fontello-sina-weibo' /><span> or with Weibo</span></a>
+                            <a id='twitter-link' href='#' onClick={this._handleSubmit}><Icon glyph='icon-fontello-sina-weibo' /><span> or with Weibo</span></a>
                           </div>
                         </div>
                         <div>
@@ -46,13 +48,13 @@ var Body = React.createClass({
                             or use your MySocial account
                           </div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                            <Form onSubmit={this.back}>
+                            <Form onSubmit={this._handleSubmit}>
                               <FormGroup>
                                 <InputGroup lg>
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-mail' />
                                   </InputGroupAddon>
-                                  <Input autoFocus type='email' id='emailaddress' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
+                                  <Input autoFocus type='email' ref='username' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -60,7 +62,7 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-key' />
                                   </InputGroupAddon>
-                                  <Input type='password' id='password' className='border-focus-blue' placeholder='password' />
+                                  <Input type='password' ref='password' className='border-focus-blue' placeholder='password' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -70,7 +72,7 @@ var Body = React.createClass({
                                       <Link to='/signup'>Create a MySocial account</Link>
                                     </Col>
                                     <Col xs={6} collapseLeft collapseRight className='text-right'>
-                                      <Button outlined lg type='submit' bsStyle='blue' onClick={this.back}>Login</Button>
+                                      <Button outlined lg type='submit' bsStyle='blue'>Login</Button>
                                     </Col>
                                   </Row>
                                 </Grid>

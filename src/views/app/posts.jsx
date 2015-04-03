@@ -2,9 +2,10 @@ var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ActionTypes = require('../constants/PostConstants');
-var PostStore = require('../stores/PostStore');
+var AppDispatcher = require('../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../constants/constants.jsx');
+var PostStore = require('../stores/posts.jsx');
+var Authentication = require('../mixins/authentication.jsx');
 
 var SocialBanner = React.createClass({
   getInitialState: function() {
@@ -212,6 +213,7 @@ var Body = React.createClass({
     this.state.data.forEach(function(obj){
       rightStream.push(
         <PostSummary
+          key={obj._id}
           author={obj.author}
           location="BJ"
           avator="/imgs/avatars/avatar0.png"

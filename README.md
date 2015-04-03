@@ -10,8 +10,8 @@ social by react&amp;nodejs
 <p>run gulp cmd</p>
 
 <h3>Dev: </h3>
-<p>views: src/views/app</p>
+<p>client: src/views</p>
 <p>controller: src/controllers</p>
-<p>routes: src/routes.js</p>
+<p>routes: config/routes.jsx</p>
 <p>server: server.js</p>
 
