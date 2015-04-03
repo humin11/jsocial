@@ -34,7 +34,8 @@ MongoApi.MongoController.prototype = {
     applyDefault: function (model) {
         var result = assign({}, model);
         for (var item in this.model.Default) {
-            result[item] = this.model.Default[item]()
+            var defvalue = this.model.Default[item]
+            result[item] = typeof defvalue == 'function' ? defvalue() : defvalue
         }
         return result
     },
