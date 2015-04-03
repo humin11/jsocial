@@ -5,11 +5,13 @@ var passport = require('passport');
 
 exports.signIn = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (!user) {
+      res.send({err:err,user:user});
+      return;
+    }
     req.login(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/');
+      res.send({err:err,user:user});
+      return;
     });
   })(req, res, next);
 }

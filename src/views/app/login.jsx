@@ -16,9 +16,9 @@ var LoginPage = React.createClass({
   },
   _handleSubmit: function(e) {
     e.preventDefault();
-    var email = this.refs.email.getValue();
+    var username = this.refs.username.getValue();
     var password = this.refs.password.getValue();
-    AuthStore.signIn(email, password, function (err, user) {
+    AuthStore.signIn(username, password, function (err, user) {
       if (err || !user) {
         return this.setState({ error: true });
       }
@@ -36,11 +36,14 @@ var LoginPage = React.createClass({
   },
   componentDidMount: function() {
     $('html').addClass('authentication');
-    AuthStore.addChangeListener(this.retryTransition);
+    //AuthStore.addChangeListener(this.retryTransition);
   },
   componentWillUnmount: function() {
     $('html').removeClass('authentication');
-    AuthStore.removeChangeListener(this.retryTransition);
+    //AuthStore.removeChangeListener(this.retryTransition);
+  },
+  renderErrorBlock: function () {
+    return this.state.error ? <p className="help-block">Bad login information</p> : null;
   },
   render: function() {
     var classes = classSet({
@@ -77,13 +80,13 @@ var LoginPage = React.createClass({
                               or use your MySocial account
                             </div>
                             <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                              <Form onSubmit={this._handleSubmit}>
+                              <Form onSubmit={this._handleSubmit} className={this.state.error ? "has-error" : null}>
                                 <FormGroup>
                                   <InputGroup lg>
                                     <InputGroupAddon>
                                       <Icon glyph='icon-fontello-mail' />
                                     </InputGroupAddon>
-                                    <Input autoFocus type='email' ref='email' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
+                                    <Input autoFocus type='email' ref='username' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
                                   </InputGroup>
                                 </FormGroup>
                                 <FormGroup>
@@ -106,6 +109,7 @@ var LoginPage = React.createClass({
                                     </Row>
                                   </Grid>
                                 </FormGroup>
+                                {this.renderErrorBlock()}
                               </Form>
                             </div>
                           </div>

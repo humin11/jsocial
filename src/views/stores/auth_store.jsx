@@ -3,36 +3,23 @@
  */
 var _user = null;
 var _changeListeners  = [];
-var _initCalled = false;
 
-var URLS = {
-  AUTH: "/auth",
-  SIGN_UP: "/signup",
-  SIGN_OUT: "/signout"
-};
 
 var AuthStore = {
-  init: function () {
-    if(_initCalled) {
-      return;
-    }
-    _initCalled = true;
-    this.fetchUser();
-  },
-  fetchUser: function () {
+  signIn: function (username, password, done) {
     $.ajax({
-      url: URLS.AUTH,
-      type: "GET",
+      url: "/auth",
+      type: "POST",
       contentType: "application/json",
-      data : JSON.stringify(action.data),
+      data : JSON.stringify({ username: username, password: password }),
       success: function(obj){
-        _user = obj;
+        _user = obj.user;
         AuthStore.notifyChange();
+        if (done) {
+          done(obj.err, _user);
+        }
       }
     });
-  },
-  signIn: function (username, password, done) {
-    _postAndHandleParseUser(URLS.AUTH, username, password, done);
   },
   isLoggedIn: function () {
     return _user !== null;
@@ -54,21 +41,5 @@ var AuthStore = {
     });
   },
 };
-
-function _postAndHandleParseUser(url, email, password, done) {
-  $.ajax({
-    url: url,
-    type: "POST",
-    contentType: "application/json",
-    data : JSON.stringify({ email: email, password: password }),
-    success: function(obj){
-      _user = obj;
-      AuthStore.notifyChange();
-      if (done) {
-        done(err, _user);
-      }
-    }
-  });
-}
 
 module.exports = AuthStore;
