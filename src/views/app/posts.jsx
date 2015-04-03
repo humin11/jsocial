@@ -4,7 +4,7 @@ var Footer = require('../common/footer.jsx');
 
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var PostStore = require('../stores/posts.jsx');
+var PostStore = require('../stores/posts_store.jsx');
 var Authentication = require('../mixins/authentication.jsx');
 
 var SocialBanner = React.createClass({
