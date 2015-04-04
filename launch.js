@@ -1,5 +1,6 @@
 require('enhanced-require')(module, {
   recursive: false,
+  originalRequire: require,
   module: {
     loaders: [
       {test: /\.txt$/, loaders: ['raw']},

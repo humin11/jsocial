@@ -1,6 +1,14 @@
 var assign = require('object-assign')
 var express = require('express');
+var MongoClient = require.options.originalRequire('mongodb').MongoClient
+var url = 'mongodb://localhost:27017/myproject';
+// Use connect method to connect to the Server
+MongoClient.connect(url, function(err, db) {
+    //assert.equal(BSON, err);
+    console.log("Connected correctly to server");
 
+    db.close();
+});
 var MongoApi = {
     MongoController: function (params) {
         MongoApi.apply(this,params)
