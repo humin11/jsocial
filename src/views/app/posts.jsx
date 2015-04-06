@@ -195,7 +195,7 @@ var PostSummary = React.createClass({
 
 var Body = React.createClass({
   getInitialState: function() {
-    return {data: null};
+    return {data: PostStore.getData()};
   },
   componentDidMount: function() {
     $('html').addClass('social');

@@ -8,7 +8,8 @@ var classSet = React.addons.classSet;
 var LoginPage = React.createClass({
   mixins: [SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
   statics: {
-    attemptedTransition: null
+    attemptedTransition: null,
+    firstLogin: true
   },
   getInitialState: function () {
     return {
@@ -24,6 +25,7 @@ var LoginPage = React.createClass({
       username: username,
       password: password
     });
+    LoginPage.firstLogin = false;
   },
   retryTransition: function () {
     if (LoginPage.attemptedTransition) {
@@ -33,7 +35,7 @@ var LoginPage = React.createClass({
     } else {
       if(AuthStore.isLoggedIn())
         this.replaceWith("/");
-      else
+      else if(!LoginPage.firstLogin)
         this.setState({error:true});
     }
   },
