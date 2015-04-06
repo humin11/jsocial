@@ -4,6 +4,10 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-  POST_CREATE: null,
-  COMMENT_CREATE: null
+  POSTS_INIT: null,
+  POSTS_CREATE: null,
+  COMMENTS_CREATE: null,
+  AUTH_INIT: null,
+  AUTH_LOGIN: null,
+  AUTH_LOGOUT: null
 });

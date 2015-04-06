@@ -2,7 +2,8 @@ var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
 var AuthStore = require('../stores/auth_store.jsx');
-
+var AppDispatcher = require('../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../constants/constants.jsx');
 var classSet = React.addons.classSet;
 var LoginPage = React.createClass({
   mixins: [SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
@@ -18,12 +19,11 @@ var LoginPage = React.createClass({
     e.preventDefault();
     var username = this.refs.username.getValue();
     var password = this.refs.password.getValue();
-    AuthStore.signIn(username, password, function (err, user) {
-      if (err || !user) {
-        return this.setState({ error: true });
-      }
-      this.retryTransition();
-    }.bind(this));
+    AppDispatcher.dispatch({
+      type: ActionTypes.AUTH_LOGIN,
+      username: username,
+      password: password
+    });
   },
   retryTransition: function () {
     if (LoginPage.attemptedTransition) {
@@ -31,16 +31,23 @@ var LoginPage = React.createClass({
       LoginPage.attemptedTransition = null;
       transition.retry();
     } else {
-      this.replaceWith("/");
+      if(AuthStore.isLoggedIn())
+        this.replaceWith("/");
+      else
+        this.setState({error:true});
     }
+  },
+  componentWillMount: function () {
+    this.retryTransition();
   },
   componentDidMount: function() {
     $('html').addClass('authentication');
-    //AuthStore.addChangeListener(this.retryTransition);
+    AuthStore.addChangeListener(this.retryTransition);
+    AppDispatcher.dispatch({ type: ActionTypes.AUTH_INIT });
   },
   componentWillUnmount: function() {
     $('html').removeClass('authentication');
-    //AuthStore.removeChangeListener(this.retryTransition);
+    AuthStore.removeChangeListener(this.retryTransition);
   },
   renderErrorBlock: function () {
     return this.state.error ? <p className="help-block">Bad login information</p> : null;

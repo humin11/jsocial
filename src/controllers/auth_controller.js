@@ -6,7 +6,7 @@ var passport = require('passport');
 exports.signIn = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (!user) {
-      res.send({err:err,user:user});
+      res.send({err:err,user:null});
       return;
     }
     req.login(user, function(err) {
@@ -14,4 +14,13 @@ exports.signIn = function(req, res, next) {
       return;
     });
   })(req, res, next);
-}
+};
+
+exports.getCurrentUser = function(req, res, next) {
+  if (req.user) {
+    res.send({err:null, user: req.user});
+  }else{
+    res.send({err:null, user: null});
+  }
+  return;
+};
