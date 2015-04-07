@@ -34,6 +34,8 @@ var secured = function(req, res, next) {
 
 module.exports = function(app, passport) {
   /** CATCH-ALL ROUTE **/
+  require("../src/controllers/users_controller").binding(app);
+
   app.get('*', function(req, res, next) {
     if(req.url === '/favicon.ico') return next();
     res.header('Access-Control-Allow-Origin', '*');
