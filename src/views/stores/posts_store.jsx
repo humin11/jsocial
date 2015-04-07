@@ -35,9 +35,10 @@ AppDispatcher.register(function(action) {
         return;
       }
       $.ajax({
-        url: "/posts/list",
+        url: "/posts/find",
         type: "POST",
         contentType: "application/json",
+        data : JSON.stringify(action.data),
         success: function(obj){
           if (obj) {
             _data = obj;
@@ -49,7 +50,7 @@ AppDispatcher.register(function(action) {
       break;
     case ActionTypes.POSTS_CREATE:
       $.ajax({
-        url: '/posts/create',
+        url: '/posts/insert',
         type: "POST",
         contentType: "application/json",
         data : JSON.stringify(action.data),

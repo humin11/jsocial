@@ -164,8 +164,7 @@ MongoApi.Controller.prototype = {
   },
   binding: function (express) {
     for (var item in this.url) {
-      console.log("create url: /" + this.table + "/" + item);
-      express.get("/" + this.table + "/" + item, this.url[item].bind(this));
+      express.post("/" + this.table + "/" + item, this.url[item].bind(this));
     }
     return this;
   }

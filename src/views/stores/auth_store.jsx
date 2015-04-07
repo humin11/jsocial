@@ -39,7 +39,7 @@ AppDispatcher.register(function(action) {
       }
       _initCalled = true;
       $.ajax({
-        url: "/auth/user",
+        url: "/users/getUser",
         type: "POST",
         contentType: "application/json",
         success: function(obj){
@@ -52,7 +52,7 @@ AppDispatcher.register(function(action) {
       break;
     case ActionTypes.AUTH_LOGIN:
       $.ajax({
-        url: "/auth",
+        url: "/users/login",
         type: "POST",
         contentType: "application/json",
         data : JSON.stringify({ username: action.username, password: action.password }),

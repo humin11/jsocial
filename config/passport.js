@@ -2,6 +2,7 @@
  * Created by steven on 15/4/3.
  */
 var LocalStrategy = require('passport-local').Strategy;
+var userController = require('../src/controllers/users_controller');
 
 var serialize = function(user, done) {
   done(null, user);
@@ -19,18 +20,18 @@ module.exports = function(passport) {
       passwordField: 'password'
     },
     function (username, password, done) {
-      var user = {
-        id: '1',
-        username: 'admin@gmail.com',
-        password: '123'
-      };
-      if (username !== user.username) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (password !== user.password) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
+      userController.findOne({username:username,password:password},function(err,user,next){
+        next();
+        console.log(user);
+        if (username !== user.username) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (password !== user.password) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
+
     }
   ));
 };

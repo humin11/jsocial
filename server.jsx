@@ -7,7 +7,6 @@ var app = express();
 
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
-require('./config/ajaxrouters')(app);
 require('./config/routes')(app, passport);
 
 var server = app.listen(process.env.PORT, function() {

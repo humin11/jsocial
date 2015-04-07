@@ -7,8 +7,8 @@ module.exports = new MongoController({
   model:{                                     //模型格式定义
     Default:{                               //默认格式，用于添加新的对象时，增加附加的属性（调用为函数返回结果）
       _id:ModelDefault.id,
-      create:ModelDefault.now,
-      password:"aaa"
+      create_at:ModelDefault.now,
+      author:'admin'
     }
   }
 })
