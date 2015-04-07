@@ -58,6 +58,7 @@ var MongoApi = {
       this.url = assign(params.url,MongoApi.Controller.prototype.url);
     }
     this.DB = new MongoApi.DB(params.table);
+    this.DB.SimpleFormat = (params.SimpleFormat)?(params.SimpleFormat):MongoApi.SimpleFormat;
   },
   DB: function (table) {
     this.table = table;
@@ -79,6 +80,9 @@ MongoApi.Controller.prototype = {
       result[item] = typeof defvalue == 'function' ? defvalue(req) : defvalue;
     }
     return result;
+  },
+  toSimple: function (model) {
+    return this.DB.toSimple(model);
   },
   outFormat: function (model) {
     if (model instanceof Array) {
@@ -103,16 +107,7 @@ MongoApi.Controller.prototype = {
     }
     return result;
   },
-  toSimple: function (model) {
-    var reslut = model;
-    if (this.model.SimpleFormat) {
-      reslut = {};
-      forEach(this.model.SimpleFormat, function (e) {
-        reslut[e] = model[e];
-      })
-    }
-    return result;
-  },
+
   url: {
     insert: function (req, res) {
       var model = req.body;
@@ -132,7 +127,7 @@ MongoApi.Controller.prototype = {
         }.bind(this));
     },
     remove: function (req, res) {
-      var model = req.body
+      var model = req.body;
       this.DB.remove(model, function (err, next) {
         res.send(MongoApi.Json.Ok());
         next();
@@ -143,7 +138,6 @@ MongoApi.Controller.prototype = {
       model.index = (model.index) ? (model.index) : 0;
       model.count = (model.count) ? model.count : 20;
       model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
-
       this.DB.count(model.query, function (err, count, next1) {
         this.DB.find(model.query, function (err, docs, next2) {
           res.send({
@@ -192,21 +186,30 @@ MongoApi.DB.prototype = {
     MongoClient.connect(url, function (err, db) {
       var collection = db.collection(this.table);
       callback(collection, function () {
-        db.close()
+        db.close();
       });
     }.bind(this));
+  },
+  toSimple: function (model) {
+    var reslut = model;
+    reslut = {};
+    this.SimpleFormat.forEach(function (e) {
+      reslut[e] = model[e];
+    })
+    return result;
   },
   insert: function (model, callback) {
     this.connect(function (collection, next) {
       var array = model;
-      if (model instanceof Array)
+      if (model instanceof Array){
         collection.insert(array, {safe: true}, function (err) {
           callback(err, next);
-        });
-      else
+        });}
+      else{
         collection.insert([array], {safe: true}, function (err) {
           callback(err, next);
         });
+      }
     });
   },
   update: function (updatemodel, callback) {
@@ -217,7 +220,6 @@ MongoApi.DB.prototype = {
         model: updatemodel
       }
     }
-    //console.log(model)
     this.connect(function (collection,next) {
       collection.update(
         updatemodel.query,
@@ -232,8 +234,8 @@ MongoApi.DB.prototype = {
       model = {
         query: {"_id": model["_id"]},
         model: removemodel
-      }
-    }
+      };
+    };
     this.connect(function (collection,next) {
       collection.remove(
         updatemodel.query, {safe: true}, function(err){
@@ -266,24 +268,23 @@ MongoApi.DB.prototype = {
       })
     });
   },
-  find2Simple:function(querymodel,callback) {
-    this.connect(function (collection, next) {
-      collection.find(querymodel.query).limit(querymodel.count).skip(querymodel.count * (index - 1)).toArray(function (err, docs) {
-        var list = [];
-        forEach(list, function (item) {
-          list[list.length] = this.toSimple(item);
-        })
-        callback(err, list, next);
-      });
-    });
-  },
-  findOne2Simple: function (querymodel, callback) {
+  findS:function(querymodel,callback) {
     this.connect(function (collection,next) {
-      collection.findOne(querymodel)(function(doc){
-        callback(err,this.toSimple(doc),next);
-      });
-    });
+        collection.find(querymodel.query)
+          .limit(querymodel.count)
+          .skip(querymodel.count * (querymodel.index - 1))
+          .toArray(function(err,docs){
+            callback(err,this.toSimple(docs),next);
+          });
+      }
+    );
   },
+  findOneS: function (querymodel, callback) {
+    this.connect(function (collection,next) {
+      collection.findOne(querymodel,function(err,object){
+        callback(err,this.toSimple(object),next);
+      })
+    });
+  }
 }
 module.exports = MongoApi 
-
