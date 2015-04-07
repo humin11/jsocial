@@ -12,7 +12,7 @@ module.exports = function(app, passport) {
   app.use(compression());
   app.use(cookieParser());
   app.use(bodyParser.json());
-  app.use(session({ secret: 'jsocial' , resave:false,saveUninitialized: true,cookie: { secure: true }}));
+  app.use(session({ secret: 'jsocial', resave: false, saveUninitialized: true, cookie: { maxAge: 60000 }}));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(require('express').static(path.join(process.cwd(), 'public')));

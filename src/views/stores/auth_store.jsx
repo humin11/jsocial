@@ -1,45 +1,75 @@
 /**
  * Created by steven on 15/4/3.
  */
+
+var AppDispatcher = require('../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../constants/constants.jsx');
+var assign = require('object-assign');
 var _user = null;
-var _changeListeners  = [];
+var _initCalled = false;
+var CHANGE_EVENT = 'change';
 
-
-var AuthStore = {
-  signIn: function (username, password, done) {
-    $.ajax({
-      url: "/auth",
-      type: "POST",
-      contentType: "application/json",
-      data : JSON.stringify({ username: username, password: password }),
-      success: function(obj){
-        _user = obj.user;
-        AuthStore.notifyChange();
-        if (done) {
-          done(obj.err, _user);
-        }
-      }
-    });
-  },
+var AuthStore = assign({}, EventEmitter2.prototype, {
+  maxListeners: 99999,
   isLoggedIn: function () {
     return _user !== null;
   },
   getUser: function () {
     return _user;
   },
-  notifyChange: function() {
-    _changeListeners.forEach(function (listener) {
-      listener();
-    });
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
   },
-  addChangeListener: function (listener) {
-    _changeListeners.push(listener);
+  addChangeListener: function(callback) {
+    this.on(CHANGE_EVENT, callback);
   },
-  removeChangeListener: function (listener) {
-    _changeListeners = _changeListeners.filter(function (l) {
-      return listener !== l;
-    });
-  },
-};
+
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  }
+});
+
+AppDispatcher.register(function(action) {
+
+  switch(action.type) {
+
+    case ActionTypes.AUTH_INIT:
+      if(_initCalled) {
+        return;
+      }
+      _initCalled = true;
+      $.ajax({
+        url: "/auth/user",
+        type: "POST",
+        contentType: "application/json",
+        success: function(obj){
+          if (obj.user) {
+            _user = obj.user;
+          }
+          AuthStore.emitChange();
+        }
+      });
+      break;
+    case ActionTypes.AUTH_LOGIN:
+      $.ajax({
+        url: "/auth",
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify({ username: action.username, password: action.password }),
+        success: function(obj){
+          _user = obj.user;
+          AuthStore.emitChange();
+        }
+      });
+      break;
+    case ActionTypes.AUTH_LOGOUT:
+      break;
+
+    default:
+    // do nothing
+  }
+
+});
+
 
 module.exports = AuthStore;

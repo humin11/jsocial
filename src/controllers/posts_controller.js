@@ -14,8 +14,8 @@ exports.create = function(req, res, next){
   res.send(obj);
 };
 
-exports.list = function(){
-  return allpost;
+exports.list = function(req, res, next){
+  res.send(allpost);
 };
 
 

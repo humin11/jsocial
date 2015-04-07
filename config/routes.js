@@ -50,9 +50,9 @@ module.exports = function(app, passport) {
       }
     });
   });
-  //app.get("/auth", authController.getCurrentUser);
+  app.post("/auth/user", authController.getCurrentUser);
   app.post("/auth", authController.signIn);
   // secured routes
-  app.post("/post/create", postController.create);
-  app.post("/post/list", secured, postController.list);
+  app.post("/posts/create", postController.create);
+  app.post("/posts/list", postController.list);
 };

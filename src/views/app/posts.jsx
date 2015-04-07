@@ -75,7 +75,7 @@ var NewPost = React.createClass({
   handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
-      type: ActionTypes.POST_CREATE,
+      type: ActionTypes.POSTS_CREATE,
       data: {content:content}
     });
   },
@@ -195,33 +195,35 @@ var PostSummary = React.createClass({
 
 var Body = React.createClass({
   getInitialState: function() {
-    return {data: PostStore.data};
+    return {data: PostStore.getData()};
   },
   componentDidMount: function() {
     $('html').addClass('social');
-    PostStore.on('change',this._onChange);
+    PostStore.addChangeListener(this._onChange);
+    AppDispatcher.dispatch({ type: ActionTypes.POSTS_INIT });
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
-    PostStore.off('change',this._onChange);
+    PostStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({data: PostStore.data});
+    this.setState({data: PostStore.getData()});
   },
   render: function() {
     var rightStream = [];
-    this.state.data.forEach(function(obj){
-      rightStream.push(
-        <PostSummary
-          key={obj._id}
-          author={obj.author}
-          location="BJ"
-          avator="/imgs/avatars/avatar0.png"
-          date={obj.create_at}
-          img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
-          {obj.content}
-        </PostSummary>);
-    });
+    if(this.state.data)
+      this.state.data.forEach(function(obj){
+        rightStream.push(
+          <PostSummary
+            key={obj._id}
+            author={obj.author}
+            location="BJ"
+            avator="/imgs/avatars/avatar0.png"
+            date={obj.create_at}
+            img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
+            {obj.content}
+          </PostSummary>);
+      });
     if(rightStream.length == 0){
       rightStream.push(<span></span>);
     }
@@ -254,13 +256,14 @@ var Body = React.createClass({
 
 var classSet = React.addons.classSet;
 var Posts = React.createClass({
-  mixins: [SidebarMixin,Authentication],
+  mixins: [SidebarMixin],
   render: function() {
     var classes = classSet({
       'container-open': this.state.open
     });
     return (
       <Container id='container' className={classes}>
+        <Sidebar />
         <Header pressed />
         <Body/>
         <Footer />
