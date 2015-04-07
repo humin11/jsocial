@@ -194,10 +194,9 @@ MongoApi.DB.prototype = {
     if (!model) {
       return model;
     }
-    var reslut = model;
-    reslut = {};
+    var result = {};
     this.SimpleFormat.forEach(function (e) {
-      reslut[e] = model[e];
+      result[e] = model[e];
     })
     return result;
   },
@@ -283,11 +282,8 @@ MongoApi.DB.prototype = {
     );
   },
   findSimple: function (querymodel, callback) {
-    console.log(this.table);
     this.connect(function (collection,next) {
-      console.log(this.table);
       collection.findOne(querymodel,function(err,object){
-        console.log(this.toSimple);
         callback(err,this.toSimple(object),next);
       }.bind(this));
     }.bind(this));
