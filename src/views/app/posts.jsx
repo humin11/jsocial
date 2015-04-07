@@ -1,7 +1,7 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
-
+var moment = require('moment');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var PostStore = require('../stores/posts_store.jsx');
@@ -76,7 +76,7 @@ var NewPost = React.createClass({
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
-      data: {content:content}
+      data: {content:content,comments:[]}
     });
   },
   render: function () {
@@ -104,10 +104,26 @@ var NewPost = React.createClass({
   }
 });
 var NewComment = React.createClass({
+  getInitialState: function () {
+    return {
+      collapsed: true
+    };
+  },
+  _onClick: function(){
+    this.setState({collapsed:false});
+  },
   render: function () {
+    var item;
+    if(this.state.collapsed)
+      item = <Input type='text' placeholder='Write a comment...' onClick={this._onClick} style={{border: '1px solid #d8d8d8'}} />;
+    else
+      item =
+        <div className="comment-editor-main bg-white">
+          <div contentEditable placeholder='Write a comment...' className="comment-editor" ></div>
+        </div>;
     return (
-      <PanelFooter style={{padding: 12.5, borderTop: 0}}>
-        <Textarea rows='1' placeholder='Write a comment...' style={{border: 'none'}} />
+      <PanelFooter style={{marginTop:'0px', padding: 12.5, borderTop: 0}} className="bg-gray">
+        {item}
       </PanelFooter>
     )
   }
@@ -200,24 +216,16 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '12.5px 25px', margin: 0}}>
-          <Grid className='fg-text'>
-            <Row>
-              <Col xs={4} collapseLeft collapseRight>
-                <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
-                  <Icon glyph='icon-fontello-heart-1' />
-                  <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
-                </Button>
-              </Col>
-              <Col xs={4} style={{marginLeft:'5px'}} collapseLeft collapseRight>
-                <Button ref='shareCount' outlined bsStyle='default' active={this.state.shareActive} onClick={this.handleShare}>
-                  <Icon glyph='icon-stroke-gap-icons-Share' />
-                  <span style={{marginLeft:'5px'}}>{this.state.shareCount}</span>
-                </Button>
-              </Col>
-            </Row>
-          </Grid>
+          <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
+            <Icon glyph='icon-fontello-heart-1' />
+            <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
+          </Button>
+          <Button style={{marginLeft:'5px'}} ref='shareCount' outlined bsStyle='default' active={this.state.shareActive} onClick={this.handleShare}>
+            <Icon glyph='icon-stroke-gap-icons-Share' />
+            <span style={{marginLeft:'5px'}}>{this.state.shareCount}</span>
+          </Button>
         </PanelFooter>
-        <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}}>
+        <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}
         </PanelFooter>
         <NewComment></NewComment>
@@ -262,7 +270,10 @@ var Body = React.createClass({
                 author='Toby King'
                 date='2 hours ago'
                 //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
-                comments={[]}
+                comments={[
+                {"_id":"33",author:"user1",content:"Nice!",create_at:"2015-11-21 23:21:00"},
+                {"_id":"34",author:"user2",content:"Nice!",create_at:"2015-11-22 23:21:00"},
+                {"_id":"35",author:"user3",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
                 >
                   {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>
