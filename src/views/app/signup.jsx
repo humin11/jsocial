@@ -89,14 +89,14 @@ var Body = React.createClass({
                               <Row>
                                 <Col xs={12} sm={6} className='facebook-container' smCollapseLeft smCollapseRight>
                                   <Button block type='submit' id='facebook-btn' lg bsStyle='darkblue' onClick={this.back}>
-                                    <Icon glyph='icon-fontello-facebook' />
-                                    <span>Facebook</span>
+                                    <Icon glyph='icon-fontello-qq' />
+                                    <span>QQ</span>
                                   </Button>
                                 </Col>
                                 <Col xs={12} sm={6} className='' smCollapseLeft smCollapseRight>
                                   <Button block type='submit' id='twitter-btn' lg bsStyle='darkblue' onClick={this.back}>
-                                    <Icon glyph='icon-fontello-twitter' />
-                                    <span>Twitter</span>
+                                    <Icon glyph='icon-fontello-sina-weibo' />
+                                    <span>Weibo</span>
                                   </Button>
                                 </Col>
                               </Row>
