@@ -38,6 +38,7 @@
     "keymirror": "^0.1.1",
     "map-stream": "0.0.5",
     "modernizr": "^3.0.0-pre",
+    "moment": "^2.10.0",
     "mongodb": "^2.0.25",
     "object-assign": "^1.0.0",
     "passport":"^0.2.1",

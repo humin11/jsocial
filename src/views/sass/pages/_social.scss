@@ -15,6 +15,7 @@
   .rubix-panel-footer {
     border-top: 1px solid #d8d8d8;
   }
+
 }
 html.social body .sidebar-nav > li.active:after {
   display: none !important;
@@ -54,5 +55,29 @@ html.social body .sidebar-nav > li.active:after {
 
   >span {
     margin-left: $line-height-computed;
+  }
+}
+
+.comment-editor-main {
+  min-height: 60px;
+  margin: 16px 16px 12px 16px;
+  padding: 4px 15px 0 4px;
+  outline: 0;
+  border: 1px solid #c4c4c4;
+  font-size: 16px;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  .comment-editor {
+    max-height:200px;
+    min-height: 120px;
+    margin: 4px 4px 2px 4px;
+    padding: 4px 5px 0 5px;
+    outline: 0;
+    font-size: 16px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #fff;
   }
 }

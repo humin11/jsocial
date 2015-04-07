@@ -20,9 +20,9 @@ module.exports = function(passport) {
       passwordField: 'password'
     },
     function (username, password, done) {
-      userController.findOne({username:username,password:password},function(err,user,next){
+      userController.findOne({email:username,password:password},function(err,user,next){
+        console.log("*****"+user);
         next();
-        console.log(user);
         if (username !== user.username) {
           return done(null, false, { message: 'Incorrect username.' });
         }
