@@ -134,7 +134,7 @@ var PostComment = React.createClass({
     return {
       author:{
         name: "admin",
-        avatar: "/imgs/avatars/avatar0.png"
+        avatar: "/imgs/avatars/avatar.jpg"
       }
 
     };
@@ -142,7 +142,7 @@ var PostComment = React.createClass({
   render: function () {
     return (
       <div className='inbox-avatar' style={{borderBottom: '1px solid #EAEDF1'}}>
-        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign: 'top', top: 10, position: 'relative'}} />
+        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}} />
         <div className='inbox-avatar-name'>
           <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
           <div className='fg-text'><small>{this.props.children}..</small></div>
@@ -160,7 +160,7 @@ var PostSummary = React.createClass({
     return {
       author: {
         name: "admin",
-        avatar: "/imgs/avatars/avatar0.png"
+        avatar: "/imgs/avatars/avatar.jpg"
       }
     };
   },
@@ -202,7 +202,7 @@ var PostSummary = React.createClass({
       <PanelContainer noControls>
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
           <div className='inbox-avatar'>
-            <img src={this.props.author.avatar} width='40' height='40' />
+            <img src={this.props.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
             <div className='inbox-avatar-name'>
               <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
               <div className='fg-text'><small>{this.props.date}</small></div>
@@ -220,7 +220,7 @@ var PostSummary = React.createClass({
             {img}
           </div>
         </PanelBody>
-        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '12.5px 25px', margin: 0}}>
+        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
           <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
             <Icon glyph='icon-fontello-heart-1' />
             <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
@@ -268,7 +268,7 @@ var Body = React.createClass({
       <Container id='body' className='social'>
         <Grid>
           <Row>
-            <Col sm={6} collapseRight >
+            <Col sm={4} collapseRight >
               <NewPost></NewPost>
               <PostSummary
                 _id='123'
@@ -282,7 +282,31 @@ var Body = React.createClass({
                   {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>
             </Col>
-            <Col sm={6} >
+            <Col sm={4} collapseRight>
+              <PostSummary
+                _id='123'
+                date='2 hours ago'
+                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
+                comments={[
+                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
+                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
+                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
+                >
+                {"I'll be out of my mind and you'll be out of ideas pretty soon."}
+              </PostSummary>
+            </Col>
+            <Col sm={4} >
+              <PostSummary
+                _id='123'
+                date='2 hours ago'
+                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
+                comments={[
+                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
+                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
+                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
+                >
+                {"I'll be out of my mind and you'll be out of ideas pretty soon."}
+              </PostSummary>
               {rightStream}
             </Col>
           </Row>
