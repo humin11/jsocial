@@ -5,7 +5,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var _data = null;
+var _data = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 

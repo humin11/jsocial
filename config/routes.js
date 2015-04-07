@@ -1,7 +1,8 @@
 /**
  * Created by steven on 15/4/3.
  */
-var postController = require('../src/controllers/posts_controller');
+var postsController = require('../src/controllers/posts_controller');
+var commentsController = require('../src/controllers/comments_controller');
 var authController = require("../src/controllers/auth_controller");
 var routes = require('../src/routes.jsx');
 var html = require('./template');
@@ -53,6 +54,8 @@ module.exports = function(app, passport) {
   app.post("/auth/user", authController.getCurrentUser);
   app.post("/auth", authController.signIn);
   // secured routes
-  app.post("/posts/create", postController.create);
-  app.post("/posts/list", postController.list);
+  app.post("/posts/create", postsController.create);
+  app.post("/posts/list", postsController.list);
+  app.post("/comments/create", commentsController.create);
+  app.post("/comments/list", commentsController.list);
 };

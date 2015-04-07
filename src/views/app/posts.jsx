@@ -81,7 +81,7 @@ var NewPost = React.createClass({
   },
   render: function () {
     return (
-      <PanelContainer>
+      <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
           <Textarea rows='3' placeholder="What's on your mind?" style={{border: 'none'}} ref="postContent"/>
         </PanelBody>
@@ -106,7 +106,7 @@ var NewPost = React.createClass({
 var NewComment = React.createClass({
   render: function () {
     return (
-      <PanelFooter style={{padding: 12.5}}>
+      <PanelFooter style={{padding: 12.5, borderTop: 0}}>
         <Textarea rows='1' placeholder='Write a comment...' style={{border: 'none'}} />
       </PanelFooter>
     )
@@ -114,6 +114,11 @@ var NewComment = React.createClass({
 });
 
 var PostComment = React.createClass({
+  getDefaultProps: function() {
+    return {
+      avator: '/imgs/avatars/avatar0.png'
+    };
+  },
   render: function () {
     return (
       <div className='inbox-avatar' style={{borderBottom: '1px solid #EAEDF1'}}>
@@ -131,9 +136,48 @@ var PostComment = React.createClass({
 });
 
 var PostSummary = React.createClass({
+  getDefaultProps: function() {
+    return {
+      avator: '/imgs/avatars/avatar0.png',
+      location: "Beijing, China"
+    };
+  },
+  getInitialState: function () {
+    return {
+      shareCount: 200,
+      shareActive: false,
+      shareTextStyle: 'fg-white',
+      likeCount: 999,
+      likeActive: false,
+      likeTextStyle: 'fg-white',
+      comments: this.props.comments
+    };
+  },
+  handleShare: function() {
+    this.setState({
+      shareCount: 1000,
+      shareActive: true,
+      shareTextStyle: 'fg-orange75'
+    });
+  },
+  handleLike: function() {
+    this.setState({
+      likeCount: 1000,
+      likeActive: true,
+      likeTextStyle: 'fg-orange75'
+    });
+  },
   render: function() {
+    var comments = {};
+    this.state.comments.forEach(function(c) {
+      var d = moment(c.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
+      comments['comment-' + c._id] = <PostComment author={c.author} date={d} >{c.content}</PostComment>;
+    });
+    var img = <noscript></noscript>;
+    if(this.props.img)
+      img = <Img responsive src={this.props.img}/>;
     return (
-      <PanelContainer>
+      <PanelContainer noControls>
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
           <div className='inbox-avatar'>
             <img src={this.props.avator} width='40' height='40' />
@@ -152,40 +196,29 @@ var PostSummary = React.createClass({
             </div>
           </div>
           <div style={{margin: -25, marginTop: 25}}>
-            <Img responsive src={this.props.img} />
+            {img}
           </div>
         </PanelBody>
-        <PanelFooter noRadius className='fg-black75 bg-gray' style={{padding: '12.5px 25px', margin: 0}}>
+        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '12.5px 25px', margin: 0}}>
           <Grid className='fg-text'>
             <Row>
-              <Col xs={6} collapseLeft collapseRight>
-                <a href='#' className='fg-text' style={{border: 'none', marginRight: 25}}><Icon glyph='icon-dripicons-thumbs-up icon-1-and-quarter-x' /><span style={{position: 'relative', top: -2, left: 3}}>Like</span></a>
+              <Col xs={4} collapseLeft collapseRight>
+                <Button ref='likeCount' outlined bsStyle='default' active={this.state.likeActive} onClick={this.handleLike}>
+                  <Icon glyph='icon-fontello-heart-1' />
+                  <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
+                </Button>
               </Col>
-              <Col xs={6} className='text-right' collapseLeft collapseRight>
-                <span style={{top: 5, position: 'relative'}}><strong>{this.props.like}</strong> people like this</span>
+              <Col xs={4} collapseLeft collapseRight>
+                <Button ref='shareCount' outlined bsStyle='default' active={this.state.shareActive} onClick={this.handleShare}>
+                  <Icon glyph='icon-stroke-gap-icons-Share' />
+                  <span style={{marginLeft:'5px'}}>{this.state.shareCount}</span>
+                </Button>
               </Col>
             </Row>
           </Grid>
         </PanelFooter>
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}}>
-            <PostComment
-              author='Ava Parry'
-              avator='/imgs/avatars/avatar0.png'
-              date='2 hours ago'>
-                Nice!
-            </PostComment>
-            <PostComment
-              author='Ava Parry'
-              avator='/imgs/avatars/avatar0.png'
-              date='2 hours ago'>
-                Nice!
-            </PostComment>
-            <PostComment
-              author='Ava Parry'
-              avator='/imgs/avatars/avatar0.png'
-              date='2 hours ago'>
-                Nice!
-            </PostComment>
+          {comments}
         </PanelFooter>
         <NewComment></NewComment>
       </PanelContainer>
@@ -210,37 +243,27 @@ var Body = React.createClass({
     this.setState({data: PostStore.getData()});
   },
   render: function() {
-    var rightStream = [];
-    if(this.state.data)
-      this.state.data.forEach(function(obj){
-        rightStream.push(
-          <PostSummary
-            key={obj._id}
-            author={obj.author}
-            location="BJ"
-            avator="/imgs/avatars/avatar0.png"
-            date={obj.create_at}
-            img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
-            {obj.content}
-          </PostSummary>);
-      });
-    if(rightStream.length == 0){
-      rightStream.push(<span></span>);
-    }
+    var rightStream = {};
+    this.state.data.forEach(function (obj) {
+      var d = moment(obj.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
+      rightStream["post-" + obj._id] =
+        <PostSummary author={obj.author} date={d} comments={obj.comments}>
+          {obj.content}
+        </PostSummary>;
+    });
     return (
       <Container id='body' className='social'>
-        <SocialBanner />
         <Grid>
           <Row>
             <Col sm={6} collapseRight >
               <NewPost></NewPost>
               <PostSummary
+                _id='123'
                 author='Toby King'
-                location='Beijing, China'
-                avator='/imgs/avatars/avatar0.png'
                 date='2 hours ago'
-                img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'>
-                  {"I'll be out of my mind and you'll be out of ideas pretty soon. So let's spend the afternoon in a cold hot air balloon. Leave your jacket behind. Lean out and touch the tree tops over town. I can't wait to kiss the ground wherever we touch back down."}
+                comments={[]}
+                >
+                  {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>
             </Col>
             <Col sm={6} >
