@@ -220,7 +220,7 @@ var PostSummary = React.createClass({
             {img}
           </div>
         </PanelBody>
-        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '12.5px 25px', margin: 0}}>
+        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
           <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
             <Icon glyph='icon-fontello-heart-1' />
             <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
@@ -282,7 +282,7 @@ var Body = React.createClass({
                   {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>
             </Col>
-            <Col sm={4} >
+            <Col sm={4} collapseRight>
               <PostSummary
                 _id='123'
                 date='2 hours ago'
