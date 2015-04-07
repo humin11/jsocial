@@ -38,7 +38,7 @@ var createRTL = argv.rtl ? true : false;
 var production = argv.production ? true : false;
 var port = argv.port ? argv.port : 8080;
 var wport = argv.wport ? argv.wport : 8079;
-var whost = argv.whost ? argv.whost : '192.168.1.48';
+var whost = argv.whost ? argv.whost : 'localhost';
 
 /* file patterns to watch */
 var paths = {
