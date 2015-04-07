@@ -41,11 +41,17 @@ var MongoApi = {
   },
   SimpleFormat: ["_id", "name"],
   Controller: function (params) {
-    apply(this, params);
-    this.DB = new MongoApi.DB(params.table);
-    for (var item in this.DB) {
-      //console.log("simple : /" + item);
+    this.table = params.table;
+    this.model = params.model;
+    this.model = (this.model) ? this.model : {};
+    this.model.Default = (this.model.Default) ? this.model.Default : {};
+    this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
+    this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
+    this.model.OutFormat.hide = (this.model.OutFormat.hide) ? this.model.OutFormat.hide : {};
+    if (params.url){
+      this.url = assign(params.url,MongoApi.Controller.prototype.url);
     }
+    this.DB = new MongoApi.DB(params.table);
   },
   DB: function (table) {
     this.table = table;
@@ -53,11 +59,11 @@ var MongoApi = {
 }
 
 MongoApi.Controller.prototype = {
-  applyDefault: function (model,req) {
+  applyDefault: function (model, req) {
     if (model instanceof Array) {
       var result = [];
       for (var i = 0; i < model.length; i++) {
-        result[i] = arguments.callee(model[i],req);
+        result[i] = arguments.callee(model[i], req);
       }
       return result;
     }
@@ -103,10 +109,9 @@ MongoApi.Controller.prototype = {
   },
   url: {
     insert: function (req, res) {
-      console.log("insert:"+req.body);
       var model = req.body;
-      model = this.applyDefault(model,req);
-      this.DB.insert(model,function(err,next){
+      model = this.applyDefault(model, req);
+      this.DB.insert(model, function (err, next) {
         model = this.outFormat(model);
         res.send(model);
         next();
@@ -114,27 +119,27 @@ MongoApi.Controller.prototype = {
     },
     update: function (req, res) {
       var model = req.body;
-        data : JSON.stringify(action.data),
-      this.DB.update(model, function (err,next) {
-        res.send(MongoApi.Json.Ok());
-        next();
-      }.bind(this));
+      data : JSON.stringify(action.data),
+        this.DB.update(model, function (err, next) {
+          res.send(MongoApi.Json.Ok());
+          next();
+        }.bind(this));
     },
     remove: function (req, res) {
       var model = req.body
-      this.DB.remove(model,function(err,next){
+      this.DB.remove(model, function (err, next) {
         res.send(MongoApi.Json.Ok());
         next();
       }.bind(this));
     },
-    findPage:function(req,res) {
+    findPage: function (req, res) {
       var model = req.body;
       model.index = (model.index) ? (model.index) : 0;
       model.count = (model.count) ? model.count : 20;
-      model.count = (model.count>0 && model.count<50)?model.count : model.count;
+      model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
 
-      this.DB.count(model.query, function (err, count,next1) {
-        this.DB.find(model.query, function (err, docs,next2) {
+      this.DB.count(model.query, function (err, count, next1) {
+        this.DB.find(model.query, function (err, docs, next2) {
           res.send({
             count: count,
             docs: this.outFormat(docs)
@@ -151,14 +156,15 @@ MongoApi.Controller.prototype = {
       model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
       model.query = (model.query) ? (model.query) : {};
       this.DB.find(model, function (err, docs, next) {
-        console.log(this);
-        res.send(this.outFormat(docs));
+        var result = docs;//this.outFormat(docs);
+        console.log(result);
+        res.send(result);
         next();
       }.bind(this));
     },
     findOne: function (req, res) {
       var model = req.body;
-      this.DB.findOne(model,function(err,doc,next){
+      this.DB.findOne(model, function (err, doc, next) {
         res.send(doc);
         next();
       });
@@ -168,6 +174,7 @@ MongoApi.Controller.prototype = {
     for (var item in this.url) {
       console.log("/" + this.table + "/" + item);
       express.post("/" + this.table + "/" + item, this.url[item].bind(this));
+      //express.get("/" + this.table + "/" + item, this.url[item].bind(this));
     }
     return this;
   }
@@ -186,11 +193,12 @@ MongoApi.DB.prototype = {
   },
   find: function (querymodel, callback) {
     this.connect(function (collection,next) {
-        collection.find(model.query)
+        collection.find(querymodel.query)
           .limit(querymodel.count)
           .skip(querymodel.count * (querymodel.index - 1))
           .toArray(function(err,docs){
-            callback(err,docs,next)
+            console.log(err,docs);
+            callback(err,docs,next);
           });
       }
     );
