@@ -203,12 +203,12 @@ var PostSummary = React.createClass({
           <Grid className='fg-text'>
             <Row>
               <Col xs={4} collapseLeft collapseRight>
-                <Button ref='likeCount' outlined bsStyle='default' active={this.state.likeActive} onClick={this.handleLike}>
+                <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
                   <Icon glyph='icon-fontello-heart-1' />
                   <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
                 </Button>
               </Col>
-              <Col xs={4} collapseLeft collapseRight>
+              <Col xs={4} style={{marginLeft:'5px'}} collapseLeft collapseRight>
                 <Button ref='shareCount' outlined bsStyle='default' active={this.state.shareActive} onClick={this.handleShare}>
                   <Icon glyph='icon-stroke-gap-icons-Share' />
                   <span style={{marginLeft:'5px'}}>{this.state.shareCount}</span>
@@ -261,6 +261,7 @@ var Body = React.createClass({
                 _id='123'
                 author='Toby King'
                 date='2 hours ago'
+                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
                 comments={[]}
                 >
                   {"I'll be out of my mind and you'll be out of ideas pretty soon."}

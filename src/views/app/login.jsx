@@ -1,7 +1,7 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
-var AuthStore = require('../stores/auth_store.jsx');
+var UsersStore = require('../stores/users_store.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var classSet = React.addons.classSet;
@@ -18,10 +18,11 @@ var LoginPage = React.createClass({
   },
   _handleSubmit: function(e) {
     e.preventDefault();
+    e.stopPropagation();
     var username = this.refs.username.getValue();
     var password = this.refs.password.getValue();
     AppDispatcher.dispatch({
-      type: ActionTypes.AUTH_LOGIN,
+      type: ActionTypes.USERS_LOGIN,
       username: username,
       password: password
     });
@@ -44,12 +45,12 @@ var LoginPage = React.createClass({
   },
   componentDidMount: function() {
     $('html').addClass('authentication');
-    AuthStore.addChangeListener(this.retryTransition);
-    AppDispatcher.dispatch({ type: ActionTypes.AUTH_INIT });
+    UsersStore.addChangeListener(this.retryTransition);
+    AppDispatcher.dispatch({ type: ActionTypes.USERS_INIT });
   },
   componentWillUnmount: function() {
     $('html').removeClass('authentication');
-    AuthStore.removeChangeListener(this.retryTransition);
+    UsersStore.removeChangeListener(this.retryTransition);
   },
   renderErrorBlock: function () {
     return this.state.error ? <p className="help-block">Bad login information</p> : null;

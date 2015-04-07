@@ -33,7 +33,7 @@ AppDispatcher.register(function(action) {
 
   switch(action.type) {
 
-    case ActionTypes.AUTH_INIT:
+    case ActionTypes.USERS_INIT:
       if(_initCalled) {
         return;
       }
@@ -50,7 +50,21 @@ AppDispatcher.register(function(action) {
         }
       });
       break;
-    case ActionTypes.AUTH_LOGIN:
+    case ActionTypes.USERS_SIGNUP:
+      $.ajax({
+        url: "/users/insert",
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify({ username: action.username, email:action.email, password: action.password }),
+        success: function(obj){
+          if (obj.user) {
+            _user = obj.user;
+          }
+          AuthStore.emitChange();
+        }
+      });
+      break;
+    case ActionTypes.USERS_LOGIN:
       $.ajax({
         url: "/users/login",
         type: "POST",
@@ -62,7 +76,7 @@ AppDispatcher.register(function(action) {
         }
       });
       break;
-    case ActionTypes.AUTH_LOGOUT:
+    case ActionTypes.USERS_LOGOUT:
       break;
 
     default:

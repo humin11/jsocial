@@ -54,6 +54,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
+          console.log("********"+obj);
           _data.push(obj);
           PostStore.emitChange();
         }

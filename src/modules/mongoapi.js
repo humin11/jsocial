@@ -103,6 +103,7 @@ MongoApi.Controller.prototype = {
   },
   url: {
     insert: function (req, res) {
+      console.log("insert:"+req.body);
       var model = req.body;
       model = this.applyDefault(model,req);
       this.DB.insert(model,function(err,next){

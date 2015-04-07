@@ -1,13 +1,29 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
+var UsersStore = require('../stores/users_store.jsx');
+var AppDispatcher = require('../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../constants/constants.jsx');
 
 var Body = React.createClass({
   mixins: [ReactRouter.State, ReactRouter.Navigation],
-  back: function(e) {
+  getInitialState: function () {
+    return {
+      error: false
+    };
+  },
+  _handleSubmit: function(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.transitionTo('/posts');
+    var username = this.refs.username.getValue();
+    var email = this.refs.email.getValue();
+    var password = this.refs.password.getValue();
+    AppDispatcher.dispatch({
+      type: ActionTypes.USERS_SIGNUP,
+      username: username,
+      email: email,
+      password: password
+    });
   },
   componentDidMount: function() {
     $('html').addClass('authentication');
@@ -31,13 +47,13 @@ var Body = React.createClass({
                         </div>
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                            <Form onSubmit={this.back}>
+                            <Form onSubmit={this._handleSubmit}>
                               <FormGroup>
                                 <InputGroup lg>
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-user' />
                                   </InputGroupAddon>
-                                  <Input autoFocus type='text' id='username' className='border-focus-blue' placeholder='Username' />
+                                  <Input autoFocus type='text' ref='username' className='border-focus-blue' placeholder='Username' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -45,7 +61,7 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-mail' />
                                   </InputGroupAddon>
-                                  <Input type='email' id='emailaddress' className='border-focus-blue' placeholder='support@sketchpixy.com' />
+                                  <Input type='email' ref='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -53,14 +69,14 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-key' />
                                   </InputGroupAddon>
-                                  <Input type='password' id='password' className='border-focus-blue' placeholder='password' />
+                                  <Input type='password' ref='password' className='border-focus-blue' placeholder='password' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
                                 <Grid>
                                   <Row>
                                     <Col xs={12} collapseLeft collapseRight>
-                                      <Button type='submit' outlined lg bsStyle='blue' block onClick={this.back}>Create account</Button>
+                                      <Button type='submit' outlined lg bsStyle='blue' block>Create account</Button>
                                     </Col>
                                   </Row>
                                 </Grid>
