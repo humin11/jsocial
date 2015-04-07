@@ -1,4 +1,4 @@
-var MongoApi = require("mongo_controller")
+var MongoApi = require("../modules/mongoapi")
 var MongoController = MongoApi.Controller
 var ModelDefault = MongoApi.ModelDefault
 

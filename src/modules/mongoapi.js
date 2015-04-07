@@ -1,6 +1,6 @@
 var assign = require('object-assign')
 var express = require('express');
-var apply = require('./../modules/apply')
+var apply = require('./apply')
 var mongodb = require.options.originalRequire('mongodb')
 var MongoClient = mongodb.MongoClient
 
@@ -44,7 +44,7 @@ var MongoApi = {
     apply(this, params);
     this.DB = new MongoApi.DB(params.table);
     for (var item in this.DB) {
-      console.log("simple : /" + item);
+      //console.log("simple : /" + item);
     }
   },
   DB: function (table) {

@@ -1,22 +1,16 @@
-/**
- * Created by steven on 15/3/31.
- */
+var MongoApi = require("../modules/mongoapi")
+var MongoController = MongoApi.Controller
+var ModelDefault = MongoApi.ModelDefault
 
-var allpost = [{"_id":"1",author:"admin",content:"ahaha",create_at:"2015-11-21 23:21:00"},
-  {"_id":"2",author:"admin",content:"hehehe",create_at:"2015-11-22 23:22:00"}];
-
-exports.create = function(req, res, next){
-  var obj = req.body;
-  obj["_id"] = "3";
-  obj["author"] = "admin";
-  obj["create_at"] = "2015-11-21 23:21:00";
-  allpost.push(obj);
-  res.send(obj);
-};
-
-exports.list = function(req, res, next){
-  res.send(allpost);
-};
-
+module.exports = new MongoController({
+  table:"posts",                              //表名
+  model:{                                     //模型格式定义
+    Default:{                               //默认格式，用于添加新的对象时，增加附加的属性（调用为函数返回结果）
+      _id:ModelDefault.id,
+      create:ModelDefault.now,
+      password:"aaa"
+    }
+  }
+})
 
 
