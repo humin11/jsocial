@@ -112,15 +112,7 @@ MongoApi.Controller.prototype = {
       }.bind(this));
     },
     update: function (req, res) {
-      var model = req.text;
-      model = {
-        query: {
-          password : "aaa"
-        },
-        model: {
-          password: "bbb"
-        }
-      }
+      var model = req.body;
       this.DB.update(model, function (err,next) {
         res.send(MongoApi.Json.Ok());
         next();
@@ -134,7 +126,7 @@ MongoApi.Controller.prototype = {
       }.bind(this));
     },
     findPage:function(req,res) {
-      var model = req.value;
+      var model = req.body;
       model.index = (model.index) ? (model.index) : 0;
       model.count = (model.count) ? model.count : 20;
       model.count = (model.count>0 && model.count<50)?model.count : model.count;
@@ -151,7 +143,7 @@ MongoApi.Controller.prototype = {
       });
     },
     find: function (req, res) {
-      var model = {};
+      var model = req.body;
       model.index = (model.index) ? (model.index) : 1;
       model.count = (model.count) ? model.count : 20;
       model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
@@ -163,7 +155,7 @@ MongoApi.Controller.prototype = {
       }.bind(this));
     },
     findOne: function (req, res) {
-      var model = req.value;
+      var model = req.body;
       this.DB.findOne(model,function(err,doc,next){
         res.send(doc);
         next();
@@ -192,7 +184,7 @@ MongoApi.DB.prototype = {
   },
   find: function (querymodel, callback) {
     this.connect(function (collection,next) {
-        collection.find()
+        collection.find(model.query)
           .limit(querymodel.count)
           .skip(querymodel.count * (querymodel.index - 1))
           .toArray(function(err,docs){
@@ -216,7 +208,6 @@ MongoApi.DB.prototype = {
   },
   update: function (updatemodel, callback) {
     var model = updatemodel;
-    console.log(model)
     if (!model.query) {
       model = {
         query: {"_id": model["_id"]},
