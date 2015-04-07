@@ -191,6 +191,9 @@ MongoApi.DB.prototype = {
     }.bind(this));
   },
   toSimple: function (model) {
+    if (!model) {
+      return model;
+    }
     var reslut = model;
     reslut = {};
     this.SimpleFormat.forEach(function (e) {
@@ -247,8 +250,8 @@ MongoApi.DB.prototype = {
     this.connect(function (collection,next) {
       collection.count(querymodel, function(err,count){
         callback(err,count,next);
-      })
-    });
+      }.bind(this))
+    }.bind(this));
   },
   find: function (querymodel, callback) {
     this.connect(function (collection,next) {
@@ -257,16 +260,16 @@ MongoApi.DB.prototype = {
           .skip(querymodel.count * (querymodel.index - 1))
           .toArray(function(err,docs){
             callback(err,docs,next);
-          });
-      }
+          }.bind(this));
+      }.bind(this)
     );
   },
   findOne: function (querymodel, callback) {
     this.connect(function (collection,next) {
       collection.findOne(querymodel,function(err,object){
         callback(err,object,next);
-      })
-    });
+      }.bind(this))
+    }.bind(this));
   },
   findSimples:function(querymodel,callback) {
     this.connect(function (collection,next) {
@@ -275,16 +278,19 @@ MongoApi.DB.prototype = {
           .skip(querymodel.count * (querymodel.index - 1))
           .toArray(function(err,docs){
             callback(err,this.toSimple(docs),next);
-          });
-      }
+          }.bind(this));
+      }.bind(this)
     );
   },
   findSimple: function (querymodel, callback) {
+    console.log(this.table);
     this.connect(function (collection,next) {
+      console.log(this.table);
       collection.findOne(querymodel,function(err,object){
+        console.log(this.toSimple);
         callback(err,this.toSimple(object),next);
-      })
-    });
+      }.bind(this));
+    }.bind(this));
   }
 }
 module.exports = MongoApi 
