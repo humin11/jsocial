@@ -12,7 +12,8 @@ module.exports = new MongoController({
     },
     OutFormat: {
       hide: ["password"]
-    }
+    },
+    SimpleFormat: ["name","avatar"]
   },
   url: {
     login: function (req, res, next) {

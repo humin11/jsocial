@@ -20,16 +20,13 @@ module.exports = function(passport) {
       passwordField: 'password'
     },
     function (username, password, done) {
-      userController.findOne({email:username,password:password},function(err,user,next){
-        console.log("*****"+user);
+      userController.DB.findSimple({email:username,password:password},function(err,user,next){
         next();
-        if (username !== user.username) {
-          return done(null, false, { message: 'Incorrect username.' });
+        if(user){
+          return done(null, user);
+        }else{
+          return done(null, false, { message: 'Incorrect username or password.' });
         }
-        if (password !== user.password) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
       });
 
     }

@@ -39,7 +39,6 @@ AppDispatcher.register(function(action) {
         type: "POST",
         contentType: "application/json",
         success: function(obj){
-          console.log(obj);
           if (obj) {
             _data = obj;
             _initCalled = true;

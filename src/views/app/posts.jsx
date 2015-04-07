@@ -132,15 +132,19 @@ var NewComment = React.createClass({
 var PostComment = React.createClass({
   getDefaultProps: function() {
     return {
-      avator: '/imgs/avatars/avatar0.png'
+      author:{
+        name: "admin",
+        avatar: "/imgs/avatars/avatar0.png"
+      }
+
     };
   },
   render: function () {
     return (
       <div className='inbox-avatar' style={{borderBottom: '1px solid #EAEDF1'}}>
-        <img src={this.props.avator} width='30' height='30' style={{verticalAlign: 'top', top: 10, position: 'relative'}} />
+        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign: 'top', top: 10, position: 'relative'}} />
         <div className='inbox-avatar-name'>
-          <div className='fg-darkgrayishblue75'>{this.props.author}</div>
+          <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
           <div className='fg-text'><small>{this.props.children}..</small></div>
         </div>
         <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
@@ -154,8 +158,10 @@ var PostComment = React.createClass({
 var PostSummary = React.createClass({
   getDefaultProps: function() {
     return {
-      avator: '/imgs/avatars/avatar0.png',
-      location: "Beijing, China"
+      author: {
+        name: "admin",
+        avatar: "/imgs/avatars/avatar0.png"
+      }
     };
   },
   getInitialState: function () {
@@ -196,14 +202,13 @@ var PostSummary = React.createClass({
       <PanelContainer noControls>
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
           <div className='inbox-avatar'>
-            <img src={this.props.avator} width='40' height='40' />
+            <img src={this.props.author.avatar} width='40' height='40' />
             <div className='inbox-avatar-name'>
-              <div className='fg-darkgrayishblue75'>{this.props.author}</div>
-              <div className='fg-text'><small>{this.props.location}</small></div>
+              <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
+              <div className='fg-text'><small>{this.props.date}</small></div>
             </div>
             <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
               <div style={{position: 'relative', top: 0}}><Icon glyph='icon-fontello-anchor icon-1-and-quarter-x'/></div>
-              <div style={{position: 'relative', top: -10}}><small><strong>{this.props.date}</strong></small></div>
             </div>
           </div>
           <div>
@@ -267,13 +272,12 @@ var Body = React.createClass({
               <NewPost></NewPost>
               <PostSummary
                 _id='123'
-                author='Toby King'
                 date='2 hours ago'
                 //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
                 comments={[
-                {"_id":"33",author:"user1",content:"Nice!",create_at:"2015-11-21 23:21:00"},
-                {"_id":"34",author:"user2",content:"Nice!",create_at:"2015-11-22 23:21:00"},
-                {"_id":"35",author:"user3",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
+                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
+                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
+                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
                 >
                   {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>

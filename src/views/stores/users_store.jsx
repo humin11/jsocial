@@ -55,7 +55,13 @@ AppDispatcher.register(function(action) {
         url: "/users/insert",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify({ username: action.username, email:action.email, password: action.password }),
+        data : JSON.stringify({
+          name:action.username,
+          username: action.username,
+          email:action.email,
+          password: action.password,
+          avator: "/imgs/avatars/avatar0.png"
+        }),
         success: function(obj){
           if (obj.user) {
             _user = obj.user;
@@ -71,7 +77,9 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({ username: action.username, password: action.password }),
         success: function(obj){
-          _user = obj.user;
+          if (obj.user) {
+            _user = obj.user;
+          }
           AuthStore.emitChange();
         }
       });
