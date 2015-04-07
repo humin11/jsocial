@@ -75,6 +75,7 @@ MongoApi.Controller.prototype = {
     return result;
   },
   outFormat: function (model) {
+    return model;
     if (model instanceof Array) {
       var result = [];
       for (var i = 0; i < model.length; i++) {
