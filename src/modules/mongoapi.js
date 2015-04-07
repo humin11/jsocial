@@ -53,18 +53,18 @@ var MongoApi = {
 }
 
 MongoApi.Controller.prototype = {
-  applyDefault: function (model) {
+  applyDefault: function (model,req) {
     if (model instanceof Array) {
       var result = [];
       for (var i = 0; i < model.length; i++) {
-        result[i] = arguments.callee(model[i]);
+        result[i] = arguments.callee(model[i],req);
       }
       return result;
     }
     var result = assign({}, model);
     for (var item in this.model.Default) {
       var defvalue = this.model.Default[item];
-      result[item] = typeof defvalue == 'function' ? defvalue() : defvalue;
+      result[item] = typeof defvalue == 'function' ? defvalue(req) : defvalue;
     }
     return result;
   },
@@ -104,7 +104,7 @@ MongoApi.Controller.prototype = {
   url: {
     insert: function (req, res) {
       var model = req.body;
-      model = this.applyDefault(model);
+      model = this.applyDefault(model,req);
       this.DB.insert(model,function(err,next){
         model = this.outFormat(model);
         res.send(model);
