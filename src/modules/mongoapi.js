@@ -113,6 +113,7 @@ MongoApi.Controller.prototype = {
     },
     update: function (req, res) {
       var model = req.body;
+        data : JSON.stringify(action.data),
       this.DB.update(model, function (err,next) {
         res.send(MongoApi.Json.Ok());
         next();

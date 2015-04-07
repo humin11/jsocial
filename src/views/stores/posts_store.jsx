@@ -38,7 +38,6 @@ AppDispatcher.register(function(action) {
         url: "/posts/find",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(action.data),
         success: function(obj){
           if (obj) {
             _data = obj;
