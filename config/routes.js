@@ -1,10 +1,11 @@
 /**
  * Created by steven on 15/4/3.
  */
-var postController = require('../src/controllers/posts_controller');
-var authController = require("../src/controllers/auth_controller");
+//var postController = require('../src/controllers/posts_controller');
+//var authController = require("../src/controllers/auth_controller");
 var routes = require('../src/routes.jsx');
 var html = require('./template');
+var fs = require('fs');
 
 var renderApp = function(req, res, cb) {
   var router = ReactRouter.create({
@@ -33,9 +34,11 @@ var secured = function(req, res, next) {
 };
 
 module.exports = function(app, passport) {
-  /** CATCH-ALL ROUTE **/
-  require("../src/controllers/users_controller").binding(app);
-
+  fs.readdir("./src/controllers", function(err,files) {
+    files.forEach(function(file) {
+      require("../src/controllers/" + file).binding(app);
+    });
+  });
   app.get('*', function(req, res, next) {
     if(req.url === '/favicon.ico') return next();
     res.header('Access-Control-Allow-Origin', '*');
@@ -52,9 +55,9 @@ module.exports = function(app, passport) {
       }
     });
   });
-  app.post("/auth/user", authController.getCurrentUser);
-  app.post("/auth", authController.signIn);
+  //app.post("/auth/user", authController.getCurrentUser);
+  //app.post("/auth", authController.signIn);
   // secured routes
-  app.post("/posts/create", postController.create);
-  app.post("/posts/list", postController.list);
+  //app.post("/posts/create", postController.create);
+  //app.post("/posts/list", postController.list);
 };
