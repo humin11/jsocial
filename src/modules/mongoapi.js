@@ -196,18 +196,6 @@ MongoApi.DB.prototype = {
       });
     }.bind(this));
   },
-  find: function (querymodel, callback) {
-    this.connect(function (collection,next) {
-        collection.find(querymodel.query)
-          .limit(querymodel.count)
-          .skip(querymodel.count * (querymodel.index - 1))
-          .toArray(function(err,docs){
-            //console.log(err,docs);
-            callback(err,docs,next);
-          });
-      }
-    );
-  },
   insert: function (model, callback) {
     this.connect(function (collection, next) {
       var array = model;
@@ -260,11 +248,22 @@ MongoApi.DB.prototype = {
       })
     });
   },
+  find: function (querymodel, callback) {
+    this.connect(function (collection,next) {
+        collection.find(querymodel.query)
+          .limit(querymodel.count)
+          .skip(querymodel.count * (querymodel.index - 1))
+          .toArray(function(err,docs){
+            callback(err,docs,next);
+          });
+      }
+    );
+  },
   findOne: function (querymodel, callback) {
     this.connect(function (collection,next) {
-      collection.findOne(querymodel),function(err,object){
+      collection.findOne(querymodel,function(err,object){
         callback(err,object,next);
-      }
+      })
     });
   },
   find2Simple:function(querymodel,callback) {
