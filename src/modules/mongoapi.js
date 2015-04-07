@@ -222,8 +222,8 @@ MongoApi.DB.prototype = {
     }
     this.connect(function (collection,next) {
       collection.update(
-        updatemodel.query,
-        {$set: updatemodel.model}, {w:1}, function(err){
+        model.query,
+        {$set: model.model}, {w:1}, function(err){
           callback(err,next);
         });
     });
@@ -238,7 +238,7 @@ MongoApi.DB.prototype = {
     };
     this.connect(function (collection,next) {
       collection.remove(
-        updatemodel.query, {safe: true}, function(err){
+        model.query, {safe: true}, function(err){
           callback(err,next);
         });
     });
@@ -268,7 +268,7 @@ MongoApi.DB.prototype = {
       })
     });
   },
-  findS:function(querymodel,callback) {
+  findSimples:function(querymodel,callback) {
     this.connect(function (collection,next) {
         collection.find(querymodel.query)
           .limit(querymodel.count)
@@ -279,7 +279,7 @@ MongoApi.DB.prototype = {
       }
     );
   },
-  findOneS: function (querymodel, callback) {
+  findSimple: function (querymodel, callback) {
     this.connect(function (collection,next) {
       collection.findOne(querymodel,function(err,object){
         callback(err,this.toSimple(object),next);
