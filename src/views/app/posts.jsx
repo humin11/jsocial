@@ -5,65 +5,8 @@ var moment = require('moment');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var PostStore = require('../stores/posts_store.jsx');
+var UsersStore = require('../stores/users_store.jsx');
 var Authentication = require('../mixins/authentication.jsx');
-
-var SocialBanner = React.createClass({
-  getInitialState: function() {
-    return {
-      follow: 'follow me',
-      followActive: false,
-      likeCount: 999,
-      likeActive: false,
-      likeTextStyle: 'fg-white'
-    };
-  },
-  handleFollow: function() {
-    this.setState({
-      follow: 'followed',
-      followActive: true
-    });
-  },
-  handleLike: function() {
-    this.setState({
-      likeCount: 1000,
-      likeActive: true,
-      likeTextStyle: 'fg-orange75'
-    });
-  },
-  render: function() {
-    return (
-      <div style={{height: 350, marginTop: -25, backgroundImage: 'url(/imgs/shots/Blick_auf_Manhattan.JPG)', backgroundSize: 'cover', position: 'relative', marginBottom: 25, backgroundPosition: 'center'}}>
-        <div className='social-cover' style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.7)'}}>
-        </div>
-        <div className='social-desc'>
-          <div>
-            <h1 className='fg-white'>Empire State, NY, USA</h1>
-            <h5 className='fg-white' style={{opacity: 0.8}}>- Aug 20th, 2014</h5>
-            <div style={{marginTop: 50}}>
-              <div style={{display: 'inline-block'}}>
-                <Button id='likeCount' retainBackground rounded bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
-                  <Icon glyph='icon-fontello-heart-1' />
-                </Button>
-                <Label className='social-like-count' htmlFor='likeCount'><span className={this.state.likeTextStyle}>{this.state.likeCount} likes</span></Label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='social-avatar'>
-          <Img src='/imgs/avatars/avatar.jpg' height='100' width='100' style={{display: 'block', borderRadius: 100, border: '2px solid #fff', margin: 'auto', marginTop: 50}} />
-          <h4 className='fg-white text-center'>Anna Sanchez</h4>
-          <h5 className='fg-white text-center' style={{opacity: 0.8}}>DevOps Engineer, NY</h5>
-          <hr className='border-black75' style={{borderWidth: 2}}/>
-          <div className='text-center'>
-            <Button outlined inverse retainBackground active={this.state.followActive} bsStyle='brightblue' onClick={this.handleFollow}>
-              <span>{this.state.follow}</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-});
 
 var NewPost = React.createClass({
   componentDidMount: function() {
@@ -80,6 +23,8 @@ var NewPost = React.createClass({
     });
   },
   render: function () {
+    if(!UsersStore.isLoggedIn())
+      return <noscript></noscript>;
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
@@ -104,6 +49,14 @@ var NewPost = React.createClass({
   }
 });
 var NewComment = React.createClass({
+  getDefaultProps: function() {
+    return {
+      author:{
+        name: "admin",
+        avatar: "/imgs/avatars/avatar.jpg"
+      }
+    };
+  },
   getInitialState: function () {
     return {
       collapsed: true
@@ -112,17 +65,41 @@ var NewComment = React.createClass({
   _onClick: function(){
     this.setState({collapsed:false});
   },
+  _handleOk: function(){
+    alert(this.refs.commentContent.getDOMNode().innerText);
+  },
+  _handleCancel: function(){
+    this.setState({collapsed:true});
+  },
   render: function () {
+    if(!UsersStore.isLoggedIn())
+      return <noscript></noscript>;
     var item;
-    if(this.state.collapsed)
-      item = <Input type='text' placeholder='Write a comment...' onClick={this._onClick} style={{border: '1px solid #d8d8d8'}} />;
-    else
+    var footerPadding = '15px 25px 15px 25px';
+    if(this.state.collapsed) {
+      item = <Input type='text' placeholder='Write a comment...' onClick={this._onClick}
+                    style={{border: '1px solid #d8d8d8'}}/>;
+    }else {
       item =
-        <div className="comment-editor-main bg-white">
-          <div contentEditable placeholder='Write a comment...' className="comment-editor" ></div>
-        </div>;
+        <Grid>
+          <Row>
+            <Col sm={2}>
+              <img src={this.props.author.avatar} width='30' height='30'
+                   style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}}/>
+            </Col>
+            <Col sm={9} className="comment-editor-main bg-white">
+              <div ref="commentContent" contentEditable placeholder='Write a comment...' className="comment-editor"></div>
+            </Col>
+          </Row>
+          <div className='text-right' style={{paddingRight:'10px'}} >
+            <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>
+            <Button ref='cancelBtn'  style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}>Cancel</Button>
+          </div>
+        </Grid>;
+      footerPadding = '15px 0 15px 0';
+    }
     return (
-      <PanelFooter style={{marginTop:'0px', padding: 12.5, borderTop: 0}} className="bg-gray">
+      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className="bg-gray">
         {item}
       </PanelFooter>
     )
@@ -136,7 +113,6 @@ var PostComment = React.createClass({
         name: "admin",
         avatar: "/imgs/avatars/avatar.jpg"
       }
-
     };
   },
   render: function () {
@@ -166,12 +142,11 @@ var PostSummary = React.createClass({
   },
   getInitialState: function () {
     return {
-      shareCount: 200,
+      shareCount: 999,
       shareActive: false,
       shareTextStyle: 'fg-white',
       likeCount: 999,
       likeActive: false,
-      likeTextStyle: 'fg-white',
       comments: this.props.comments
     };
   },
@@ -183,10 +158,18 @@ var PostSummary = React.createClass({
     });
   },
   handleLike: function() {
+    var likeCount = this.state.likeCount;
+    var likeActive = this.state.likeActive;
+    if(likeCount == 1000) {
+      likeCount = 999;
+      likeActive = false;
+    }else{
+      likeCount = 1000;
+      likeActive = true;
+    }
     this.setState({
-      likeCount: 1000,
-      likeActive: true,
-      likeTextStyle: 'fg-orange75'
+      likeCount: likeCount,
+      likeActive: likeActive
     });
   },
   render: function() {
@@ -208,7 +191,7 @@ var PostSummary = React.createClass({
               <div className='fg-text'><small>{this.props.date}</small></div>
             </div>
             <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
-              <div style={{position: 'relative', top: 0}}><Icon glyph='icon-fontello-anchor icon-1-and-quarter-x'/></div>
+              <div style={{position: 'relative', top: 0}}><Icon className='fg-gray' glyph='icon-ikons-arrow-down icon-1-and-quarter-x'/></div>
             </div>
           </div>
           <div>
@@ -221,7 +204,7 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <Button ref='likeCount' outlined bsStyle='orange75' active={this.state.likeActive} onClick={this.handleLike}>
+          <Button ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this.handleLike}>
             <Icon glyph='icon-fontello-heart-1' />
             <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
           </Button>
@@ -241,7 +224,7 @@ var PostSummary = React.createClass({
 
 var Body = React.createClass({
   getInitialState: function() {
-    return {data: PostStore.getData()};
+    return {data: PostStore.getPosts()};
   },
   componentDidMount: function() {
     $('html').addClass('social');
@@ -253,7 +236,7 @@ var Body = React.createClass({
     PostStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({data: PostStore.getData()});
+    this.setState({data: PostStore.getPosts()});
   },
   render: function() {
     var rightStream = {};
