@@ -6,7 +6,6 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
 var _posts = [];
-var _comments = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
@@ -14,9 +13,6 @@ var PostStore = assign({}, EventEmitter2.prototype, {
   maxListeners: 99999,
   getPosts: function(){
     return _posts;
-  },
-  getComments: function(){
-
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -64,7 +60,15 @@ AppDispatcher.register(function(action) {
       });
       break;
     case ActionTypes.COMMENTS_CREATE:
-
+      $.ajax({
+        url: '/comments/insert',
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify(action.data),
+        success: function(obj){
+          console.log(obj);
+        }
+      });
       break;
 
     default:

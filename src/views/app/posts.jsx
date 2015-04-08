@@ -59,14 +59,27 @@ var NewComment = React.createClass({
   },
   getInitialState: function () {
     return {
-      collapsed: true
+      collapsed: true,
+      disabledOkBtn: true
     };
   },
   _onClick: function(){
     this.setState({collapsed:false});
   },
   _handleOk: function(){
-    alert(this.refs.commentContent.getDOMNode().innerText);
+    var content = this.refs.commentContent.getDOMNode().innerText;
+    AppDispatcher.dispatch({
+      type: ActionTypes.COMMENTS_CREATE,
+      data: {content:content,source_id:this.props.source_id,source_type:'post'}
+    });
+    this.setState({collapsed:true,disabledOkBtn: true});
+  },
+  _handleChange: function(){
+    if(this.refs.commentContent.getDOMNode().innerText.length > 0){
+      this.setState({disabledOkBtn:false});
+    }else{
+      this.setState({disabledOkBtn:true});
+    }
   },
   _handleCancel: function(){
     this.setState({collapsed:true});
@@ -76,10 +89,14 @@ var NewComment = React.createClass({
       return <noscript></noscript>;
     var item;
     var footerPadding = '15px 25px 15px 25px';
+
     if(this.state.collapsed) {
       item = <Input type='text' placeholder='Write a comment...' onClick={this._onClick}
                     style={{border: '1px solid #d8d8d8'}}/>;
     }else {
+      var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>;
+      if(this.state.disabledOkBtn)
+        okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}>Ok</Button>;
       item =
         <Grid>
           <Row>
@@ -88,11 +105,11 @@ var NewComment = React.createClass({
                    style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}}/>
             </Col>
             <Col sm={9} className="comment-editor-main bg-white">
-              <div ref="commentContent" contentEditable placeholder='Write a comment...' className="comment-editor"></div>
+              <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder='Write a comment...' className="comment-editor"></div>
             </Col>
           </Row>
           <div className='text-right' style={{paddingRight:'10px'}} >
-            <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>
+            {okBtn}
             <Button ref='cancelBtn'  style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}>Cancel</Button>
           </div>
         </Grid>;
@@ -216,7 +233,7 @@ var PostSummary = React.createClass({
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}
         </PanelFooter>
-        <NewComment></NewComment>
+        <NewComment source_id={this.props.id}></NewComment>
       </PanelContainer>
     );
   }
@@ -243,7 +260,7 @@ var Body = React.createClass({
     this.state.data.forEach(function (obj) {
       var d = moment(obj.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
       rightStream["post-" + obj._id] =
-        <PostSummary author={obj.author} date={d} comments={obj.comments}>
+        <PostSummary id={obj._id} author={obj.author} date={d} comments={obj.comments}>
           {obj.content}
         </PostSummary>;
     });
@@ -254,7 +271,7 @@ var Body = React.createClass({
             <Col sm={4} collapseRight >
               <NewPost></NewPost>
               <PostSummary
-                _id='123'
+                id='123'
                 date='2 hours ago'
                 //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
                 comments={[
@@ -267,7 +284,7 @@ var Body = React.createClass({
             </Col>
             <Col sm={4} collapseRight>
               <PostSummary
-                _id='123'
+                id='121'
                 date='2 hours ago'
                 //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
                 comments={[
@@ -280,7 +297,7 @@ var Body = React.createClass({
             </Col>
             <Col sm={4} >
               <PostSummary
-                _id='123'
+                id='321'
                 date='2 hours ago'
                 //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
                 comments={[
