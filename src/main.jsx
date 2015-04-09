@@ -2,8 +2,8 @@
 
 /* Initialize Locales */
 l20n.initializeLocales('app', {
-  'locales': ['en-US'],
-  'default': 'en-US'
+  'locales': ['ch'],
+  'default': 'ch'
 });
 
 /* Initializing touch events */

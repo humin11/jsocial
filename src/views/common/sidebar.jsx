@@ -1,5 +1,5 @@
 var ChatComponent = require('./chat.jsx')
-
+var l20n = require('../global/vendor/l20n/l20n.jsx');
 var ApplicationSidebar = React.createClass({
   render: function() {
     return (
@@ -30,7 +30,7 @@ var ApplicationSidebar = React.createClass({
               <div className='sidebar-header'>EXTRAS</div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-ikons-login' name='Login' href='/login' />
+                  <SidebarNavItem glyph='icon-ikons-login' name={<Entity entity='login'/>} href='/login' />
                   <SidebarNavItem glyph='icon-simple-line-icons-users' name='Signup' href='/signup' />
                   <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href='/lock' />
                 </SidebarNav>

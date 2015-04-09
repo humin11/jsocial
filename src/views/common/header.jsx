@@ -113,7 +113,7 @@ var Navigation = React.createClass({
   mixins: [ReactRouter.State, ReactRouter.Navigation],
   getInitialState: function() {
     return {
-      selectedFlag: 'United-States'
+      selectedFlag: 'China'
     };
   },
   handleSkinSwitch: function(e) {
@@ -368,7 +368,7 @@ var Navigation = React.createClass({
                 <Grid>
                   <Row>
                     <Col xs={2} className='avatar-container' collapseRight>
-                      <div><img src='/imgs/avatars/avatar22.png' width='40' height='40' alt='sarah_patchett' /></div>
+                      <div><img src='/imgs/avatars/avatar.png' width='40' height='40' alt='sarah_patchett' /></div>
                       <div className='text-center'>
                         <BLabel bsStyle='info'>NEW</BLabel>
                       </div>

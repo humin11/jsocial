@@ -350,7 +350,7 @@ var Body = React.createClass({
 var classSet = React.addons.classSet;
 var Posts = React.createClass({
   mixins: [SidebarMixin],
-  componentWillMount: function() {
+  componentDidMount: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.USERS_INIT
     });

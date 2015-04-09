@@ -22,3 +22,5 @@
 <!-- NOTIFICATIONS MENU -->
 <notificationsMenuHeading '您的通知'>
 <notificationsTimeFirst '一个小时前'>
+
+<login '登录'>
