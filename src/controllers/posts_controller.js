@@ -13,6 +13,11 @@ module.exports = new MongoController({
         return req.user;
       }
     }
+  },
+  url: {
+    login: function (req, res, next) {
+
+    }
   }
 })
 

@@ -298,7 +298,7 @@ var Navigation = React.createClass({
             </Menu>
           </NavItem>
           <NavItem divider />
-          <DirectNavItem glyph='user-female' path='/app/social' className='small-font' />
+          <DirectNavItem glyph='user-female' path='/users' className='small-font' />
           <NavItem dropdown className='small-font collapse-left'>
             <DropdownButton nav toggleOnHover container={this} menu='settings-menu'>
               <Icon bundle='fontello' glyph='cog-7' />

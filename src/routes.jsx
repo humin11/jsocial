@@ -15,6 +15,7 @@ var blog = require('./views/app/blog.jsx');
 var login = require('./views/app/login.jsx');
 var signup = require('./views/app/signup.jsx');
 var lock = require('./views/app/lock.jsx');
+var users = require('./views/app/users.jsx');
 
 
 /* ROUTES */
@@ -29,6 +30,7 @@ module.exports = (
     <Route path='/login' handler={login} />
     <Route path='/signup' handler={signup} />
     <Route path='/lock' handler={lock} />
+    <Route path='/users' handler={users} />
     <NotFoundRoute handler={notfound} />
 
   </Route>

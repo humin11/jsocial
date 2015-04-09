@@ -52,7 +52,7 @@ AppDispatcher.register(function(action) {
         url: '/posts/insert',
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(action.data),
+        data : JSON.stringify({content:action.content, like_count:0, reshare_count:0, comment_count:0, comments:[]}),
         success: function(obj){
           _posts.push(obj);
           PostStore.emitChange();

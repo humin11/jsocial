@@ -19,12 +19,12 @@ var NewPost = React.createClass({
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
-      data: {content:content,comments:[]}
+      content:content
     });
   },
   render: function () {
-    if(!UsersStore.isLoggedIn())
-      return <noscript></noscript>;
+    //if(!UsersStore.isLoggedIn())
+    //  return <noscript></noscript>;
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
@@ -85,8 +85,8 @@ var NewComment = React.createClass({
     this.setState({collapsed:true});
   },
   render: function () {
-    if(!UsersStore.isLoggedIn())
-      return <noscript></noscript>;
+    //if(!UsersStore.isLoggedIn())
+    //  return <noscript></noscript>;
     var item;
     var footerPadding = '15px 25px 15px 25px';
 
@@ -100,11 +100,11 @@ var NewComment = React.createClass({
       item =
         <Grid>
           <Row>
-            <Col sm={2}>
+            <Col xs={2}>
               <img src={this.props.author.avatar} width='30' height='30'
                    style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}}/>
             </Col>
-            <Col sm={9} className="comment-editor-main bg-white">
+            <Col xs={9} className="comment-editor-main bg-white">
               <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder='Write a comment...' className="comment-editor"></div>
             </Col>
           </Row>
@@ -148,6 +148,24 @@ var PostComment = React.createClass({
   }
 });
 
+var MoreComments = React.createClass({
+  getDefaultProps: function() {
+    return {
+      counts:0
+    };
+  },
+  getInitialState: function () {
+    return {
+      collapsed: true
+    };
+  },
+  render: function(){
+    return (
+      <span></span>
+    );
+  }
+});
+
 var PostSummary = React.createClass({
   getDefaultProps: function() {
     return {
@@ -159,22 +177,23 @@ var PostSummary = React.createClass({
   },
   getInitialState: function () {
     return {
-      shareCount: 999,
-      shareActive: false,
-      shareTextStyle: 'fg-white',
-      likeCount: 999,
+      likeCount:123,
       likeActive: false,
+      reshareCount:231,
+      reshareActive: false,
+      reshareTextStyle: 'fg-white',
+      commentCount:321,
       comments: this.props.comments
     };
   },
-  handleShare: function() {
+  _handleReshare: function() {
     this.setState({
-      shareCount: 1000,
-      shareActive: true,
-      shareTextStyle: 'fg-orange75'
+      reshareCount: 1000,
+      reshareActive: true,
+      reshareTextStyle: 'fg-orange75'
     });
   },
-  handleLike: function() {
+  _handleLike: function() {
     var likeCount = this.state.likeCount;
     var likeActive = this.state.likeActive;
     if(likeCount == 1000) {
@@ -221,14 +240,14 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <Button ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this.handleLike}>
-            <Icon glyph='icon-fontello-heart-1' />
-            <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
-          </Button>
-          <Button style={{marginLeft:'5px'}} ref='shareCount' outlined bsStyle='default' active={this.state.shareActive} onClick={this.handleShare}>
-            <Icon glyph='icon-stroke-gap-icons-Share' />
-            <span style={{marginLeft:'5px'}}>{this.state.shareCount}</span>
-          </Button>
+          <div className='fg-pink' style={{display: 'inline-block', marginLeft: 25}}>
+            <Icon className="fg-gray" glyph='icon-ikons-heart' active={this.state.likeActive} onClick={this._handleLike}/>
+            <span>{this.state.likeCount}</span>
+          </div>
+          <div style={{display: 'inline-block', marginLeft: 25}}>
+            <Icon className="fg-gray" glyph='icon-fontello-share' active={this.state.reshareActive} onClick={this._handleReshare}/>
+            <span>{this.state.reshareCount}</span>
+          </div>
         </PanelFooter>
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}
@@ -267,6 +286,7 @@ var Body = React.createClass({
     return (
       <Container id='body' className='social'>
         <Grid>
+          <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
             <Col sm={4} collapseRight >
               <NewPost></NewPost>
@@ -295,7 +315,7 @@ var Body = React.createClass({
                 {"I'll be out of my mind and you'll be out of ideas pretty soon."}
               </PostSummary>
             </Col>
-            <Col sm={4} >
+            <Col sm={4} collapseRight>
               <PostSummary
                 id='321'
                 date='2 hours ago'
