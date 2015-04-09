@@ -21,17 +21,25 @@ module.exports = new MongoController({
     login: function (req, res, next) {
       passport.authenticate('local', function (err, user, info) {
         if (!user) {
-          res.send({err: err, user: null});
+          res.send(null);
           return;
         }
         req.login(user, function (err) {
-          res.send({err: err, user: user});
+          res.send(user);
           return;
         });
       })(req, res, next);
     },
     getUser: function (req, res, next) {
-      res.send({err: null, user: req.user});
+      if (req.user){
+        this.DB.findOne({_id: MongoApi.ObjectId(req.user._id)},function(err,object,next){
+          res.send(object);
+          next();
+        });
+      }
+      else {
+        res.send({});
+      }
     }
   }
 })

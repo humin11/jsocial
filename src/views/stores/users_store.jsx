@@ -42,10 +42,8 @@ AppDispatcher.register(function(action) {
         url: "/users/getUser",
         type: "POST",
         contentType: "application/json",
-        success: function(obj){
-          if (obj.user) {
-            _user = obj.user;
-          }
+        success: function(obj) {
+          _user = obj;
           AuthStore.emitChange();
         }
       });

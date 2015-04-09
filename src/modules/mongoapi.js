@@ -44,6 +44,7 @@ var MongoApi = {
       return this.id;
     }
   },
+  ObjectId:mongodb.ObjectId,
   SimpleFormat: ["_id", "name"],
   Controller: function (params) {
     this.table = params.table;
@@ -171,11 +172,12 @@ MongoApi.Controller.prototype = {
     },
     findOne: function (req, res) {
       var model = req.body;
+      console.log(this);
       this.DB.findOne(model, function (err, doc, next) {
         res.send(doc);
         next();
       });
-    }
+    }.bind(this)
   },
   binding: function (express) {
     for (var item in this.url) {
@@ -273,7 +275,9 @@ MongoApi.DB.prototype = {
   },
   findOne: function (querymodel, callback) {
     this.connect(function (collection,next) {
+      console.log(querymodel);
       collection.findOne(querymodel,function(err,object){
+        console.log(err,object);
         callback(err,object,next);
       }.bind(this))
     }.bind(this));
