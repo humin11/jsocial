@@ -23,7 +23,7 @@ var MongoApi = {
       this.errcode = code;
       this.message = message;
     },
-    ListOk:function(array,index,count){
+    ListOk: function (array, index, count) {
       this.code = 1;
       this.state = "OK";
       this.array = array;
@@ -47,18 +47,19 @@ var MongoApi = {
     this.model.Default = (this.model.Default) ? this.model.Default : {};
     this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
     this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
+    this.SimpleFormat = (params.SimpleFormat) ? params.SimpleFormat : this.SimpleFormat;
     var hide = {};
-    if (this.model.OutFormat.hide){
-      for(var i=0;i<this.model.OutFormat.hide.length;i++) {
+    if (this.model.OutFormat.hide) {
+      for (var i = 0; i < this.model.OutFormat.hide.length; i++) {
         hide[this.model.OutFormat.hide[i]] = true;
       }
     }
     this.model.OutFormat.hide = hide;
-    if (params.url){
-      this.url = assign(params.url,MongoApi.Controller.prototype.url);
+    if (params.url) {
+      this.url = assign(params.url, MongoApi.Controller.prototype.url);
     }
     this.DB = new MongoApi.DB(params.table);
-    this.DB.SimpleFormat = (params.SimpleFormat)?(params.SimpleFormat):MongoApi.SimpleFormat;
+    this.DB.SimpleFormat = this.SimpleFormat;
   },
   DB: function (table) {
     this.table = table;
