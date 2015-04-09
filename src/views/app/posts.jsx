@@ -23,8 +23,8 @@ var NewPost = React.createClass({
     });
   },
   render: function () {
-    //if(!UsersStore.isLoggedIn())
-    //  return <noscript></noscript>;
+    if(!UsersStore.isLoggedIn())
+      return <noscript></noscript>;
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
@@ -85,8 +85,8 @@ var NewComment = React.createClass({
     this.setState({collapsed:true});
   },
   render: function () {
-    //if(!UsersStore.isLoggedIn())
-    //  return <noscript></noscript>;
+    if(!UsersStore.isLoggedIn())
+      return <noscript></noscript>;
     var item;
     var footerPadding = '15px 25px 15px 25px';
 
@@ -187,20 +187,28 @@ var PostSummary = React.createClass({
     };
   },
   _handleReshare: function() {
+    var reshareCount = this.state.reshareCount;
+    var reshareActive = this.state.reshareActive;
+    if(reshareActive) {
+      reshareCount--;
+      reshareActive = false;
+    }else{
+      reshareCount++;
+      reshareActive = true;
+    }
     this.setState({
-      reshareCount: 1000,
-      reshareActive: true,
-      reshareTextStyle: 'fg-orange75'
+      reshareCount: reshareCount,
+      reshareActive: reshareActive
     });
   },
   _handleLike: function() {
     var likeCount = this.state.likeCount;
     var likeActive = this.state.likeActive;
-    if(likeCount == 1000) {
-      likeCount = 999;
+    if(likeActive) {
+      likeCount--;
       likeActive = false;
     }else{
-      likeCount = 1000;
+      likeCount++;
       likeActive = true;
     }
     this.setState({
@@ -227,7 +235,9 @@ var PostSummary = React.createClass({
               <div className='fg-text'><small>{this.props.date}</small></div>
             </div>
             <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
-              <div style={{position: 'relative', top: 0}}><Icon className='fg-gray' glyph='icon-ikons-arrow-down icon-1-and-quarter-x'/></div>
+              <div style={{position: 'relative', top: 0}}>
+                <Icon className='fg-gray hide' glyph='icon-ikons-arrow-down icon-1-and-quarter-x'/>
+              </div>
             </div>
           </div>
           <div>
@@ -240,14 +250,14 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <div className='fg-pink' style={{display: 'inline-block', marginLeft: 25}}>
-            <Icon className="fg-gray" glyph='icon-ikons-heart' active={this.state.likeActive} onClick={this._handleLike}/>
-            <span>{this.state.likeCount}</span>
-          </div>
-          <div style={{display: 'inline-block', marginLeft: 25}}>
-            <Icon className="fg-gray" glyph='icon-fontello-share' active={this.state.reshareActive} onClick={this._handleReshare}/>
-            <span>{this.state.reshareCount}</span>
-          </div>
+          <Button ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+            <Icon glyph='icon-fontello-heart-1' />
+            <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
+          </Button>
+          <Button style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
+            <Icon glyph='icon-stroke-gap-icons-Share' />
+            <span style={{marginLeft:'5px'}}>{this.state.reshareCount}</span>
+          </Button>
         </PanelFooter>
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}

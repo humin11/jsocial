@@ -21,6 +21,7 @@ module.exports = function(passport) {
     },
     function (username, password, done) {
       userController.DB.findSimple({email:username,password:password},function(err,user,next){
+        console.log(user);
         next();
         if(user){
           return done(null, user);

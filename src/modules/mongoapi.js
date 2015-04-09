@@ -46,7 +46,9 @@ var MongoApi = {
     this.model.Default = (this.model.Default) ? this.model.Default : {};
     this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
     this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
-    this.SimpleFormat = (params.SimpleFormat) ? params.SimpleFormat : MongoApi.SimpleFormat;
+    console.log(params.SimpleFormat);
+    this.SimpleFormat = (params.model.SimpleFormat) ? params.model.SimpleFormat : MongoApi.SimpleFormat;
+    console.log(this.SimpleFormat)
     var hide = {};
     if (this.model.OutFormat.hide) {
       for (var i = 0; i < this.model.OutFormat.hide.length; i++) {
@@ -284,6 +286,7 @@ MongoApi.DB.prototype = {
   findSimple: function (querymodel, callback) {
     this.connect(function (collection,next) {
       collection.findOne(querymodel,function(err,object){
+        console.log(this.SimpleFormat);
         callback(err,this.toSimple(object),next);
       }.bind(this));
     }.bind(this));
