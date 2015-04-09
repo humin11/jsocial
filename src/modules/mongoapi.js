@@ -286,7 +286,6 @@ MongoApi.DB.prototype = {
   findSimple: function (querymodel, callback) {
     this.connect(function (collection,next) {
       collection.findOne(querymodel,function(err,object){
-        console.log(this.SimpleFormat);
         callback(err,this.toSimple(object),next);
       }.bind(this));
     }.bind(this));

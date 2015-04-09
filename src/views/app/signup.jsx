@@ -25,11 +25,22 @@ var Body = React.createClass({
       password: password
     });
   },
+  retryTransition: function () {
+    if(UsersStore.isLoggedIn())
+      this.replaceWith("/");
+    else
+      this.setState({error:true});
+  },
   componentDidMount: function() {
     $('html').addClass('authentication');
+    UsersStore.addChangeListener(this.retryTransition);
   },
   componentWillUnmount: function() {
     $('html').removeClass('authentication');
+    UsersStore.removeChangeListener(this.retryTransition);
+  },
+  renderErrorBlock: function () {
+    return this.state.error ? <p className="help-block">email already in used</p> : null;
   },
   render: function() {
     return (
@@ -82,6 +93,7 @@ var Body = React.createClass({
                                 </Grid>
                               </FormGroup>
                             </Form>
+                            {this.renderErrorBlock()}
                           </div>
                           <div className='bg-hoverblue fg-black50 text-center' style={{padding: 25, paddingTop: 12.5}}>
                             <div style={{marginBottom: 12.5}}>SIGN UP WITH</div>

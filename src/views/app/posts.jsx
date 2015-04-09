@@ -350,6 +350,11 @@ var Body = React.createClass({
 var classSet = React.addons.classSet;
 var Posts = React.createClass({
   mixins: [SidebarMixin],
+  componentWillMount: function() {
+    AppDispatcher.dispatch({
+      type: ActionTypes.USERS_INIT
+    });
+  },
   render: function() {
     var classes = classSet({
       'container-open': this.state.open
