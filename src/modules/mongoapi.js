@@ -47,7 +47,7 @@ var MongoApi = {
     this.model.Default = (this.model.Default) ? this.model.Default : {};
     this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
     this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
-    this.SimpleFormat = (params.SimpleFormat) ? params.SimpleFormat : this.SimpleFormat;
+    this.SimpleFormat = (params.SimpleFormat) ? params.SimpleFormat : MongoApi.SimpleFormat;
     var hide = {};
     if (this.model.OutFormat.hide) {
       for (var i = 0; i < this.model.OutFormat.hide.length; i++) {
