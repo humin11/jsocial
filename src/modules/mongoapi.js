@@ -1,6 +1,5 @@
 var assign = require('object-assign')
 var express = require('express');
-var apply = require('./apply')
 var mongodb = require.options.originalRequire('mongodb')
 var MongoClient = mongodb.MongoClient
 
