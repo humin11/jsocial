@@ -36,6 +36,12 @@ var MongoApi = {
     },
     now: function () {
       return new Date();
+    },
+    author:function(req){
+      return req.user;
+    },
+    thisId:function(){
+      return this.id;
     }
   },
   SimpleFormat: ["_id", "name"],
