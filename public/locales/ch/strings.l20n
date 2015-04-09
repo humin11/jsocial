@@ -24,3 +24,8 @@
 <notificationsTimeFirst '一个小时前'>
 
 <login '登录'>
+
+<!-- SIDEBAR -->
+<sidebarChat '聊天'>
+<sidebarPost '微博'>
+<sidebarCircle '合作社'>
