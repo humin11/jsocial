@@ -27,9 +27,9 @@ var Recommend = React.createClass({
     var users = {};
     this.state.people.forEach(function(p) {
       users['recommend-people-' + p._id] =
-        <Row>
+        <Row className='recommend-person'>
           <Col xs={12} >
-            <div className='inbox-avatar recommend-person'>
+            <div className='inbox-avatar'>
               <img src={p.avatar} width='40' height='40' style={{verticalAlign:'top',position:'relative'}} />
               <div className='inbox-avatar-name'>
                 <div className='fg-darkgrayishblue75'>{p.name}</div>
@@ -53,7 +53,7 @@ var Recommend = React.createClass({
           </Grid>
         </PanelHeader>
         <PanelBody style={{padding: 12.5}}>
-          <Grid>
+          <Grid className="recommend-people">
             {users}
           </Grid>
         </PanelBody>

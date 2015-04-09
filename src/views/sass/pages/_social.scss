@@ -83,8 +83,12 @@ html.social body .sidebar-nav > li.active:after {
 }
 
 .recommend-person {
-  border-bottom: 1px solid #EAEDF1;
+  .col-xs-12 .inbox-avatar{
+    border-bottom: 1px solid #EAEDF1;
+  }
   &:last-of-type {
-    border-bottom: 0;
+    .col-xs-12 .inbox-avatar{
+      border-bottom: 0;
+    }
   }
 }
