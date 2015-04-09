@@ -1,6 +1,7 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
+var Recommend = require('../common/recommend_people.jsx');
 var moment = require('moment');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
@@ -102,7 +103,7 @@ var NewComment = React.createClass({
           <Row>
             <Col xs={2}>
               <img src={this.props.author.avatar} width='30' height='30'
-                   style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}}/>
+                   style={{verticalAlign:'top',top:10,position:'relative'}}/>
             </Col>
             <Col xs={9} className="comment-editor-main bg-white">
               <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder='Write a comment...' className="comment-editor"></div>
@@ -128,14 +129,14 @@ var PostComment = React.createClass({
     return {
       author:{
         name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
+        avatar: "/imgs/avatars/avatar4.png"
       }
     };
   },
   render: function () {
     return (
       <div className='inbox-avatar' style={{borderBottom: '1px solid #EAEDF1'}}>
-        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}} />
+        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign:'top',top:10,position:'relative'}} />
         <div className='inbox-avatar-name'>
           <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
           <div className='fg-text'><small>{this.props.children}..</small></div>
@@ -171,7 +172,7 @@ var PostSummary = React.createClass({
     return {
       author: {
         name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
+        avatar: "/imgs/avatars/avatar4.png"
       }
     };
   },
@@ -250,11 +251,11 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <Button ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+          <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
             <Icon glyph='icon-fontello-heart-1' />
             <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
           </Button>
-          <Button style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
+          <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
             <Icon glyph='icon-stroke-gap-icons-Share' />
             <span style={{marginLeft:'5px'}}>{this.state.reshareCount}</span>
           </Button>
@@ -326,6 +327,7 @@ var Body = React.createClass({
               </PostSummary>
             </Col>
             <Col sm={4} collapseRight>
+              <Recommend></Recommend>
               <PostSummary
                 id='321'
                 date='2 hours ago'

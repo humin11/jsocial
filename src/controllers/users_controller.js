@@ -8,7 +8,9 @@ module.exports = new MongoController({
   model: {
     Default: {
       _id: ModelDefault.id,
-      create_at: ModelDefault.now
+      create_at: ModelDefault.now,
+      avatar: "/imgs/avatars/avatar.png",
+      followed: function(){return [this._id];}
     },
     OutFormat: {
       hide: ["password"]

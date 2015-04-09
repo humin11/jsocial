@@ -23,7 +23,14 @@
 <notificationsMenuHeading '您的通知'>
 <notificationsTimeFirst '一个小时前'>
 
+<!-- USER -->
 <login '登录'>
+<signup '注册'>
+<follow '关注'>
+<followed '已关注'>
+<unfollow '取消关注'>
+<recommendPeople '可能感兴趣的人'>
+
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>

@@ -81,3 +81,10 @@ html.social body .sidebar-nav > li.active:after {
     background-color: #fff;
   }
 }
+
+.recommend-person {
+  border-bottom: 1px solid #EAEDF1;
+  &:last-of-type {
+    border-bottom: 0;
+  }
+}

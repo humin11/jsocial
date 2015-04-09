@@ -59,8 +59,7 @@ AppDispatcher.register(function(action) {
           name:action.username,
           username: action.username,
           email:action.email,
-          password: action.password,
-          avatar: "/imgs/avatars/avatar.png"
+          password: action.password
         }),
         success: function(obj){
           if (obj.user) {

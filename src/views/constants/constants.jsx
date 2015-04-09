@@ -14,5 +14,5 @@ module.exports = keyMirror({
   AVATAR_INIT:null,
   AVATAR_HIED:null,
   SIDEBAR_INIT:null,
-
+  RECOMMEND_PEOPLE:null
 });
