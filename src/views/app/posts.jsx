@@ -54,7 +54,7 @@ var NewComment = React.createClass({
     return {
       author:{
         name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
+        avatar: "/imgs/avatars/avatar.png"
       }
     };
   },
