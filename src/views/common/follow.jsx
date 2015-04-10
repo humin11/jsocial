@@ -48,7 +48,7 @@ var Follow = React.createClass({
           <span style={{marginLeft:'5px'}}><Entity entity='follow'/></span>
         </Button>;
     }
-    return ({btn});
+    return (btn);
   }
 });
 

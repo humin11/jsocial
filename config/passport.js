@@ -20,7 +20,7 @@ module.exports = function(passport) {
       passwordField: 'password'
     },
     function (username, password, done) {
-      userController.DB.findSimple({email:username,password:password},function(err,user,next){
+      userController.DB.findOne({email:username,password:password},function(err,user,next){
         next();
         if(user){
           return done(null, user);

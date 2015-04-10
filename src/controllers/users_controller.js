@@ -45,7 +45,8 @@ module.exports = new MongoController({
     },
     findRecommend: function(req, res){
       if(req.user) {
-        this.DB.find({count: 3, query: {_id: {$ne: MongoApi.ObjectId(req.user._id)}}}, function (err, object, next) {
+        this.DB.findSimples({count: 3, query: {_id: {$ne: MongoApi.ObjectId(req.user._id)}}}, function (err, object, next) {
+          console.log(object);
           res.send(object);
           next();
         });

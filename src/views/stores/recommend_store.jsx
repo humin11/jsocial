@@ -5,7 +5,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var _people = null;
+var _people = [];
 var CHANGE_EVENT = 'change';
 
 var RecommendStore = assign({}, EventEmitter2.prototype, {

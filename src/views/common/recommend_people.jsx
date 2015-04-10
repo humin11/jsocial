@@ -30,7 +30,7 @@ var Recommend = React.createClass({
     });
   },
   render: function(){
-    if(!this.state.isLoggedIn || !this.state.people)
+    if(!this.state.isLoggedIn || this.state.people.length == 0)
       return null;
     var users = {};
     this.state.people.forEach(function(p) {

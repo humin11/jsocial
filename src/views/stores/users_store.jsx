@@ -75,7 +75,6 @@ AppDispatcher.register(function(action) {
           password: action.password
         }),
         success: function(obj){
-          console.log(obj);
           if(obj){
             _user = obj;
             mapFollowed();
@@ -91,6 +90,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({ username: action.username, password: action.password }),
         success: function(obj){
+          console.log(obj);
           if(obj.user){
             _user = obj.user;
             mapFollowed();
