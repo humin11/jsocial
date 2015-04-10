@@ -83,8 +83,9 @@ MongoApi.Controller.prototype = {
     }
     var result = assign({}, model);
     for (var item in this.model.Default) {
-      var defvalue = this.model.Default[item];
-      result[item] = typeof defvalue == 'function' ? defvalue(req).bind(result) : defvalue;
+      var aaa = this.model.Default[item];
+      result[item] = typeof aaa == 'function' ? aaa(req,result) : aaa;
+      console.log(result[item]);
     }
     return result;
   },

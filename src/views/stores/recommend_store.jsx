@@ -30,7 +30,7 @@ AppDispatcher.register(function(action) {
   switch(action.type) {
     case ActionTypes.RECOMMEND_PEOPLE:
       $.ajax({
-        url: "/users/find",
+        url: "/users/findRecommend",
         type: "POST",
         contentType: "application/json",
         success: function(obj){

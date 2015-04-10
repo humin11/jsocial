@@ -11,6 +11,8 @@ module.exports = keyMirror({
   USERS_SIGNUP: null,
   USERS_LOGIN: null,
   USERS_LOGOUT: null,
+  USERS_FOLLOW: null,
+  USERS_UNFOLLOW: null,
   AVATAR_INIT:null,
   AVATAR_HIED:null,
   SIDEBAR_INIT:null,

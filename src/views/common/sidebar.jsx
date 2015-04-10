@@ -1,5 +1,6 @@
 var ChatComponent = require('./chat.jsx')
 var l20n = require('../global/vendor/l20n/l20n.jsx');
+var UsersStore = require('../stores/users_store.jsx');
 var ApplicationSidebar = React.createClass({
   render: function() {
     return (
@@ -470,26 +471,82 @@ var NotificationComponent = React.createClass({
   }
 });
 
-var SidebarSection = React.createClass({
+var LoggedIn = React.createClass({
   render: function() {
     return (
+      <div id='avatar'>
+        <Grid>
+          <Row className='fg-white'>
+            <Col xs={4} collapseRight>
+              <img src={this.props.user.avatar} width='40' height='40' style={{borderRadius: '20px'}} />
+            </Col>
+            <Col xs={8} collapseLeft id='avatar-col'>
+              <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{this.props.user.name}</div>
+              <div>
+                <Progress id='demo-progress' value={30} min={0} max={100} color='#ffffff'/>
+                <Link to='/app/lock'><Icon id='demo-icon' bundle='fontello' glyph='lock-5' /></Link>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    );
+  }
+});
+var NoLoggedIn = React.createClass({
+  render: function() {
+    return (
+      <div id='avatar'>
+        <Grid>
+          <Row className='fg-white' style={{marginTop:20}}>
+            <Col xs={6} collapseRight>
+              <Link to="/login">
+                <Button bsStyle='default'>
+                  <Icon glyph='icon-ikons-login'/>
+                  <Entity entity='login'/>
+                </Button>
+              </Link>
+            </Col>
+            <Col xs={6} collapseRight >
+              <Link to="/signup">
+                <Button bsStyle='default'>
+                  <Icon glyph='icon-simple-line-icons-users'/>
+                  <Entity entity='signup'/>
+                </Button>
+              </Link>
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    );
+  }
+});
+
+var SidebarSection = React.createClass({
+  getInitialState: function () {
+    return {
+      isLoggedIn: UsersStore.isLoggedIn()
+    };
+  },
+  componentDidMount: function() {
+    UsersStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    UsersStore.removeChangeListener(this._onChange);
+  },
+  _onChange: function(){
+    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
+  },
+  render: function() {
+    var userSection = null;
+    if(this.state.isLoggedIn){
+      userSection = <LoggedIn user={UsersStore.getUser()} />;
+    }else{
+      userSection = <NoLoggedIn />;
+    }
+    return (
       <div id='sidebar' {...this.props}>
-        <div id='avatar'>
-          <Grid>
-            <Row className='fg-white'>
-              <Col xs={4} collapseRight>
-                <img src='/imgs/avatars/avatar0.png' width='40' height='40' style={{borderRadius: '20px'}} />
-              </Col>
-              <Col xs={8} collapseLeft id='avatar-col'>
-                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>Johnny R</div>
-                <div>
-                  <Progress id='demo-progress' value={30} min={0} max={100} color='#ffffff'/>
-                  <Link to='/app/lock'><Icon id='demo-icon' bundle='fontello' glyph='lock-5' /></Link>
-                </div>
-              </Col>
-            </Row>
-          </Grid>
-        </div>
+        {userSection}
         <SidebarControls>
           <SidebarControlBtn bundle='fontello' glyph='docs' sidebar={0} />
           <SidebarControlBtn bundle='fontello' glyph='chat-1' sidebar={1} />

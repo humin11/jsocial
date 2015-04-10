@@ -72,7 +72,7 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-mail' />
                                   </InputGroupAddon>
-                                  <Input type='email' ref='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
+                                  <Input type='text' ref='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>

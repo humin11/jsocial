@@ -96,7 +96,7 @@ var LoginPage = React.createClass({
                                     <InputGroupAddon>
                                       <Icon glyph='icon-fontello-mail' />
                                     </InputGroupAddon>
-                                    <Input autoFocus type='email' ref='username' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
+                                    <Input autoFocus type='text' ref='username' className='border-focus-blue' placeholder='whosyourdaddy@gmail.com' />
                                   </InputGroup>
                                 </FormGroup>
                                 <FormGroup>

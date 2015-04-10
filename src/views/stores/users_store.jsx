@@ -9,6 +9,15 @@ var _user = null;
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
+function mapFollowed(){
+  if(_user){
+    _user.followedMap = {};
+    _user.followed.forEach(function(follow){
+      _user.followedMap[follow._id] = follow;
+    });
+  }
+}
+
 var AuthStore = assign({}, EventEmitter2.prototype, {
   maxListeners: 99999,
   isLoggedIn: function () {
@@ -16,6 +25,9 @@ var AuthStore = assign({}, EventEmitter2.prototype, {
   },
   getUser: function () {
     return _user;
+  },
+  hasFollowed: function(userid){
+    return _user.followedMap[userid];
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -45,6 +57,7 @@ AppDispatcher.register(function(action) {
         success: function(obj) {
           if(obj.user){
             _user = obj.user;
+            mapFollowed();
             AuthStore.emitChange();
           }
         }
@@ -62,8 +75,10 @@ AppDispatcher.register(function(action) {
           password: action.password
         }),
         success: function(obj){
-          if(obj.user){
-            _user = obj.user;
+          console.log(obj);
+          if(obj){
+            _user = obj;
+            mapFollowed();
             AuthStore.emitChange();
           }
         }
@@ -78,8 +93,37 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           if(obj.user){
             _user = obj.user;
+            mapFollowed();
           }
           AuthStore.emitChange();
+        }
+      });
+      break;
+    case ActionTypes.USERS_FOLLOW:
+      $.ajax({
+        url: "/users/follow",
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify(action.user),
+        success: function(obj){
+          if(obj){
+            _user.followedMap[action.user._id] = action.user;
+            AuthStore.emitChange();
+          }
+        }
+      });
+      break;
+    case ActionTypes.USERS_UNFOLLOW:
+      $.ajax({
+        url: "/users/unfollow",
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify(action.user),
+        success: function(obj){
+          if(obj){
+            delete _user.followedMap[action.user._id];
+            AuthStore.emitChange();
+          }
         }
       });
       break;

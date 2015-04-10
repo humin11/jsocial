@@ -5,25 +5,33 @@ var Follow = require('./follow.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var RecommendStore = require('../stores/recommend_store.jsx');
+var UsersStore = require('../stores/users_store.jsx');
 
 var Recommend = React.createClass({
   getInitialState: function() {
-    return {people: RecommendStore.getRecommendPeople()};
+    return {
+      isLoggedIn: UsersStore.isLoggedIn(),
+      people: RecommendStore.getRecommendPeople()
+    };
   },
   componentDidMount: function() {
     RecommendStore.addChangeListener(this._onChange);
+    UsersStore.addChangeListener(this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.RECOMMEND_PEOPLE });
   },
   componentWillUnmount: function() {
     RecommendStore.removeChangeListener(this._onChange);
+    UsersStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({people: RecommendStore.getRecommendPeople()});
+    this.setState({
+      isLoggedIn: UsersStore.isLoggedIn(),
+      people: RecommendStore.getRecommendPeople()
+    });
   },
   render: function(){
-    if(!this.state.people)
+    if(!this.state.isLoggedIn || !this.state.people)
       return null;
-
     var users = {};
     this.state.people.forEach(function(p) {
       users['recommend-people-' + p._id] =
@@ -35,7 +43,7 @@ var Recommend = React.createClass({
                 <div className='fg-darkgrayishblue75'>{p.name}</div>
               </div>
               <div className='inbox-date text-right'>
-                <Follow id={p._id} ></Follow>
+                <Follow user={p} ></Follow>
               </div>
             </div>
           </Col>

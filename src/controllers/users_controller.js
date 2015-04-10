@@ -10,7 +10,9 @@ module.exports = new MongoController({
       _id: ModelDefault.id,
       create_at: ModelDefault.now,
       avatar: "/imgs/avatars/avatar.png",
-      followed: function(){return [this._id];}
+      followed: function(req,model){
+        return [model];
+      }
     },
     OutFormat: {
       hide: ["password"]
@@ -36,9 +38,38 @@ module.exports = new MongoController({
           res.send({err:null,user:object});
           next();
         });
-      }
-      else {
+      } else {
         res.send({err:null,user:null});
+      }
+    },
+    findRecommend: function(req, res){
+      if(req.user) {
+        this.DB.find({count: 3, query: {_id: {$ne: MongoApi.ObjectId(req.user._id)}}}, function (err, object, next) {
+          res.send(object);
+          next();
+        });
+      } else {
+        res.send([]);
+      }
+    },
+    follow: function(req, res){
+      if(req.user) {
+        this.DB.update({_id: MongoApi.ObjectId(req.user._id)},{ $push: {followed: req.body}},function(err,next){
+          res.send(true);
+          next();
+        });
+      } else {
+        res.send(false);
+      }
+    },
+    unfollow: function(req, res){
+      if(req.user) {
+        this.DB.update({_id: MongoApi.ObjectId(req.user._id)},{ $pull: {followed: {_id: req.body._id}}},function(err,next){
+          res.send(true);
+          next();
+        });
+      } else {
+        res.send(false);
       }
     }
   }
