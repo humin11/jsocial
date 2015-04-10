@@ -16,5 +16,8 @@ module.exports = keyMirror({
   AVATAR_INIT:null,
   AVATAR_HIED:null,
   SIDEBAR_INIT:null,
-  RECOMMEND_PEOPLE:null
+  RECOMMEND_PEOPLE:null,
+  CHAT_INIT:null,
+  CHAT_SEND:null,
+  CHAT_ARRIVE:null
 });
