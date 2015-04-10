@@ -31,6 +31,9 @@
 <unfollow '取消关注'>
 <recommendPeople '可能感兴趣的人'>
 
+<!-- POST -->
+
+<share '分享'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>

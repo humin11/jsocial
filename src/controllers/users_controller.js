@@ -21,11 +21,11 @@ module.exports = new MongoController({
     login: function (req, res, next) {
       passport.authenticate('local', function (err, user, info) {
         if (!user) {
-          res.send(null);
+          res.send({err:null,user:null});
           return;
         }
         req.login(user, function (err) {
-          res.send(user);
+          res.send({err:null,user:user});
           return;
         });
       })(req, res, next);
@@ -33,12 +33,12 @@ module.exports = new MongoController({
     getUser: function (req, res, next) {
       if (req.user){
         this.DB.findOne({_id: MongoApi.ObjectId(req.user._id)},function(err,object,next){
-          res.send(object);
+          res.send({err:null,user:object});
           next();
         });
       }
       else {
-        res.send({});
+        res.send({err:null,user:null});
       }
     }
   }
