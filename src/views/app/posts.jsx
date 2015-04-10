@@ -74,7 +74,10 @@ var NewComment = React.createClass({
     UsersStore.removeChangeListener(this._onChange);
   },
   _onChange: function(){
-    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
+    this.setState({
+      author: UsersStore.getUser(),
+      isLoggedIn: UsersStore.isLoggedIn()
+    });
   },
   _handleClick: function(){
     this.setState({collapsed:false});
@@ -108,8 +111,9 @@ var NewComment = React.createClass({
                     style={{border: '1px solid #d8d8d8'}}/>;
     }else {
       var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>;
-      if(this.state.disabledOkBtn)
+      if(this.state.disabledOkBtn) {
         okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}>Ok</Button>;
+      }
       item =
         <Grid>
           <Row>

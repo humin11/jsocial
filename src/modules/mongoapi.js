@@ -199,11 +199,23 @@ MongoApi.DB.prototype = {
     if (!model) {
       return model;
     }
-    var result = {};
-    this.SimpleFormat.forEach(function (e) {
-      result[e] = model[e];
-    })
-    return result;
+    if (model instanceof Array){
+      var result = [];
+      model.forEach(function(item){
+        var value = {};
+        this.SimpleFormat.forEach(function (e) {
+          value[e] = item[e];
+        }.bind(this));
+        result[result.length] = value;
+      }.bind(this));
+      return result;
+    } else{
+      var result = {};
+      this.SimpleFormat.forEach(function (e) {
+        result[e] = model[e];
+      }.bind(this));
+      return result;
+    }
   },
   insert: function (model, callback) {
     this.connect(function (collection, next) {
@@ -230,12 +242,12 @@ MongoApi.DB.prototype = {
     this.connect(function (collection,next) {
       collection.update(
         model.query,
-        {$set: model.model}, {w:1}, function(err){
+        model.model, {w:1}, function(err){
           callback(err,next);
         });
     });
   },
-  remove: function (updatemodel, callback) {
+  remove: function (removemodel, callback) {
     var model = removemodel;
     if (!model.query) {
       model = {

@@ -46,7 +46,6 @@ module.exports = new MongoController({
     findRecommend: function(req, res){
       if(req.user) {
         this.DB.findSimples({count: 3, query: {_id: {$ne: MongoApi.ObjectId(req.user._id)}}}, function (err, object, next) {
-          console.log(object);
           res.send(object);
           next();
         });
@@ -56,7 +55,7 @@ module.exports = new MongoController({
     },
     follow: function(req, res){
       if(req.user) {
-        this.DB.update({_id: MongoApi.ObjectId(req.user._id)},{ $push: {followed: req.body}},function(err,next){
+        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $push: {followed: req.body}}},function(err,next){
           res.send(true);
           next();
         });
@@ -66,7 +65,7 @@ module.exports = new MongoController({
     },
     unfollow: function(req, res){
       if(req.user) {
-        this.DB.update({_id: MongoApi.ObjectId(req.user._id)},{ $pull: {followed: {_id: req.body._id}}},function(err,next){
+        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $pull: {followed: {_id: req.body._id}}}},function(err,next){
           res.send(true);
           next();
         });

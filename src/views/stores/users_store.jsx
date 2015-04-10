@@ -27,7 +27,10 @@ var AuthStore = assign({}, EventEmitter2.prototype, {
     return _user;
   },
   hasFollowed: function(userid){
-    return _user.followedMap[userid];
+    if(_user.followedMap[userid])
+      return true;
+    else
+      return false;
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -90,7 +93,6 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({ username: action.username, password: action.password }),
         success: function(obj){
-          console.log(obj);
           if(obj.user){
             _user = obj.user;
             mapFollowed();

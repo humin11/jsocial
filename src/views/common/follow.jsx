@@ -11,16 +11,17 @@ var Follow = React.createClass({
     };
   },
   _handleFollow: function(){
-    AppDispatcher.dispatch({
-      type: ActionTypes.USERS_FOLLOW,
-      user:this.props.user
-    });
-  },
-  _handleUnfollow: function(){
-    AppDispatcher.dispatch({
-      type: ActionTypes.USERS_UNFOLLOW,
-      user:this.props.user
-    });
+    if(this.state.followed){
+      AppDispatcher.dispatch({
+        type: ActionTypes.USERS_UNFOLLOW,
+        user:this.props.user
+      });
+    }else{
+      AppDispatcher.dispatch({
+        type: ActionTypes.USERS_FOLLOW,
+        user:this.props.user
+      });
+    }
   },
   componentDidMount: function() {
     UsersStore.addChangeListener(this._onChange);
@@ -29,26 +30,25 @@ var Follow = React.createClass({
     UsersStore.removeChangeListener(this._onChange);
   },
   _onChange: function(){
+    console.log("_onChange");
     this.setState({
       followed: UsersStore.hasFollowed(this.props.user._id)
     });
   },
   render: function(){
-    var btn = null;
+    console.log("render:"+this.state.followed);
+    var text = null;
     if(this.state.followed) {
-      btn =
-        <Button xs outlined bsStyle='default' onClick={this._handleUnfollow}>
-          <Icon bundle='fontello' glyph='user'/>
-          <span style={{marginLeft:'5px'}}><Entity entity='unfollow'/></span>
-        </Button>;
+      text = <Entity entity='unfollow'/>;
     }else{
-      btn =
-        <Button xs outlined bsStyle='default' onClick={this._handleFollow}>
-          <Icon bundle='fontello' glyph='user'/>
-          <span style={{marginLeft:'5px'}}><Entity entity='follow'/></span>
-        </Button>;
+      text = <Entity entity='follow'/>;
     }
-    return (btn);
+    return (
+      <Button xs outlined bsStyle='default' onClick={this._handleFollow}>
+        <Icon bundle='fontello' glyph='user'/>
+        <span style={{marginLeft:'5px'}}>{text}</span>
+      </Button>
+    );
   }
 });
 
