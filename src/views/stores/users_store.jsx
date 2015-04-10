@@ -43,8 +43,10 @@ AppDispatcher.register(function(action) {
         type: "POST",
         contentType: "application/json",
         success: function(obj) {
-          _user = obj;
-          AuthStore.emitChange();
+          if(obj.user){
+            _user = obj.user;
+            AuthStore.emitChange();
+          }
         }
       });
       break;
@@ -57,14 +59,13 @@ AppDispatcher.register(function(action) {
           name:action.username,
           username: action.username,
           email:action.email,
-          password: action.password,
-          avatar: "/imgs/avatars/avatar.png"
+          password: action.password
         }),
         success: function(obj){
-          if (obj.user) {
+          if(obj.user){
             _user = obj.user;
+            AuthStore.emitChange();
           }
-          AuthStore.emitChange();
         }
       });
       break;
@@ -75,7 +76,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({ username: action.username, password: action.password }),
         success: function(obj){
-          if (obj.user) {
+          if(obj.user){
             _user = obj.user;
           }
           AuthStore.emitChange();

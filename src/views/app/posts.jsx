@@ -1,7 +1,9 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
+var Recommend = require('../common/recommend_people.jsx');
 var moment = require('moment');
+moment.locale('zh-cn');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var PostStore = require('../stores/posts_store.jsx');
@@ -9,21 +11,29 @@ var UsersStore = require('../stores/users_store.jsx');
 var Authentication = require('../mixins/authentication.jsx');
 
 var NewPost = React.createClass({
+  getInitialState: function () {
+    return {
+      isLoggedIn: UsersStore.isLoggedIn()
+    };
+  },
   componentDidMount: function() {
-
+    UsersStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
-
+    UsersStore.removeChangeListener(this._onChange);
   },
-  handleClick: function(){
+  _handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
       content:content
     });
   },
+  _onChange: function(){
+    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
+  },
   render: function () {
-    if(!UsersStore.isLoggedIn())
+    if(!this.state.isLoggedIn)
       return <noscript></noscript>;
     return (
       <PanelContainer noControls >
@@ -39,7 +49,7 @@ var NewPost = React.createClass({
                 <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-calendar icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
               </Col>
               <Col xs={6} className='text-right' collapseLeft collapseRight>
-                <Button onClick={this.handleClick} bsStyle='darkgreen45'>send</Button>
+                <Button onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>
               </Col>
             </Row>
           </Grid>
@@ -49,21 +59,24 @@ var NewPost = React.createClass({
   }
 });
 var NewComment = React.createClass({
-  getDefaultProps: function() {
-    return {
-      author:{
-        name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
-      }
-    };
-  },
   getInitialState: function () {
     return {
       collapsed: true,
-      disabledOkBtn: true
+      disabledOkBtn: true,
+      author: UsersStore.getUser(),
+      isLoggedIn: UsersStore.isLoggedIn()
     };
   },
-  _onClick: function(){
+  componentDidMount: function() {
+    UsersStore.addChangeListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    UsersStore.removeChangeListener(this._onChange);
+  },
+  _onChange: function(){
+    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
+  },
+  _handleClick: function(){
     this.setState({collapsed:false});
   },
   _handleOk: function(){
@@ -85,13 +98,13 @@ var NewComment = React.createClass({
     this.setState({collapsed:true});
   },
   render: function () {
-    if(!UsersStore.isLoggedIn())
+    if(!this.state.isLoggedIn)
       return <noscript></noscript>;
     var item;
     var footerPadding = '15px 25px 15px 25px';
 
     if(this.state.collapsed) {
-      item = <Input type='text' placeholder='Write a comment...' onClick={this._onClick}
+      item = <Input type='text' placeholder='Write a comment...' onClick={this._handleClick}
                     style={{border: '1px solid #d8d8d8'}}/>;
     }else {
       var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>;
@@ -101,8 +114,8 @@ var NewComment = React.createClass({
         <Grid>
           <Row>
             <Col xs={2}>
-              <img src={this.props.author.avatar} width='30' height='30'
-                   style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}}/>
+              <img src={this.state.author.avatar} width='30' height='30'
+                   style={{verticalAlign:'top',top:10,position:'relative'}}/>
             </Col>
             <Col xs={9} className="comment-editor-main bg-white">
               <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder='Write a comment...' className="comment-editor"></div>
@@ -128,14 +141,14 @@ var PostComment = React.createClass({
     return {
       author:{
         name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
+        avatar: "/imgs/avatars/avatar4.png"
       }
     };
   },
   render: function () {
     return (
       <div className='inbox-avatar' style={{borderBottom: '1px solid #EAEDF1'}}>
-        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign:'top',top:10,position:'relative',borderRadius:'20px'}} />
+        <img src={this.props.author.avatar} width='30' height='30' style={{verticalAlign:'top',top:10,position:'relative'}} />
         <div className='inbox-avatar-name'>
           <div className='fg-darkgrayishblue75'>{this.props.author.name}</div>
           <div className='fg-text'><small>{this.props.children}..</small></div>
@@ -171,18 +184,18 @@ var PostSummary = React.createClass({
     return {
       author: {
         name: "admin",
-        avatar: "/imgs/avatars/avatar.jpg"
+        avatar: "/imgs/avatars/avatar4.png"
       }
     };
   },
   getInitialState: function () {
     return {
-      likeCount:123,
+      likeCount:this.props.likeCount,
       likeActive: false,
-      reshareCount:231,
+      reshareCount:this.props.reshareCount,
       reshareActive: false,
       reshareTextStyle: 'fg-white',
-      commentCount:321,
+      commentCount:this.props.commentCount,
       comments: this.props.comments
     };
   },
@@ -226,7 +239,7 @@ var PostSummary = React.createClass({
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
     return (
-      <PanelContainer noControls>
+      <PanelContainer noControls className="item">
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
           <div className='inbox-avatar'>
             <img src={this.props.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
@@ -250,11 +263,11 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <Button ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+          <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
             <Icon glyph='icon-fontello-heart-1' />
             <span style={{marginLeft:'5px'}}>{this.state.likeCount}</span>
           </Button>
-          <Button style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
+          <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
             <Icon glyph='icon-stroke-gap-icons-Share' />
             <span style={{marginLeft:'5px'}}>{this.state.reshareCount}</span>
           </Button>
@@ -285,58 +298,46 @@ var Body = React.createClass({
     this.setState({data: PostStore.getPosts()});
   },
   render: function() {
+    var leftStream = {};
+    var centerStream = {};
     var rightStream = {};
-    this.state.data.forEach(function (obj) {
+    for(var i=0;i<this.state.data.length;i++){
+      var obj = this.state.data[i];
       var d = moment(obj.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-      rightStream["post-" + obj._id] =
-        <PostSummary id={obj._id} author={obj.author} date={d} comments={obj.comments}>
-          {obj.content}
-        </PostSummary>;
-    });
+      if((i+1) % 3 == 0){
+        rightStream["post-" + obj._id] =
+          <PostSummary id={obj._id} author={obj.author} date={d}  comments={obj.comments}
+                       likeCount={obj.like_count} reshareCount={obj.reshare_count} commentCount={obj.comment_count}>
+            {obj.content}
+          </PostSummary>;
+      }else if((i+1) % 2 == 0) {
+        leftStream["post-" + obj._id] =
+          <PostSummary id={obj._id} author={obj.author} date={d} comments={obj.comments}
+                       likeCount={obj.like_count} reshareCount={obj.reshare_count} commentCount={obj.comment_count}>
+            {obj.content}
+          </PostSummary>;
+      }else{
+        centerStream["post-" + obj._id] =
+          <PostSummary id={obj._id} author={obj.author} date={d} comments={obj.comments}
+                       likeCount={obj.like_count} reshareCount={obj.reshare_count} commentCount={obj.comment_count}>
+            {obj.content}
+          </PostSummary>;
+      }
+    }
     return (
       <Container id='body' className='social'>
         <Grid>
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
-            <Col sm={4} collapseRight >
+            <Col sm={4} collapseRight ref="leftStream">
               <NewPost></NewPost>
-              <PostSummary
-                id='123'
-                date='2 hours ago'
-                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
-                comments={[
-                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
-                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
-                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
-                >
-                  {"I'll be out of my mind and you'll be out of ideas pretty soon."}
-              </PostSummary>
+              {leftStream}
             </Col>
-            <Col sm={4} collapseRight>
-              <PostSummary
-                id='121'
-                date='2 hours ago'
-                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
-                comments={[
-                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
-                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
-                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
-                >
-                {"I'll be out of my mind and you'll be out of ideas pretty soon."}
-              </PostSummary>
+            <Col sm={4} collapseRight ref="centerStream">
+              {centerStream}
             </Col>
-            <Col sm={4} collapseRight>
-              <PostSummary
-                id='321'
-                date='2 hours ago'
-                //img='/imgs/gallery/tumblr_n8zm8ndGiY1st5lhmo1_1280.jpg'
-                comments={[
-                {_id:"33",content:"Nice!",create_at:"2015-11-21 23:21:00"},
-                {_id:"34",content:"Nice!",create_at:"2015-11-22 23:21:00"},
-                {_id:"35",content:"Nice!",create_at:"2015-11-23 23:21:00"}]}
-                >
-                {"I'll be out of my mind and you'll be out of ideas pretty soon."}
-              </PostSummary>
+            <Col sm={4} collapseRight ref="rightStream">
+              <Recommend className="item" ></Recommend>
               {rightStream}
             </Col>
           </Row>

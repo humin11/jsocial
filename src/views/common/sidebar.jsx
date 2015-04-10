@@ -31,7 +31,7 @@ var ApplicationSidebar = React.createClass({
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-ikons-login' name={<Entity entity='login'/>} href='/login' />
-                  <SidebarNavItem glyph='icon-simple-line-icons-users' name='Signup' href='/signup' />
+                  <SidebarNavItem glyph='icon-simple-line-icons-users' name={<Entity entity='signup'/>}  href='/signup' />
                   <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href='/lock' />
                 </SidebarNav>
               </div>
@@ -478,10 +478,10 @@ var SidebarSection = React.createClass({
           <Grid>
             <Row className='fg-white'>
               <Col xs={4} collapseRight>
-                <img src='/imgs/avatars/avatar0.png' width='40' height='40' />
+                <img src='/imgs/avatars/avatar0.png' width='40' height='40' style={{borderRadius: '20px'}} />
               </Col>
               <Col xs={8} collapseLeft id='avatar-col'>
-                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>Anna Sanchez</div>
+                <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>Johnny R</div>
                 <div>
                   <Progress id='demo-progress' value={30} min={0} max={100} color='#ffffff'/>
                   <Link to='/app/lock'><Icon id='demo-icon' bundle='fontello' glyph='lock-5' /></Link>

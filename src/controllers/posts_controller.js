@@ -15,7 +15,7 @@ module.exports = new MongoController({
     }
   },
   url: {
-    login: function (req, res, next) {
+    findShared: function (req, res, next) {
 
     }
   }

@@ -53,9 +53,7 @@ var MongoApi = {
     this.model.Default = (this.model.Default) ? this.model.Default : {};
     this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
     this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
-    console.log(params.SimpleFormat);
     this.SimpleFormat = (params.model.SimpleFormat) ? params.model.SimpleFormat : MongoApi.SimpleFormat;
-    console.log(this.SimpleFormat)
     var hide = {};
     if (this.model.OutFormat.hide) {
       for (var i = 0; i < this.model.OutFormat.hide.length; i++) {
@@ -172,7 +170,6 @@ MongoApi.Controller.prototype = {
     },
     findOne: function (req, res) {
       var model = req.body;
-      console.log(this);
       this.DB.findOne(model, function (err, doc, next) {
         res.send(doc);
         next();
@@ -181,9 +178,7 @@ MongoApi.Controller.prototype = {
   },
   binding: function (express) {
     for (var item in this.url) {
-      //console.log("/" + this.table + "/" + item);
       express.post("/" + this.table + "/" + item, this.url[item].bind(this));
-      //express.get("/" + this.table + "/" + item, this.url[item].bind(this));
     }
     return this;
   }
@@ -275,9 +270,7 @@ MongoApi.DB.prototype = {
   },
   findOne: function (querymodel, callback) {
     this.connect(function (collection,next) {
-      console.log(querymodel);
       collection.findOne(querymodel,function(err,object){
-        console.log(err,object);
         callback(err,object,next);
       }.bind(this))
     }.bind(this));
