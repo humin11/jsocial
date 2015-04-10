@@ -27,10 +27,7 @@ var AuthStore = assign({}, EventEmitter2.prototype, {
     return _user;
   },
   hasFollowed: function(userid){
-    if(_user.followedMap[userid])
-      return true;
-    else
-      return false;
+    return _user.followedMap[userid];
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
