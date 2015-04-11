@@ -44,6 +44,7 @@ var MongoApi = {
         MongoApi.ConvertObjectId(model);
       }
     }
+    return model;
   },
   ModelDefault: {
     id: function () {
