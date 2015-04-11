@@ -78,7 +78,7 @@ var MongoApi = {
     }
     this.model.OutFormat.hide = hide;
     if (params.url) {
-      this.url = assign(params.url, MongoApi.Controller.prototype.url);
+      this.url = assign(MongoApi.Controller.prototype.url,params.url);
     }
     this.DB = new MongoApi.DB(params.table);
     this.DB.SimpleFormat = this.SimpleFormat;
@@ -133,6 +133,7 @@ MongoApi.Controller.prototype = {
 
   url: {
     insert: function (req, res) {
+      console.log("this");
       var model = MongoApi.ConvertObjectId(req.body);
       model = this.applyDefault(model, req);
       this.DB.insert(model, function (err, next) {
