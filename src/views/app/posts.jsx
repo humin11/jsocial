@@ -29,6 +29,7 @@ var NewPost = React.createClass({
       type: ActionTypes.POSTS_CREATE,
       content:content
     });
+    this.refs.postContent.getDOMNode().value = '';
   },
   _onChange: function(){
     this.setState({isLoggedIn: UsersStore.isLoggedIn()});
@@ -36,10 +37,11 @@ var NewPost = React.createClass({
   render: function () {
     if(!this.state.isLoggedIn)
       return <noscript></noscript>;
+    var holder = l20n.ctx.getSync('inputNewPost',null);
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
-          <Textarea rows='3' placeholder="What's on your mind?" style={{border: 'none'}} ref="postContent"/>
+          <Textarea rows='3' placeholder={holder} style={{border: 'none'}} ref="postContent"/>
         </PanelBody>
         <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
           <Grid>
@@ -89,6 +91,7 @@ var NewComment = React.createClass({
       type: ActionTypes.COMMENTS_CREATE,
       data: {content:content,source:this.props.source}
     });
+    this.refs.commentContent.getDOMNode().innerHTML = '';
     this.setState({collapsed:true,disabledOkBtn: true});
   },
   _handleChange: function(){
@@ -99,11 +102,13 @@ var NewComment = React.createClass({
     }
   },
   _handleCancel: function(){
+    this.refs.commentContent.getDOMNode().innerHTML = '';
     this.setState({collapsed:true});
   },
   render: function () {
     if(!this.state.isLoggedIn)
       return <noscript></noscript>;
+    var holder = l20n.ctx.getSync('inputNewComment',null);
     var footerPadding = '15px 25px 15px 25px';
     var inputClass = classSet({
       'hide': !(this.state.collapsed)
@@ -115,13 +120,13 @@ var NewComment = React.createClass({
     }else {
       footerPadding = '15px 0 15px 0';
     }
-    var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}>Ok</Button>;
+    var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     if(this.state.disabledOkBtn) {
-      okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}>Ok</Button>;
+      okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     }
     return (
       <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className="bg-gray">
-        <Input className={inputClass} type='text' placeholder='Write a comment...' onClick={this._handleClick}
+        <Input className={inputClass} type='text' placeholder={holder}  onClick={this._handleClick}
                style={{border: '1px solid #d8d8d8'}}/>
         <Grid className={divClass}>
           <Row>
@@ -130,12 +135,12 @@ var NewComment = React.createClass({
                    style={{verticalAlign:'top',top:10,position:'relative'}}/>
             </Col>
             <Col xs={9} className="comment-editor-main bg-white">
-              <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder='Write a comment...' className="comment-editor"></div>
+              <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder={holder} className="comment-editor"></div>
             </Col>
           </Row>
           <div className='text-right' style={{paddingRight:'10px'}} >
             {okBtn}
-            <Button ref='cancelBtn'  style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}>Cancel</Button>
+            <Button ref='cancelBtn'  style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}><Entity entity='cancel'/></Button>
           </div>
         </Grid>
       </PanelFooter>
@@ -330,7 +335,7 @@ var Body = React.createClass({
               {centerStream}
             </Col>
             <Col sm={4} collapseRight ref="rightStream">
-              <Recommend className="item" ></Recommend>
+              <Recommend className="hidden-sm hidden-xs"></Recommend>
               {rightStream}
             </Col>
           </Row>
