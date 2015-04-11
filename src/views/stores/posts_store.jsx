@@ -61,12 +61,12 @@ AppDispatcher.register(function(action) {
       break;
     case ActionTypes.COMMENTS_CREATE:
       $.ajax({
-        url: '/comments/insert',
+        url: '/comments/add',
         type: "POST",
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
-          console.log(obj);
+
         }
       });
       break;

@@ -30,13 +30,11 @@ var Follow = React.createClass({
     UsersStore.removeChangeListener(this._onChange);
   },
   _onChange: function(){
-    console.log("_onChange");
     this.setState({
       followed: UsersStore.hasFollowed(this.props.user._id)
     });
   },
   render: function(){
-    console.log("render:"+this.state.followed);
     var text = null;
     if(this.state.followed) {
       text = <Entity entity='unfollow'/>;
