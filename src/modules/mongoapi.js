@@ -30,6 +30,16 @@ var MongoApi = {
       this.count = count;
     }
   },
+  ConvertObjectId:function(model) {
+    for (var name in model) {
+      if (name == '_id') {
+        model[name] = MongoApi.ObjectId(model[name]);
+      }
+      else if (typeof(model[name]) == "object") {
+        MongoApi.ConvertObjectId(model);
+      }
+    }
+  },
   ModelDefault: {
     id: function () {
       return mongodb.ObjectId();
