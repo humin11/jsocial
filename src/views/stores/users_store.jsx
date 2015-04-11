@@ -18,8 +18,7 @@ function mapFollowed(){
   }
 }
 
-var AuthStore = assign({}, EventEmitter2.prototype, {
-  maxListeners: 99999,
+var AuthStore = assign(new EventEmitter2({maxListeners: 99999}),{
   isLoggedIn: function () {
     return _user !== null;
   },

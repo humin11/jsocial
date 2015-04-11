@@ -64,7 +64,7 @@ var NewPost = React.createClass({
 var NewComment = React.createClass({
   getInitialState: function () {
     return {
-      collapsed: true,
+      expanded: false,
       disabledOkBtn: true,
       author: UsersStore.getUser(),
       isLoggedIn: UsersStore.isLoggedIn()
@@ -82,8 +82,8 @@ var NewComment = React.createClass({
       isLoggedIn: UsersStore.isLoggedIn()
     });
   },
-  _handleClick: function(){
-    this.setState({collapsed:false});
+  _handleExpand: function(){
+    this.setState({expanded:true});
   },
   _handleOk: function(){
     var content = this.refs.commentContent.getDOMNode().innerText;
@@ -91,8 +91,7 @@ var NewComment = React.createClass({
       type: ActionTypes.COMMENTS_CREATE,
       data: {content:content,source:this.props.source}
     });
-    this.refs.commentContent.getDOMNode().innerHTML = '';
-    this.setState({collapsed:true,disabledOkBtn: true});
+    this._handleCancel();
   },
   _handleChange: function(){
     if(this.refs.commentContent.getDOMNode().innerText.length > 0){
@@ -103,21 +102,29 @@ var NewComment = React.createClass({
   },
   _handleCancel: function(){
     this.refs.commentContent.getDOMNode().innerHTML = '';
-    this.setState({collapsed:true});
+    if(this.props.hideCommentHolder) {
+      this.props.parent._handleNewComment();
+    }else{
+      this.setState({expanded: false,disabledOkBtn: true});
+    }
   },
   render: function () {
     if(!this.state.isLoggedIn)
       return <noscript></noscript>;
     var holder = l20n.ctx.getSync('inputNewComment',null);
-    var footerPadding = '15px 25px 15px 25px';
+
+    var footerClass = classSet({
+      'hide': !(this.state.expanded || this.props.expanded) && this.props.hideCommentHolder,
+      'bg-gray': true
+    });
     var inputClass = classSet({
-      'hide': !(this.state.collapsed)
+      'hide': this.state.expanded || this.props.hideCommentHolder
     });
     var divClass = classSet({
-      'hide': this.state.collapsed
+      'hide': !(this.state.expanded || this.props.expanded)
     });
-    if(this.state.collapsed) {
-    }else {
+    var footerPadding = '15px 25px 15px 25px';
+    if(this.state.expanded) {
       footerPadding = '15px 0 15px 0';
     }
     var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
@@ -125,8 +132,8 @@ var NewComment = React.createClass({
       okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     }
     return (
-      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className="bg-gray">
-        <Input className={inputClass} type='text' placeholder={holder}  onClick={this._handleClick}
+      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className={footerClass}>
+        <Input className={inputClass} type='text' placeholder={holder}  onClick={this._handleExpand}
                style={{border: '1px solid #d8d8d8'}}/>
         <Grid className={divClass}>
           <Row>
@@ -140,7 +147,7 @@ var NewComment = React.createClass({
           </Row>
           <div className='text-right' style={{paddingRight:'10px'}} >
             {okBtn}
-            <Button ref='cancelBtn'  style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}><Entity entity='cancel'/></Button>
+            <Button ref='cancelBtn' style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}><Entity entity='cancel'/></Button>
           </div>
         </Grid>
       </PanelFooter>
@@ -197,14 +204,21 @@ var PostSummary = React.createClass({
       likeActive: false,
       reshareActive: false,
       reshareTextStyle: 'fg-white',
-      post: this.props.post
+      post: this.props.post,
+      newCommentExpanded: false,
+      isLoggedIn: UsersStore.isLoggedIn()
     };
   },
   componentDidMount: function() {
     PostStore.addPostChangeListener(this._onChange);
+    UsersStore.addChangeListener(this._onLogin);
   },
   componentWillUnmount: function() {
     PostStore.removePostChangeListener(this._onChange);
+    UsersStore.removeChangeListener(this._onLogin);
+  },
+  _onLogin: function(){
+    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
   },
   _onChange: function() {
     this.setState({post: PostStore.getPost(this.state.post._id)});
@@ -239,6 +253,11 @@ var PostSummary = React.createClass({
       likeActive: likeActive
     });
   },
+  _handleNewComment: function(){
+    this.setState({
+      newCommentExpanded:!(this.state.newCommentExpanded)
+    });
+  },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
     var comments = {};
@@ -249,6 +268,14 @@ var PostSummary = React.createClass({
     var img = <noscript></noscript>;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
+
+    var holder = l20n.ctx.getSync('inputNewComment',null);
+    var hideCommentHolder = false;
+    if(this.state.post.comments.length > 0)
+      hideCommentHolder = true;
+    var inputClass = classSet({
+      'hide': hideCommentHolder || this.state.newCommentExpanded || !this.state.isLoggedIn
+    });
     return (
       <PanelContainer noControls className="item">
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
@@ -274,19 +301,35 @@ var PostSummary = React.createClass({
           </div>
         </PanelBody>
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
-          <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
-            <Icon glyph='icon-fontello-heart-1' />
-            <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
-          </Button>
-          <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
-            <Icon glyph='icon-stroke-gap-icons-Share' />
-            <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
-          </Button>
+          <Grid style={{marginRight:'-30px'}}>
+            <Row>
+              <Col xs={2} style={{marginLeft:'-20px'}}>
+                <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+                  <Icon glyph='icon-fontello-heart-1' />
+                  <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
+                </Button>
+              </Col>
+              <Col xs={2} >
+                <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
+                  <Icon glyph='icon-stroke-gap-icons-Share' />
+                  <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
+                </Button>
+              </Col>
+              <Col xs={6} style={{margin:'0 0 0 10px'}}>
+                <Input className={inputClass} type='text' placeholder={holder} onClick={this._handleNewComment}
+                       style={{border: '1px solid #d8d8d8'}}/>
+              </Col>
+              <Col xs={2} >
+                <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
+              </Col>
+            </Row>
+          </Grid>
+
         </PanelFooter>
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}
         </PanelFooter>
-        <NewComment source={{_id: this.state.post._id, type: 'post'}}></NewComment>
+        <NewComment source={{_id: this.state.post._id, type: 'post'}} expanded={this.state.newCommentExpanded} hideCommentHolder={!hideCommentHolder} parent={this}></NewComment>
       </PanelContainer>
     );
   }

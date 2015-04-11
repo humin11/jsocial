@@ -29,8 +29,7 @@ function updateComments(id,comments){
   }
 }
 
-var PostStore = assign({}, EventEmitter2.prototype, {
-  maxListeners: 99999,
+var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   getPosts: function(){
     return _posts;
   },
