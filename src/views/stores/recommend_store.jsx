@@ -8,8 +8,7 @@ var assign = require('object-assign');
 var _people = [];
 var CHANGE_EVENT = 'change';
 
-var RecommendStore = assign({}, EventEmitter2.prototype, {
-  maxListeners: 99999,
+var RecommendStore = assign(new EventEmitter2({maxListeners: 99999}), {
   getRecommendPeople: function () {
     return _people;
   },
