@@ -5,6 +5,8 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
+var UserStore = require('./users_store.jsx');
+
 var _posts = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
@@ -106,6 +108,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify({content:action.content, like_count:0, reshare_count:0, comment_count:0, comments:[]}),
         success: function(obj){
           _posts.push(obj);
+          UserStore.getUser().post_count++;
           PostStore.emitChange();
         }
       });
