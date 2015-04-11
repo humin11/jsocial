@@ -132,7 +132,7 @@ MongoApi.Controller.prototype = {
 
   url: {
     insert: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       model = this.applyDefault(model, req);
       this.DB.insert(model, function (err, next) {
         model = this.outFormat(model);
@@ -141,7 +141,7 @@ MongoApi.Controller.prototype = {
       }.bind(this));
     },
     update: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       data : JSON.stringify(action.data),
         this.DB.update(model, function (err, next) {
           res.send(MongoApi.Json.Ok());
@@ -149,14 +149,14 @@ MongoApi.Controller.prototype = {
         }.bind(this));
     },
     remove: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       this.DB.remove(model, function (err, next) {
         res.send(MongoApi.Json.Ok());
         next();
       }.bind(this));
     },
     findPage: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       model.index = (model.index) ? (model.index) : 0;
       model.count = (model.count) ? model.count : 20;
       model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
@@ -172,7 +172,7 @@ MongoApi.Controller.prototype = {
       });
     },
     find: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       model.index = (model.index) ? (model.index) : 1;
       model.count = (model.count) ? model.count : 20;
       model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
@@ -184,7 +184,7 @@ MongoApi.Controller.prototype = {
       }.bind(this));
     },
     findOne: function (req, res) {
-      var model = req.body;
+      var model = MongoApi.ConvertObjectId(req.body);
       this.DB.findOne(model, function (err, doc, next) {
         res.send(doc);
         next();
