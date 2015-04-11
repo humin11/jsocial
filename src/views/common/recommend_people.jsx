@@ -50,7 +50,7 @@ var Recommend = React.createClass({
         </Row>
     });
     return (
-      <PanelContainer noControls id="recommend-people">
+      <PanelContainer {...this.props} noControls id="recommend-people">
         <PanelHeader className='bg-orange75 fg-white '>
           <Grid>
             <Row>

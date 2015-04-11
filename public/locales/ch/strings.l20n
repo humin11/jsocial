@@ -37,8 +37,11 @@
 <farm '农场'>
 
 <!-- POST -->
-
+<inputNewPost '分享新鲜事...'>
+<inputNewComment '发表评论...'>
 <share '分享'>
+<submitComment '发表评论'>
+<cancel '取消'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
