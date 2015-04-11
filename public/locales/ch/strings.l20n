@@ -30,6 +30,11 @@
 <followed '已关注'>
 <unfollow '取消关注'>
 <recommendPeople '可能感兴趣的人'>
+<followCount '关注'>
+<fansCount '粉丝'>
+<postCount '微博'>
+
+<farm '农场'>
 
 <!-- POST -->
 <inputNewPost '分享新鲜事...'>
