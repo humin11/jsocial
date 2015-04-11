@@ -58,8 +58,8 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
-  emitPostChange: function() {
-    this.emit(POST_CHANGE_EVENT);
+  emitPostChange: function(post) {
+    this.emit(POST_CHANGE_EVENT,post);
   },
   addPostChangeListener: function(callback) {
     this.on(POST_CHANGE_EVENT, callback);
@@ -120,7 +120,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify(action.data),
         success: function(obj){
           updatePost(obj);
-          PostStore.emitPostChange();
+          PostStore.emitPostChange(obj);
         }
       });
       break;

@@ -8,7 +8,6 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var PostStore = require('../stores/posts_store.jsx');
 var UsersStore = require('../stores/users_store.jsx');
-var Authentication = require('../mixins/authentication.jsx');
 var classSet = React.addons.classSet;
 
 var NewPost = React.createClass({
@@ -66,24 +65,32 @@ var NewComment = React.createClass({
     return {
       expanded: false,
       disabledOkBtn: true,
+      disabledCancelBtn: false,
       author: UsersStore.getUser(),
       isLoggedIn: UsersStore.isLoggedIn()
     };
   },
   componentDidMount: function() {
-    UsersStore.addChangeListener(this._onChange);
+    UsersStore.addChangeListener(this._onLogin);
+    PostStore.addPostChangeListener(this._onCreateComplete);
   },
   componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onChange);
+    UsersStore.removeChangeListener(this._onLogin);
+    PostStore.removePostChangeListener(this._onCreateComplete);
   },
-  _onChange: function(){
+  _onLogin: function(){
     this.setState({
       author: UsersStore.getUser(),
       isLoggedIn: UsersStore.isLoggedIn()
     });
   },
+  _onCreateComplete: function(post){
+    if(post._id == this.props.source._id) {
+      this._handleCancel();
+    }
+  },
   _handleExpand: function(){
-    this.setState({expanded:true});
+    this.setState({ expanded: true });
   },
   _handleOk: function(){
     var content = this.refs.commentContent.getDOMNode().innerText;
@@ -91,13 +98,16 @@ var NewComment = React.createClass({
       type: ActionTypes.COMMENTS_CREATE,
       data: {content:content,source:this.props.source}
     });
-    this._handleCancel();
+    this.setState({
+      disabledOkBtn: true,
+      disabledCancelBtn: true
+    });
   },
   _handleChange: function(){
     if(this.refs.commentContent.getDOMNode().innerText.length > 0){
-      this.setState({disabledOkBtn:false});
+      this.setState({ disabledOkBtn: false });
     }else{
-      this.setState({disabledOkBtn:true});
+      this.setState({ disabledOkBtn: true });
     }
   },
   _handleCancel: function(){
@@ -105,14 +115,17 @@ var NewComment = React.createClass({
     if(this.props.hideCommentHolder) {
       this.props.parent._handleNewComment();
     }else{
-      this.setState({expanded: false,disabledOkBtn: true});
+      this.setState({
+        expanded: false,
+        disabledOkBtn: true,
+        disabledCancelBtn: false
+      });
     }
   },
   render: function () {
     if(!this.state.isLoggedIn)
       return <noscript></noscript>;
     var holder = l20n.ctx.getSync('inputNewComment',null);
-
     var footerClass = classSet({
       'hide': !(this.state.expanded || this.props.expanded) && this.props.hideCommentHolder,
       'bg-gray': true
@@ -131,6 +144,10 @@ var NewComment = React.createClass({
     if(this.state.disabledOkBtn) {
       okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     }
+    var cancelBtn = <Button ref='cancelBtn' style={{marginLeft:'4px'}} bsStyle='darkgray50' onClick={this._handleCancel}><Entity entity='cancel'/></Button>;
+    if(this.state.disabledCancelBtn) {
+      cancelBtn = <Button ref='cancelBtn' disabled style={{marginLeft:'4px'}} bsStyle='darkgray50' onClick={this._handleCancel}><Entity entity='cancel'/></Button>;
+    }
     return (
       <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className={footerClass}>
         <Input className={inputClass} type='text' placeholder={holder}  onClick={this._handleExpand}
@@ -147,7 +164,7 @@ var NewComment = React.createClass({
           </Row>
           <div className='text-right' style={{paddingRight:'10px'}} >
             {okBtn}
-            <Button ref='cancelBtn' style={{marginLeft:'4px'}} bsStyle='default' onClick={this._handleCancel}><Entity entity='cancel'/></Button>
+            {cancelBtn}
           </div>
         </Grid>
       </PanelFooter>
@@ -220,8 +237,10 @@ var PostSummary = React.createClass({
   _onLogin: function(){
     this.setState({isLoggedIn: UsersStore.isLoggedIn()});
   },
-  _onChange: function() {
-    this.setState({post: PostStore.getPost(this.state.post._id)});
+  _onChange: function(post) {
+    if(post._id == this.state.post._id) {
+      this.setState({post: post});
+    }
   },
   _handleReshare: function() {
     var post = this.state.post;
@@ -324,7 +343,6 @@ var PostSummary = React.createClass({
               </Col>
             </Row>
           </Grid>
-
         </PanelFooter>
         <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
           {comments}
@@ -360,9 +378,9 @@ var Body = React.createClass({
       if((i+1) % 3 == 0){
         rightStream["post-" + obj._id] = <PostSummary post={obj} />;
       }else if((i+1) % 2 == 0) {
-        leftStream["post-" + obj._id] = <PostSummary post={obj} />;
-      }else{
         centerStream["post-" + obj._id] = <PostSummary post={obj} />;
+      }else{
+        leftStream["post-" + obj._id] = <PostSummary post={obj} />;
       }
     }
     return (
@@ -392,6 +410,9 @@ var Body = React.createClass({
 
 var Posts = React.createClass({
   mixins: [SidebarMixin],
+  componentWillMount: function(){
+
+  },
   componentDidMount: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.USERS_INIT
