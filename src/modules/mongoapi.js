@@ -35,6 +35,11 @@ var MongoApi = {
       if (name == '_id') {
         model[name] = MongoApi.ObjectId(model[name]);
       }
+      else if (a instanceof Array){
+        a.forEach(function(item){
+          MongoApi.ObjectId(item);
+        });
+      }
       else if (typeof(model[name]) == "object") {
         MongoApi.ConvertObjectId(model);
       }
