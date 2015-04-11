@@ -86,7 +86,7 @@ var NewComment = React.createClass({
     var content = this.refs.commentContent.getDOMNode().innerText;
     AppDispatcher.dispatch({
       type: ActionTypes.COMMENTS_CREATE,
-      data: {content:content,source_id:this.props.source_id,source_type:'post'}
+      data: {content:content,source:{_id: this.props.source_id, type: 'post'}}
     });
     this.setState({collapsed:true,disabledOkBtn: true});
   },

@@ -19,18 +19,27 @@ module.exports = new MongoController({
   url: {
     add: function(req, res){
       if(req.user) {
-        var model = req.body;
+        var model = MongoApi.ConvertObjectId(req.body);
         model._id = ModelDefault.id();
         model.create_at = ModelDefault.now();
         model.author = req.user;
         this.DB.insert(model,function(err,next){
           var PostController = require('./posts_controller');
-          PostController.DB.find({_id:model.source_id},function(err,obj,next){
+          PostController.DB.findOne({_id:model.source._id},function(err1,obj,next1){
             var comments = obj.comments;
             if(comments.length <= 2){
-
+              comments.push(model);
+            }else{
+              comments.shift();
+              comments.push(model);
             }
+            PostController.DB.update({query:{_id: obj._id},model:{ $set: {comments: comments}}},function(err2,next2){
+              res.send(true);
+              next2();
+            });
+            next1();
           });
+          next();
         });
       } else {
         res.send(null);

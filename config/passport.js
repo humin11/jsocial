@@ -3,12 +3,14 @@
  */
 var LocalStrategy = require('passport-local').Strategy;
 var userController = require('../src/controllers/users_controller');
+var MongoApi = require("../src/modules/mongoapi")
 
 var serialize = function(user, done) {
   done(null, user);
 };
 
 var deserialize = function(user, done) {
+  user = MongoApi.ConvertObjectId(user);
   done(null, user);
 };
 
@@ -20,7 +22,7 @@ module.exports = function(passport) {
       passwordField: 'password'
     },
     function (username, password, done) {
-      userController.DB.findOne({email:username,password:password},function(err,user,next){
+      userController.DB.findSimple({email:username,password:password},function(err,user,next){
         next();
         if(user){
           return done(null, user);

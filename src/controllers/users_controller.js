@@ -28,10 +28,12 @@ module.exports = new MongoController({
           return;
         }
         req.login(user, function (err) {
-          res.send({err:null,user:user});
-          return;
-        });
-      })(req, res, next);
+          this.DB.findOne({_id: MongoApi.ObjectId(user._id)},function(err1,object,next1){
+            res.send({err:null,user:object});
+            next1();
+          });
+        }.bind(this));
+      }.bind(this))(req, res, next);
     },
     getUser: function (req, res, next) {
       if (req.user){
