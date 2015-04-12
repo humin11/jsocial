@@ -10,7 +10,7 @@ var MoreComments = React.createClass({
   },
   _handleClick:function(){
     if(this.props.expanded){
-
+      ReactBootstrap.Dispatcher.emit('morecomments:collapse',this.props.post._id);
     }else{
       AppDispatcher.dispatch({
         type: ActionTypes.COMMENTS_MORE,

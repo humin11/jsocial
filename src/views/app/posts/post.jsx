@@ -16,6 +16,7 @@ var Post = React.createClass({
       reshareTextStyle: 'fg-white',
       post: this.props.post,
       newCommentExpanded: false,
+      expandedMoreComment: false,
       isLoggedIn: UsersStore.isLoggedIn()
     };
   },
@@ -24,12 +25,16 @@ var Post = React.createClass({
     PostStore.addPostChangeListener(this._onChange);
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
+    PostStore.addCommentsChangeListener(this._onMoreCommentsExpand);
+    ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   componentWillUnmount: function() {
     UsersStore.removeChangeListener(this._onLogin);
     PostStore.removePostChangeListener(this._onChange);
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
+    PostStore.removeCommentsChangeListener(this._onMoreCommentsExpand);
+    ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   _onLogin: function(){
     this.setState({isLoggedIn: UsersStore.isLoggedIn()});
@@ -53,6 +58,22 @@ var Post = React.createClass({
     if(id == this.state.post._id) {
       this.setState({
         newCommentExpanded: true
+      });
+    }
+  },
+  _onMoreCommentsExpand: function(post) {
+    if(post._id == this.state.post._id) {
+      this.setState({
+        post: post,
+        expandedMoreComment: true
+      });
+    }
+  },
+  _onMoreCommentsCollapse: function(id){
+    if(id == this.state.post._id) {
+      PostStore.clearMoreComments(id);
+      this.setState({
+        expandedMoreComment: false
       });
     }
   },
@@ -95,9 +116,6 @@ var Post = React.createClass({
     var hideCommentHolder = false;
     if(this.state.post.comment_count > 0)
       hideCommentHolder = true;
-    var inputClass = classSet({
-      'hide': hideCommentHolder || this.state.newCommentExpanded || !this.state.isLoggedIn
-    });
     var commentHolder = null;
     if(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded) {
       commentHolder = <Input type='text' placeholder={holder}
@@ -152,10 +170,10 @@ var Post = React.createClass({
             </Row>
           </Grid>
         </PanelFooter>
-        <Comments post={this.state.post} />
+        <Comments post={this.state.post} expanded={this.state.expandedMoreComment}/>
         <NewComment source={{_id: this.state.post._id, type: 'post'}}
                     expanded={this.state.newCommentExpanded}
-                    hideHolder={!hideCommentHolder}/>
+                    hideHolder={!hideCommentHolder} />
       </PanelContainer>
     );
   }
