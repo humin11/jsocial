@@ -11,23 +11,29 @@ var MongoApi = {
   },
   Json: {
     Ok: function (message, object) {
-      this.code = 1;
-      this.state = "OK";
-      this.message = message;
-      this.object = object;
+      return {
+        code:1,
+        state:'OK',
+        message:message,
+        object:object
+      };
     },
     Error: function (message, code) {
-      this.code = 2;
-      this.state = "ERROR";
-      this.errcode = code;
-      this.message = message;
+      return {
+        code:2,
+        state:"ERROR",
+        errcode:code,
+        message:message
+      };
     },
     ListOk: function (array, index, count) {
-      this.code = 1;
-      this.state = "OK";
-      this.array = array;
-      this.index = index;
-      this.count = count;
+      return {
+        code: 1,
+        state: "OK",
+        array: array,
+        index: index,
+        count: count
+      };
     }
   },
   ConvertObjectId:function(model) {
@@ -60,6 +66,11 @@ var MongoApi = {
       return this.id;
     }
   },
+  ModelCheck:{
+    noNull:function(value){
+      return value
+    }
+  },
   ObjectId:mongodb.ObjectId,
   SimpleFormat: ["_id", "name"],
   Controller: function (params) {
@@ -67,9 +78,12 @@ var MongoApi = {
     this.model = params.model;
     this.model = (this.model) ? this.model : {};
     this.model.Default = (this.model.Default) ? this.model.Default : {};
+    this.model.Check = (this.model.Check) ? this.model.Check : {};
     this.model.OutFormat = (this.model.OutFormat) ? this.model.OutFormat : {};
     this.model.OutFormat.apply = (this.model.OutFormat.apply) ? this.model.OutFormat.apply : {};
+
     this.SimpleFormat = (params.model.SimpleFormat) ? params.model.SimpleFormat : MongoApi.SimpleFormat;
+
     var hide = {};
     if (this.model.OutFormat.hide) {
       for (var i = 0; i < this.model.OutFormat.hide.length; i++) {
@@ -104,6 +118,13 @@ MongoApi.Controller.prototype = {
     }
     return result;
   },
+  checkModel:function(model){
+    for(var item in this.model.Check){
+      if (!this.model.Check[item](model[item]))
+        return false;
+    }
+    return true;
+  },
   toSimple: function (model) {
     return this.DB.toSimple(model);
   },
@@ -133,14 +154,18 @@ MongoApi.Controller.prototype = {
 
   url: {
     insert: function (req, res) {
-      console.log("this");
       var model = MongoApi.ConvertObjectId(req.body);
       model = this.applyDefault(model, req);
+      if (!this.checkModel(model)) {
+        res.send(MongoApi.Json.Error("no check", 1));
+        return;
+      }
       this.DB.insert(model, function (err, next) {
         model = this.outFormat(model);
         res.send(model);
         next();
       }.bind(this));
+
     },
     update: function (req, res) {
       var model = MongoApi.ConvertObjectId(req.body);
