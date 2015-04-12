@@ -67,7 +67,7 @@ var MongoApi = {
     }
   },
   ModelCheck:{
-    noNull:function(value){
+    notNull:function(value){
       return value
     }
   },
