@@ -143,6 +143,7 @@ AppDispatcher.register(function(action) {
         }
       });
       break;
+
     default:
     // do nothing
   }
