@@ -1,9 +1,9 @@
 /**
  * Created by steven on 15/4/9.
  */
-var AppDispatcher = require('../dispatcher/dispatcher.jsx');
-var ActionTypes = require('../constants/constants.jsx');
-var UsersStore = require('../stores/users_store.jsx');
+var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../../constants/constants.jsx');
+var UsersStore = require('../../stores/users_store.jsx');
 var Follow = React.createClass({
   getInitialState: function() {
     return {
@@ -43,7 +43,7 @@ var Follow = React.createClass({
     }
     return (
       <Button xs outlined bsStyle='default' onClick={this._handleFollow}>
-        <Icon bundle='fontello' glyph='user'/>
+
         <span style={{marginLeft:'5px'}}>{text}</span>
       </Button>
     );
