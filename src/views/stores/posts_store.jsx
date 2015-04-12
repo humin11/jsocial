@@ -11,6 +11,7 @@ var _posts = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 var POST_CHANGE_EVENT = 'post:change';
+var COMMENT_CREATE_EVENT = 'comment:create';
 var COMMENT_CHANGE_EVENT = 'comment:change';
 
 function updatePost(post){
@@ -24,9 +25,14 @@ function updatePost(post){
 function updateComments(id,comments){
   for(var i=0; i < _posts.length; i++){
     if(_posts[i]._id == id){
-      _posts[i].comments = comments;
+      if(_posts[i].morecomments)
+        _posts[i].morecomments.push(comments);
+      else
+        _posts[i].morecomments = comments;
+      return _posts[i];
     }
   }
+  return null;
 }
 
 var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
@@ -67,14 +73,14 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   removePostChangeListener: function(callback) {
     this.removeListener(POST_CHANGE_EVENT, callback);
   },
-  emitCommentChange: function() {
-    this.emit(COMMENT_CHANGE_EVENT);
+  emitCommentCreate: function() {
+    this.emit(COMMENT_CREATE_EVENT);
   },
-  addCommentChangeListener: function(callback) {
-    this.on(COMMENT_CHANGE_EVENT, callback);
+  addCommentCreateListener: function(callback) {
+    this.on(COMMENT_CREATE_EVENT, callback);
   },
-  removeCommentChangeListener: function(callback) {
-    this.removeListener(COMMENT_CHANGE_EVENT, callback);
+  removeCommentCreateListener: function(callback) {
+    this.removeListener(COMMENT_CREATE_EVENT, callback);
   }
 });
 
@@ -121,10 +127,22 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           updatePost(obj);
           PostStore.emitPostChange(obj);
+          PostStore.emitCommentCreate(obj);
         }
       });
       break;
-
+    case ActionTypes.COMMENTS_MORE:
+      $.ajax({
+        url: '/comments/find',
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify(action.data),
+        success: function(arr){
+          var post = updateComments(action.data.source._id,arr);
+          PostStore.emitPostChange(post);
+        }
+      });
+      break;
     default:
     // do nothing
   }

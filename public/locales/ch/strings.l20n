@@ -42,6 +42,8 @@
 <share '分享'>
 <submitComment '发表评论'>
 <cancel '取消'>
+<commentCount '条评论'>
+<hideCommentCount '隐藏评论'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
