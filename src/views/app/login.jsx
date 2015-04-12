@@ -35,7 +35,7 @@ var LoginPage = React.createClass({
       transition.retry();
     } else {
       if(UsersStore.isLoggedIn())
-        this.replaceWith("/");
+        this.transitionTo("/");
       else if(!LoginPage.firstLogin)
         this.setState({error:true});
     }

@@ -10,7 +10,7 @@ module.exports = new MongoController({
     Default: {
       _id: ModelDefault.id,
       create_at: ModelDefault.now,
-      avatar: "/imgs/avatars/avatar.png",
+      avatar: "/imgs/avatars/avatar0.png",
       followed: function(req,model){
         return [assign({},model)];
       }
