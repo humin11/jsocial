@@ -11,6 +11,7 @@ var _posts = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 var POST_CHANGE_EVENT = 'post:change';
+var COMMENTS_CHANGE_EVENT = 'comments:change';
 
 function updatePost(post){
   for(var i=0; i < _posts.length; i++){
@@ -53,6 +54,13 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
     }
     return null;
   },
+  clearMoreComments: function(id){
+    for(var i=0; i < _posts.length; i++){
+      if(_posts[i]._id == id){
+        delete _posts[i].morecomments;
+      }
+    }
+  },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -70,6 +78,15 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   },
   removePostChangeListener: function(callback) {
     this.removeListener(POST_CHANGE_EVENT, callback);
+  },
+  emitCommentsChange: function(post) {
+    this.emit(COMMENTS_CHANGE_EVENT,post);
+  },
+  addCommentsChangeListener: function(callback) {
+    this.on(COMMENTS_CHANGE_EVENT, callback);
+  },
+  removeCommentsChangeListener: function(callback) {
+    this.removeListener(COMMENTS_CHANGE_EVENT, callback);
   }
 });
 
@@ -124,10 +141,10 @@ AppDispatcher.register(function(action) {
         url: '/comments/find',
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(action.data),
+        data : JSON.stringify({query:action.data}),
         success: function(arr){
           var post = updateComments(action.data.source._id,arr);
-          PostStore.emitPostChange(post);
+          PostStore.emitCommentsChange(post);
         }
       });
       break;

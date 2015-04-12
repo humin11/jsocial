@@ -24,13 +24,11 @@ var SingleComment = React.createClass({
 var Comments = React.createClass({
   render: function () {
     var comments = {};
-    var expandedMoreComment = false;
-    if(this.props.post.morecomments){
-      expandedMoreComment = true;
+    if(this.props.expanded){
       this.props.post.morecomments.forEach(function (c) {
         comments['comment-' + c._id] = <SingleComment comment={c}/>;
       });
-    }else {
+    } else {
       this.props.post.comments.forEach(function (c) {
         comments['comment-' + c._id] = <SingleComment comment={c}/>;
       });
@@ -43,7 +41,7 @@ var Comments = React.createClass({
     });
     return (
       <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
-        <MoreComments className={moreCommentClass} expanded={expandedMoreComment} post={this.props.post}/>
+        <MoreComments className={moreCommentClass} expanded={this.props.expanded} post={this.props.post}/>
         <div className="comments">
           {comments}
         </div>

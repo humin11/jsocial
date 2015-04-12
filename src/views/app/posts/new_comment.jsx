@@ -4,16 +4,10 @@ var UsersStore = require('../../stores/users_store.jsx');
 var classSet = React.addons.classSet;
 
 var NewComment = React.createClass({
-  getDefaultProps: function(){
-    return {
-      disabledOkBtn: true,
-      disabledCancelBtn: false
-    };
-  },
   getInitialState: function () {
     return {
-      disabledOkBtn: this.props.disabledOkBtn,
-      disabledCancelBtn: this.props.disabledCancelBtn,
+      disabledOkBtn: true,
+      disabledCancelBtn: false,
       author: UsersStore.getUser(),
       isLoggedIn: UsersStore.isLoggedIn()
     };
