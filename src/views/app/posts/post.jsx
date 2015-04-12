@@ -3,8 +3,7 @@ var ActionTypes = require('../../constants/constants.jsx');
 var UsersStore = require('../../stores/users_store.jsx');
 var PostStore = require('../../stores/posts_store.jsx');
 var NewComment = require('./new_comment.jsx');
-var PostComment = require('./comment.jsx');
-var MoreComments = require('./more_comments.jsx');
+var Comments = require('./comments.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;
@@ -21,19 +20,40 @@ var Post = React.createClass({
     };
   },
   componentDidMount: function() {
-    PostStore.addPostChangeListener(this._onChange);
     UsersStore.addChangeListener(this._onLogin);
+    PostStore.addPostChangeListener(this._onChange);
+    ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
+    ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
   },
   componentWillUnmount: function() {
-    PostStore.removePostChangeListener(this._onChange);
     UsersStore.removeChangeListener(this._onLogin);
+    PostStore.removePostChangeListener(this._onChange);
+    ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
+    ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
   },
   _onLogin: function(){
     this.setState({isLoggedIn: UsersStore.isLoggedIn()});
   },
   _onChange: function(post) {
     if(post._id == this.state.post._id) {
-      this.setState({post: post});
+      this.setState({
+        post: post,
+        newCommentExpanded: false
+      });
+    }
+  },
+  _onNewCommentCollapse: function(id) {
+    if(id == this.state.post._id) {
+      this.setState({
+        newCommentExpanded: false
+      });
+    }
+  },
+  _onNewCommentExpand: function(id){
+    if(id == this.state.post._id) {
+      this.setState({
+        newCommentExpanded: true
+      });
     }
   },
   _handleReshare: function() {
@@ -66,41 +86,24 @@ var Post = React.createClass({
       likeActive: likeActive
     });
   },
-  _handleNewComment: function(){
-    this.setState({
-      newCommentExpanded:!(this.state.newCommentExpanded)
-    });
-  },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-    var comments = {};
-    var expandedMoreComment = false;
-    if(this.state.post.morecomments){
-      expandedMoreComment = true;
-      this.state.post.morecomments.forEach(function (c) {
-        comments['comment-' + c._id] = <PostComment comment={c}/>;
-      });
-    }else {
-      this.state.post.comments.forEach(function (c) {
-        comments['comment-' + c._id] = <PostComment comment={c}/>;
-      });
-    }
-    var img = <noscript></noscript>;
+    var holder = l20n.ctx.getSync('inputNewComment',null);
+    var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
-    var holder = l20n.ctx.getSync('inputNewComment',null);
     var hideCommentHolder = false;
     if(this.state.post.comment_count > 0)
       hideCommentHolder = true;
     var inputClass = classSet({
       'hide': hideCommentHolder || this.state.newCommentExpanded || !this.state.isLoggedIn
     });
-    var hideMoreComment = false;
-    if(this.state.post.comment_count < 3)
-      hideMoreComment = true;
-    var moreCommentClass = classSet({
-      'hide':hideMoreComment
-    });
+    var commentHolder = null;
+    if(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded) {
+      commentHolder = <Input type='text' placeholder={holder}
+                             onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
+                             style={{border: '1px solid #d8d8d8'}}/>;
+    }
     return (
       <PanelContainer noControls>
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
@@ -141,8 +144,7 @@ var Post = React.createClass({
                 </Button>
               </Col>
               <Col xs={6} style={{margin:'0 0 0 10px'}}>
-                <Input className={inputClass} type='text' placeholder={holder} onClick={this._handleNewComment}
-                       style={{border: '1px solid #d8d8d8'}}/>
+                {commentHolder}
               </Col>
               <Col xs={2} >
                 <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
@@ -150,11 +152,10 @@ var Post = React.createClass({
             </Row>
           </Grid>
         </PanelFooter>
-        <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
-          <MoreComments className={moreCommentClass} expanded={expandedMoreComment} post={this.state.post}/>
-          {comments}
-        </PanelFooter>
-        <NewComment source={{_id: this.state.post._id, type: 'post'}} expanded={this.state.newCommentExpanded} hideCommentHolder={!hideCommentHolder} parent={this}></NewComment>
+        <Comments post={this.state.post} />
+        <NewComment source={{_id: this.state.post._id, type: 'post'}}
+                    expanded={this.state.newCommentExpanded}
+                    hideHolder={!hideCommentHolder}/>
       </PanelContainer>
     );
   }

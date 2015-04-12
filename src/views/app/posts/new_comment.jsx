@@ -1,26 +1,28 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var UsersStore = require('../../stores/users_store.jsx');
-var PostStore = require('../../stores/posts_store.jsx');
 var classSet = React.addons.classSet;
 
 var NewComment = React.createClass({
+  getDefaultProps: function(){
+    return {
+      disabledOkBtn: true,
+      disabledCancelBtn: false
+    };
+  },
   getInitialState: function () {
     return {
-      expanded: false,
-      disabledOkBtn: true,
-      disabledCancelBtn: false,
+      disabledOkBtn: this.props.disabledOkBtn,
+      disabledCancelBtn: this.props.disabledCancelBtn,
       author: UsersStore.getUser(),
       isLoggedIn: UsersStore.isLoggedIn()
     };
   },
   componentDidMount: function() {
     UsersStore.addChangeListener(this._onLogin);
-    PostStore.addCommentCreateListener(this._onCreateComplete);
   },
   componentWillUnmount: function() {
     UsersStore.removeChangeListener(this._onLogin);
-    PostStore.removeCommentCreateListener(this._onCreateComplete);
   },
   _onLogin: function(){
     this.setState({
@@ -28,23 +30,23 @@ var NewComment = React.createClass({
       isLoggedIn: UsersStore.isLoggedIn()
     });
   },
-  _onCreateComplete: function(post){
-    if(post._id == this.props.source._id) {
-      this._handleCancel();
-    }
-  },
-  _handleExpand: function(){
-    this.setState({ expanded: true });
+  _onExpand: function(){
+    this.refs.commentContent.getDOMNode().innerHTML = '';
+    this.setState({
+      disabledOkBtn: true,
+      disabledCancelBtn: false
+    });
+    ReactBootstrap.Dispatcher.emit('newcomment:expand',this.props.source._id);
   },
   _handleOk: function(){
     var content = this.refs.commentContent.getDOMNode().innerText;
-    AppDispatcher.dispatch({
-      type: ActionTypes.COMMENTS_CREATE,
-      data: {content:content,source:this.props.source}
-    });
     this.setState({
       disabledOkBtn: true,
       disabledCancelBtn: true
+    });
+    AppDispatcher.dispatch({
+      type: ActionTypes.COMMENTS_CREATE,
+      data: {content:content,source:this.props.source}
     });
   },
   _handleChange: function(){
@@ -56,32 +58,29 @@ var NewComment = React.createClass({
   },
   _handleCancel: function(){
     this.refs.commentContent.getDOMNode().innerHTML = '';
-    if(this.props.hideCommentHolder) {
-      this.props.parent._handleNewComment();
-    }else{
-      this.setState({
-        expanded: false,
-        disabledOkBtn: true,
-        disabledCancelBtn: false
-      });
-    }
+    this.setState({
+      disabledOkBtn: true,
+      disabledCancelBtn: false
+    });
+    ReactBootstrap.Dispatcher.emit('newcomment:collapse',this.props.source._id);
   },
   render: function () {
     if(!this.state.isLoggedIn)
-      return <noscript></noscript>;
+      return null;
     var holder = l20n.ctx.getSync('inputNewComment',null);
     var footerClass = classSet({
-      'hide': !(this.state.expanded || this.props.expanded) && this.props.hideCommentHolder,
+      'hide': !this.props.expanded && this.props.hideHolder,
       'bg-gray': true
     });
-    var inputClass = classSet({
-      'hide': this.state.expanded || this.props.hideCommentHolder
+    var collapsedClass = classSet({
+      'hide': this.props.expanded || this.props.hideHolder
     });
-    var divClass = classSet({
-      'hide': !(this.state.expanded || this.props.expanded)
+
+    var expandedClass = classSet({
+      'hide': !this.props.expanded
     });
     var footerPadding = '15px 25px 15px 25px';
-    if(this.state.expanded) {
+    if(this.props.expanded) {
       footerPadding = '15px 0 15px 0';
     }
     var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
@@ -94,9 +93,9 @@ var NewComment = React.createClass({
     }
     return (
       <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className={footerClass}>
-        <Input className={inputClass} type='text' placeholder={holder}  onClick={this._handleExpand}
+        <Input className={collapsedClass} type='text' placeholder={holder}  onClick={this._onExpand}
                style={{border: '1px solid #d8d8d8'}}/>
-        <Grid className={divClass}>
+        <Grid className={expandedClass}>
           <Row>
             <Col xs={2}>
               <img src={this.state.author.avatar} width='30' height='30'

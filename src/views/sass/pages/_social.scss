@@ -82,6 +82,11 @@ html.social body .sidebar-nav > li.active:after {
   }
 }
 
+.comments {
+  max-height:200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
 .recommend-person {
   .col-xs-12 .inbox-avatar{

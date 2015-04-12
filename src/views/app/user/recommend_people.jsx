@@ -2,10 +2,10 @@
  * Created by steven on 15/4/9.
  */
 var Follow = require('./follow.jsx');
-var AppDispatcher = require('../dispatcher/dispatcher.jsx');
-var ActionTypes = require('../constants/constants.jsx');
-var RecommendStore = require('../stores/recommend_store.jsx');
-var UsersStore = require('../stores/users_store.jsx');
+var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../../constants/constants.jsx');
+var RecommendStore = require('../../stores/recommend_store.jsx');
+var UsersStore = require('../../stores/users_store.jsx');
 
 var Recommend = React.createClass({
   getInitialState: function() {

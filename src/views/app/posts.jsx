@@ -10,7 +10,7 @@ var ActionTypes = require('../constants/constants.jsx');
 var PostStore = require('../stores/posts_store.jsx');
 var UsersStore = require('../stores/users_store.jsx');
 
-var Recommend = require('../common/recommend_people.jsx');
+var Recommend = require('./user/recommend_people.jsx');
 var NewPost = require('./posts/new_post.jsx');
 var PostSummary = require('./posts/post.jsx');
 

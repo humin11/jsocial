@@ -44,7 +44,9 @@ var Comments = React.createClass({
     return (
       <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0}} className="bg-gray">
         <MoreComments className={moreCommentClass} expanded={expandedMoreComment} post={this.props.post}/>
-        {comments}
+        <div className="comments">
+          {comments}
+        </div>
       </PanelFooter>
     );
   }

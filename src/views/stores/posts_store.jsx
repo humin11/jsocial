@@ -11,8 +11,6 @@ var _posts = [];
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 var POST_CHANGE_EVENT = 'post:change';
-var COMMENT_CREATE_EVENT = 'comment:create';
-var COMMENT_CHANGE_EVENT = 'comment:change';
 
 function updatePost(post){
   for(var i=0; i < _posts.length; i++){
@@ -72,15 +70,6 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   },
   removePostChangeListener: function(callback) {
     this.removeListener(POST_CHANGE_EVENT, callback);
-  },
-  emitCommentCreate: function() {
-    this.emit(COMMENT_CREATE_EVENT);
-  },
-  addCommentCreateListener: function(callback) {
-    this.on(COMMENT_CREATE_EVENT, callback);
-  },
-  removeCommentCreateListener: function(callback) {
-    this.removeListener(COMMENT_CREATE_EVENT, callback);
   }
 });
 
@@ -127,7 +116,6 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           updatePost(obj);
           PostStore.emitPostChange(obj);
-          PostStore.emitCommentCreate(obj);
         }
       });
       break;
