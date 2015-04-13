@@ -63,7 +63,7 @@ var MongoApi = {
       return req.user;
     },
     thisId:function(){
-      return this.id;
+      return this._id;
     }
   },
   ModelCheck:{
@@ -210,6 +210,18 @@ MongoApi.Controller.prototype = {
         next();
       }.bind(this));
     },
+    findAndModify:function(req,res){
+      var model = MongoApi.ConvertObjectId(req.body);
+      model.index = (model.index) ? (model.index) : 1;
+      model.count = (model.count) ? model.count : 20;
+      model.count = (model.count > 0 && model.count < 50) ? model.count : model.count;
+      model.query = (model.query) ? (model.query) : {};
+      this.DB.findAndModify(model, function (err, docs, next) {
+        var result = this.outFormat(docs);
+        res.send(result);
+        next();
+      }.bind(this));
+    },
     findOne: function (req, res) {
       var model = MongoApi.ConvertObjectId(req.body);
       this.DB.findOne(model, function (err, doc, next) {
@@ -314,6 +326,18 @@ MongoApi.DB.prototype = {
   find: function (querymodel, callback) {
     this.connect(function (collection,next) {
         collection.find(querymodel.query)
+          .limit(querymodel.count)
+          .skip(querymodel.count * (querymodel.index - 1))
+          .sort(querymodel.sort?querymodel.sort:{})
+          .toArray(function(err,docs){
+            callback(err,docs,next);
+          }.bind(this));
+      }.bind(this)
+    );
+  },
+  findAndModify:function(querymodel, callback){
+    this.connect(function (collection,next) {
+        collection.findAndModify(querymodel.query)
           .limit(querymodel.count)
           .skip(querymodel.count * (querymodel.index - 1))
           .sort(querymodel.sort?querymodel.sort:{})
