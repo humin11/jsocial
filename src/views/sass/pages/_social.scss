@@ -119,6 +119,7 @@ html.social body .sidebar-nav > li.active:after {
     }
     .comment-main {
       text-align: left;
+      max-width:250px;
       padding-left: 12.5px;
       display: inline-block;
       vertical-align: middle;
@@ -142,10 +143,12 @@ html.social body .sidebar-nav > li.active:after {
         color: #999;
         font-size: 12px;
       }
-      .comment-content {
-        color: #404040;
-        font-size: 13px;
-      }
+    }
+    .comment-content {
+      color: #404040;
+      font-size: 13px;
+      word-wrap: break-word;
+      margin-left: 40px;
     }
     .comment-toolbar {
       float: right;

@@ -24,14 +24,14 @@ var SingleComment = React.createClass({
       editFlag = true;
     }
     text = l20n.ctx.getSync('modify');
-    var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 icon-1-and-half-x'/>;
-    var replyBtn = <Icon glyph='icon-fontello-reply-1 icon-1-and-half-x'/>;
+    var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 icon-1-and-quarter-x'/>;
+    var replyBtn = <Icon glyph='icon-fontello-reply-1 icon-1-and-quarter-x'/>;
     var modifyBtn = null;
     var deleteBtn = null;
     if(editFlag){
       replyBtn = null;
-      modifyBtn = <Icon glyph='icon-fontello-edit icon-1-and-half-x'/>;
-      deleteBtn = <Icon glyph='icon-fontello-cancel-circle icon-1-and-half-x' onClick={this._handleDelete}/>;
+      modifyBtn = <Icon glyph='icon-fontello-edit icon-1-and-quarter-x'/>;
+      deleteBtn = <Icon glyph='icon-fontello-cancel-circle icon-1-and-quarter-x' onClick={this._handleDelete}/>;
     }
     return (
       <div className='comment' style={{borderBottom: '1px solid #EAEDF1'}}>
@@ -39,11 +39,11 @@ var SingleComment = React.createClass({
         <div className='comment-main'>
           <div className='comment-avatar-name fg-darkgrayishblue75'>{this.props.comment.author.name}</div>
           <div className='comment-date'>{create_at}</div>
-          <div className='fg-text comment-content'>{this.props.comment.content}</div>
         </div>
         <div className='comment-toolbar hidden-sm hidden-xs fg-text text-right'>
           {likeBtn} {replyBtn} {modifyBtn} {deleteBtn}
         </div>
+        <div className='comment-content'>{this.props.comment.content}</div>
       </div>
     )
   }
