@@ -105,7 +105,7 @@ var Post = React.createClass({
   },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-    var holder = l20n.ctx.getSync('inputNewComment',null);
+    var holder = l20n.ctx.getSync('inputNewComment');
     var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
@@ -160,7 +160,7 @@ var Post = React.createClass({
               <Col xs={6}  sm={6} style={{marginLeft:'10px'}}>
                 {commentHolder}
               </Col>
-              <Col sm={2} hidden-xs >
+              <Col sm={2} hidden-xs  style={{marginLeft:'-10px'}}>
                 <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
               </Col>
             </Row>
