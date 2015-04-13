@@ -318,6 +318,7 @@ MongoApi.DB.prototype = {
         collection.find(querymodel.query)
           .limit(querymodel.count)
           .skip(querymodel.count * (querymodel.index - 1))
+          .sort(querymodel.sort)
           .toArray(function(err,docs){
             callback(err,docs,next);
           }.bind(this));
@@ -335,6 +336,7 @@ MongoApi.DB.prototype = {
     this.connect(function (collection,next) {
         collection.find(querymodel.query)
           .limit(querymodel.count)
+          .sort(querymodel.sort)
           .skip(querymodel.count * (querymodel.index - 1))
           .toArray(function(err,docs){
             callback(err,this.toSimple(docs),next);
