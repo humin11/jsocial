@@ -26,6 +26,7 @@ var Post = React.createClass({
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
     PostStore.addCommentsChangeListener(this._onMoreCommentsExpand);
+    PostStore.addCommentRemoveListener(this._onCommentRemove);
     ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   componentWillUnmount: function() {
@@ -33,6 +34,7 @@ var Post = React.createClass({
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
     PostStore.removeCommentsChangeListener(this._onMoreCommentsExpand);
+    PostStore.removeCommentRemoveListener(this._onCommentRemove);
     ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   _onChange: function(post) {
@@ -54,6 +56,13 @@ var Post = React.createClass({
     if(id == this.state.post._id) {
       this.setState({
         newCommentExpanded: true
+      });
+    }
+  },
+  _onCommentRemove: function(post) {
+    if(post._id == this.state.post._id) {
+      this.setState({
+        post: post
       });
     }
   },
@@ -157,10 +166,10 @@ var Post = React.createClass({
                   <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
                 </Button>
               </Col>
-              <Col xs={6}  sm={6} style={{marginLeft:'10px'}}>
+              <Col xs={6}  sm={6} style={{marginLeft:'20px'}}>
                 {commentHolder}
               </Col>
-              <Col sm={2} hidden-xs  style={{marginLeft:'-10px'}}>
+              <Col sm={2} hidden-xs  style={{marginLeft:'-20px'}}>
                 <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
               </Col>
             </Row>

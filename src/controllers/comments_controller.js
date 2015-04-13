@@ -21,9 +21,7 @@ module.exports = new MongoController({
     insert: function(req, res){
       if(req.user) {
         var model = MongoApi.ConvertObjectId(req.body);
-        model._id = ModelDefault.id();
-        model.create_at = ModelDefault.now();
-        model.author = req.user;
+        model = this.applyDefault(model, req);
         this.DB.insert(model,function(err,next){
           var PostController = require('./posts_controller');
           PostController.DB.findOne({_id:model.source._id},function(err1,obj,next1){
@@ -50,7 +48,7 @@ module.exports = new MongoController({
       if(req.user) {
         var model = MongoApi.ConvertObjectId(req.body);
         this.DB.remove({query:{_id:model._id}}, function (err, next) {
-          this.DB.find({ index: 1,count: 3, sort:{ create_at: -1 }, query:{ source:{ _id: model.source._id } }},function(err1,arr,next1){
+          this.DB.find({ index: 1,count: 2, query:{ "source._id": model.source._id }},function(err1,arr,next1){
             var newarr = [];
             for(var i=0;i<arr.length;i++){
               newarr.push(arr[i]);

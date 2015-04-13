@@ -165,7 +165,6 @@ MongoApi.Controller.prototype = {
         res.send(model);
         next();
       }.bind(this));
-
     },
     update: function (req, res) {
       var model = MongoApi.ConvertObjectId(req.body);
