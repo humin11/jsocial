@@ -9,6 +9,10 @@ module.exports = new MongoController({
     Default:{
       _id:ModelDefault.id,
       create_at:ModelDefault.now,
+      like_count:0,
+      reshare_count:0,
+      comment_count:0,
+      comments:[],
       author:function(req){
         return req.user;
       }

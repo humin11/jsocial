@@ -8,6 +8,7 @@ module.exports = keyMirror({
   POSTS_CREATE: null,
   COMMENTS_CREATE: null,
   COMMENTS_MORE: null,
+  COMMENTS_DELETE: null,
   USERS_INIT: null,
   USERS_SIGNUP: null,
   USERS_LOGIN: null,

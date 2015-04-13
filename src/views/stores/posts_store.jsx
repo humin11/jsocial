@@ -18,11 +18,33 @@ function updatePost(post,comment){
     if(_posts[i]._id == post._id){
       if(_posts[i].morecomments) {
         post.morecomments = _posts[i].morecomments;
-        post.morecomments.push(comment);
+        if(comment)
+          post.morecomments.push(comment);
       }
       _posts[i] = post;
+      return post;
     }
   }
+  return null;
+}
+
+function removeComment(post,comment){
+  for(var i=0; i < _posts.length; i++) {
+    if (_posts[i]._id == post._id) {
+      if(_posts[i].morecomments) {
+        post.morecomments = _posts[i].morecomments;
+        for(var j=0; j < post.morecomments.length; j++){
+          if(comment._id == post.morecomments[j]._id){
+            post.morecomments.splice(j,1);
+            break;
+          }
+        }
+      }
+      _posts[i] = post;
+      return post;
+    }
+  }
+  return null;
 }
 
 function updatePostComments(id,comments){
@@ -120,7 +142,7 @@ AppDispatcher.register(function(action) {
         url: '/posts/insert',
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify({content:action.content, like_count:0, reshare_count:0, comment_count:0, comments:[]}),
+        data : JSON.stringify({content:action.content}),
         success: function(obj){
           _posts.push(obj);
           UserStore.getUser().post_count++;
@@ -130,7 +152,7 @@ AppDispatcher.register(function(action) {
       break;
     case ActionTypes.COMMENTS_CREATE:
       $.ajax({
-        url: '/comments/add',
+        url: '/comments/insert',
         type: "POST",
         contentType: "application/json",
         data : JSON.stringify(action.data),
@@ -148,6 +170,19 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify({query:action.data}),
         success: function(arr){
           var post = updatePostComments(action.data.source._id,arr);
+          PostStore.emitCommentsChange(post);
+        }
+      });
+      break;
+    case ActionTypes.COMMENTS_DELETE:
+      $.ajax({
+        url: '/comments/remove',
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify(action.data),
+        success: function(obj){
+          var post = removeComment(obj,action.data);
+          console.log(post);
           PostStore.emitCommentsChange(post);
         }
       });

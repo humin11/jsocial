@@ -11,13 +11,14 @@ module.exports = new MongoController({
     Default:{
       _id:ModelDefault.id,
       create_at:ModelDefault.now,
+      like_count:0,
       author:function(req){
         return req.user;
       }
     }
   },
   url: {
-    add: function(req, res){
+    insert: function(req, res){
       if(req.user) {
         var model = MongoApi.ConvertObjectId(req.body);
         model._id = ModelDefault.id();
@@ -42,8 +43,34 @@ module.exports = new MongoController({
           next();
         });
       } else {
-        res.send(null);
+        res.send(MongoApi.Json.Error());
       }
+    },
+    remove: function(req, res){
+      if(req.user) {
+        var model = MongoApi.ConvertObjectId(req.body);
+        this.DB.remove({query:{_id:model._id}}, function (err, next) {
+          this.DB.find({ index: 1,count: 3, sort:{ create_at: -1 }, query:{ source:{ _id: model.source._id } }},function(err1,arr,next1){
+            var newarr = [];
+            for(var i=0;i<arr.length;i++){
+              newarr.push(arr[i]);
+            }
+            next1();
+            var PostController = require('./posts_controller');
+            PostController.DB.update({query:{_id: model.source._id},model:{ $inc:{comment_count:-1},$set: {comments: newarr}}},function(err2,next2){
+              PostController.DB.findOne({query:{_id: model.source._id}},function(err3,obj,next3){
+                res.send(obj);
+                next3();
+              });
+              next2();
+            });
+          });
+          next();
+        }.bind(this));
+      } else {
+        res.send(MongoApi.Json.Error());
+      }
+
     }
   }
 })

@@ -1,20 +1,38 @@
 var classSet = React.addons.classSet;
 var moment = require('moment');
 moment.locale('zh-cn');
+var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
+var ActionTypes = require('../../constants/constants.jsx');
 var MoreComments = require('./more_comments.jsx');
 var Authentication = require('../../mixins/authentication.jsx');
 
 var SingleComment = React.createClass({
   mixins:[Authentication],
+  _handleLike: function(){
+
+  },
+  _handleDelete: function(){
+    AppDispatcher.dispatch({
+      type: ActionTypes.COMMENTS_DELETE,
+      data: this.props.comment
+    });
+  },
   render: function () {
     var create_at = moment(this.props.comment.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
     var editFlag = false;
     if(this.state.isLoggedIn && this.state.user._id == this.props.comment.author._id){
       editFlag = true;
     }
-    text = l20n.ctx.getSync('modify',null);
-
-    var toolbar = <span>{text}<Icon glyph='icon-feather-circle-cross'/></span>;
+    text = l20n.ctx.getSync('modify');
+    var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 icon-1-and-half-x'/>;
+    var replyBtn = <Icon glyph='icon-fontello-reply-1 icon-1-and-half-x'/>;
+    var modifyBtn = null;
+    var deleteBtn = null;
+    if(editFlag){
+      replyBtn = null;
+      modifyBtn = <Icon glyph='icon-fontello-edit icon-1-and-half-x'/>;
+      deleteBtn = <Icon glyph='icon-fontello-cancel-circle icon-1-and-half-x' onClick={this._handleDelete}/>;
+    }
     return (
       <div className='comment' style={{borderBottom: '1px solid #EAEDF1'}}>
         <img src={this.props.comment.author.avatar} />
@@ -24,7 +42,7 @@ var SingleComment = React.createClass({
           <div className='fg-text comment-content'>{this.props.comment.content}</div>
         </div>
         <div className='comment-toolbar hidden-sm hidden-xs fg-text text-right'>
-          {toolbar}
+          {likeBtn} {replyBtn} {modifyBtn} {deleteBtn}
         </div>
       </div>
     )
