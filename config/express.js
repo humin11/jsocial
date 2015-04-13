@@ -15,11 +15,11 @@ module.exports = function(app, passport) {
   app.use(bodyParser.json());
   app.use(session({
     secret: 'jsocial',
-    saveUninitialized: true, // don't create session until something stored
+    saveUninitialized: false, // don't create session until something stored
     resave: false, //don't save session if unmodified
     store: new MongoStore({
       url: require(process.cwd() + '/config/database').url,
-      ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+      ttl: 1 * 24 * 60 * 60 // = 14 days. Default
     })
   }));
   app.use(passport.initialize());
