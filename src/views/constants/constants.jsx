@@ -12,13 +12,16 @@ module.exports = keyMirror({
   USERS_SIGNUP: null,
   USERS_LOGIN: null,
   USERS_LOGOUT: null,
-  USERS_FOLLOW: null,
-  USERS_UNFOLLOW: null,
+  FOLLOW_ADD: null,
+  FOLLOW_REMOVE: null,
+  USERS_CHANGE:null,
   AVATAR_INIT:null,
   AVATAR_HIED:null,
   SIDEBAR_INIT:null,
   RECOMMEND_PEOPLE:null,
   CHAT_INIT:null,
   CHAT_SEND:null,
-  CHAT_ARRIVE:null
+  CHAT_ARRIVE:null,
+  FOLLOW_INIT:null,
+  PERSON_LOAD:null
 });
