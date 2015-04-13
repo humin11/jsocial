@@ -4,11 +4,13 @@ var UsersStore = require('../../stores/users_store.jsx');
 var PostStore = require('../../stores/posts_store.jsx');
 var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
+var Authentication = require('../../mixins/authentication.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;
 
 var Post = React.createClass({
+  mixins:[Authentication],
   getInitialState: function () {
     return {
       likeActive: false,
@@ -16,12 +18,10 @@ var Post = React.createClass({
       reshareTextStyle: 'fg-white',
       post: this.props.post,
       newCommentExpanded: false,
-      expandedMoreComment: false,
-      isLoggedIn: UsersStore.isLoggedIn()
+      expandedMoreComment: false
     };
   },
   componentDidMount: function() {
-    UsersStore.addChangeListener(this._onLogin);
     PostStore.addPostChangeListener(this._onChange);
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
@@ -29,15 +29,11 @@ var Post = React.createClass({
     ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onLogin);
     PostStore.removePostChangeListener(this._onChange);
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
     PostStore.removeCommentsChangeListener(this._onMoreCommentsExpand);
     ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onMoreCommentsCollapse);
-  },
-  _onLogin: function(){
-    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
   },
   _onChange: function(post) {
     if(post._id == this.state.post._id) {
@@ -123,7 +119,7 @@ var Post = React.createClass({
                              style={{border: '1px solid #d8d8d8'}}/>;
     }
     return (
-      <PanelContainer noControls>
+      <PanelContainer noControls >
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
           <div className='inbox-avatar'>
             <img src={this.state.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
@@ -149,22 +145,22 @@ var Post = React.createClass({
         <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
           <Grid style={{marginRight:'-30px'}}>
             <Row>
-              <Col xs={2} style={{marginLeft:'-20px'}}>
+              <Col xs={2} sm={2} style={{marginLeft:'-20px'}}>
                 <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
                   <Icon glyph='icon-fontello-heart-1' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
                 </Button>
               </Col>
-              <Col xs={2} >
+              <Col xs={2} sm={2}>
                 <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
                   <Icon glyph='icon-stroke-gap-icons-Share' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
                 </Button>
               </Col>
-              <Col xs={6} style={{margin:'0 0 0 10px'}}>
+              <Col xs={6}  sm={6} style={{marginLeft:'10px'}}>
                 {commentHolder}
               </Col>
-              <Col xs={2} >
+              <Col sm={2} hidden-xs >
                 <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
               </Col>
             </Row>

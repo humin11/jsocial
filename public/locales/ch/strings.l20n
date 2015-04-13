@@ -39,13 +39,19 @@
 <!-- POST -->
 <inputNewPost '分享新鲜事...'>
 <inputNewComment '发表评论...'>
-<share '分享'>
 <submitComment '发表评论'>
-<cancel '取消'>
-<commentCount '条评论'>
+<commentCount '{{$num}} 条评论'>
 <hideCommentCount '隐藏评论'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
 <sidebarPost '微博'>
 <sidebarCircle '合作社'>
+
+
+<!-- COMMON -->
+<share '分享'>
+<cancel '取消'>
+<delete '删除'>
+<modify '修改'>
+<reply '回复'>

@@ -1,19 +1,9 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var UsersStore = require('../../stores/users_store.jsx');
+var Authentication = require('../../mixins/authentication.jsx');
 
 var NewPost = React.createClass({
-  getInitialState: function () {
-    return {
-      isLoggedIn: UsersStore.isLoggedIn()
-    };
-  },
-  componentDidMount: function() {
-    UsersStore.addChangeListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onChange);
-  },
+  mixins:[Authentication],
   _handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
@@ -22,12 +12,9 @@ var NewPost = React.createClass({
     });
     this.refs.postContent.getDOMNode().value = '';
   },
-  _onChange: function(){
-    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
-  },
   render: function () {
     if(!this.state.isLoggedIn)
-      return <noscript></noscript>;
+      return null;
     var holder = l20n.ctx.getSync('inputNewPost',null);
     return (
       <PanelContainer noControls >

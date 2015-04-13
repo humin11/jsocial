@@ -81,12 +81,79 @@ html.social body .sidebar-nav > li.active:after {
     background-color: #fff;
   }
 }
+.morecomments {
+  margin: 10px 0 0 0;
+  cursor: pointer;
+  &:hover, &:focus {
+    .morecomment-text{
+      color: #427fed;
+    }
+  }
+  .morecomment-text {
+    font-size: 12px;
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+  }
+  .rubix-icon {
+    opacity: .7;
+    &:hover, &:focus {
+      opacity: 1;
+    }
+  }
+}
 
 .comments {
   max-height: 320px;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
+  .comment {
+    padding-top: 12.5px;
+    padding-bottom: 12.5px;
+    img {
+      width: 30px;
+      height: 30px;
+      vertical-align: top;
+      top: 10px;
+      position: relative;
+    }
+    .comment-main {
+      text-align: left;
+      padding-left: 12.5px;
+      display: inline-block;
+      vertical-align: middle;
+      >div:first-child {
+        top: 5px;
+        position: relative;
+      }
+      >div:last-child > small {
+        top: -5px;
+        position: relative;
+      }
+      .comment-avatar-name {
+        color: #404040;
+        font-weight: bold;
+        font-size: 13px;
+        &:hover, &:focus {
+          text-decoration: underline;
+        }
+      }
+      .comment-date {
+        color: #999;
+        font-size: 12px;
+      }
+      .comment-content {
+        color: #404040;
+        font-size: 13px;
+      }
+    }
+    .comment-toolbar {
+      float: right;
+    }
+  }
 }
+
+
 
 .recommend-person {
   .col-xs-12 .inbox-avatar{

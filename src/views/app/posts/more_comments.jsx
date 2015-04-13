@@ -1,8 +1,9 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var UsersStore = require('../../stores/users_store.jsx');
+var Authentication = require('../../mixins/authentication.jsx');
 
 var MoreComments = React.createClass({
+  mixins:[Authentication],
   getDefaultProps: function(){
     return {
       expanded: false
@@ -19,22 +20,17 @@ var MoreComments = React.createClass({
     }
   },
   render: function(){
-    var text = null;
-    var icon = null;
+    var text = l20n.ctx.getSync('commentCount',{num:this.props.post.comment_count});
+    var icon = <Icon glyph='icon-ikons-arrow-down' />;
     if(this.props.expanded){
       text = l20n.ctx.getSync('hideCommentCount',null);
       icon = <Icon glyph='icon-ikons-arrow-up' />;
-    } else {
-      var commentCountText = l20n.ctx.getSync('commentCount',null);
-      text = this.props.post.comment_count + commentCountText;
-      icon = <Icon glyph='icon-ikons-arrow-down' />;
     }
     return (
-      <Grid className={this.props.className} style={{marginTop:'5px',cursor:'pointer'}} onClick={this._handleClick}>
-        <Row style={{marginLeft:'-50px'}}>
-          <Col xs={4}>{text}</Col>
-          <Col xs={2} style={{margin:'2px 0 0 -60px'}}>{icon}</Col></Row>
-      </Grid>
+      <div className={this.props.className} onClick={this._handleClick}>
+        <span className="morecomment-text"> {text} </span>
+        {icon}
+      </div>
     );
   }
 });

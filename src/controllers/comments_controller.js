@@ -34,7 +34,7 @@ module.exports = new MongoController({
             }
             obj.comment_count++;
             PostController.DB.update({query:{_id: obj._id},model:{ $inc:{comment_count:1},$set: {comments: obj.comments}}},function(err2,next2){
-              res.send(obj);
+              res.send({post:obj,comment:model});
               next2();
             });
             next1();

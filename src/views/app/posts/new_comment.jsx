@@ -1,28 +1,15 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var UsersStore = require('../../stores/users_store.jsx');
 var classSet = React.addons.classSet;
+var Authentication = require('../../mixins/authentication.jsx');
 
 var NewComment = React.createClass({
+  mixins:[Authentication],
   getInitialState: function () {
     return {
       disabledOkBtn: true,
-      disabledCancelBtn: false,
-      author: UsersStore.getUser(),
-      isLoggedIn: UsersStore.isLoggedIn()
+      disabledCancelBtn: false
     };
-  },
-  componentDidMount: function() {
-    UsersStore.addChangeListener(this._onLogin);
-  },
-  componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onLogin);
-  },
-  _onLogin: function(){
-    this.setState({
-      author: UsersStore.getUser(),
-      isLoggedIn: UsersStore.isLoggedIn()
-    });
   },
   _onExpand: function(){
     this.refs.commentContent.getDOMNode().innerHTML = '';
@@ -63,8 +50,7 @@ var NewComment = React.createClass({
       return null;
     var holder = l20n.ctx.getSync('inputNewComment',null);
     var footerClass = classSet({
-      'hide': !this.props.expanded && this.props.hideHolder,
-      'bg-gray': true
+      'hide': !this.props.expanded && this.props.hideHolder
     });
     var collapsedClass = classSet({
       'hide': this.props.expanded || this.props.hideHolder
@@ -86,13 +72,13 @@ var NewComment = React.createClass({
       cancelBtn = <Button ref='cancelBtn' disabled style={{marginLeft:'4px'}} bsStyle='darkgray50' onClick={this._handleCancel}><Entity entity='cancel'/></Button>;
     }
     return (
-      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0}} className={footerClass}>
+      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0,backgroundColor:'#f5f5f5'}} className={footerClass}>
         <Input className={collapsedClass} type='text' placeholder={holder}  onClick={this._onExpand}
                style={{border: '1px solid #d8d8d8'}}/>
         <Grid className={expandedClass}>
           <Row>
             <Col xs={2}>
-              <img src={this.state.author.avatar} width='30' height='30'
+              <img src={this.state.user.avatar} width='30' height='30'
                    style={{verticalAlign:'top',top:10,position:'relative'}}/>
             </Col>
             <Col xs={9} className="comment-editor-main bg-white">

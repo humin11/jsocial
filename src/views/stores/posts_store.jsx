@@ -13,15 +13,19 @@ var CHANGE_EVENT = 'change';
 var POST_CHANGE_EVENT = 'post:change';
 var COMMENTS_CHANGE_EVENT = 'comments:change';
 
-function updatePost(post){
+function updatePost(post,comment){
   for(var i=0; i < _posts.length; i++){
     if(_posts[i]._id == post._id){
+      if(_posts[i].morecomments) {
+        post.morecomments = _posts[i].morecomments;
+        post.morecomments.push(comment);
+      }
       _posts[i] = post;
     }
   }
 }
 
-function updateComments(id,comments){
+function updatePostComments(id,comments){
   for(var i=0; i < _posts.length; i++){
     if(_posts[i]._id == id){
       if(_posts[i].morecomments)
@@ -131,8 +135,8 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
-          updatePost(obj);
-          PostStore.emitPostChange(obj);
+          updatePost(obj.post,obj.comment);
+          PostStore.emitPostChange(obj.post);
         }
       });
       break;
@@ -143,7 +147,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({query:action.data}),
         success: function(arr){
-          var post = updateComments(action.data.source._id,arr);
+          var post = updatePostComments(action.data.source._id,arr);
           PostStore.emitCommentsChange(post);
         }
       });
