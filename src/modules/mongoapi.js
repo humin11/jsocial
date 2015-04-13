@@ -212,11 +212,13 @@ MongoApi.Controller.prototype = {
     },
     findOne: function (req, res) {
       var model = MongoApi.ConvertObjectId(req.body);
+      console.log(this.DB);
+      console.log(this.DB.findOne);
       this.DB.findOne(model, function (err, doc, next) {
         res.send(doc);
         next();
-      });
-    }.bind(this)
+      }.bind(this));
+    }
   },
   binding: function (express) {
     for (var item in this.url) {
