@@ -123,7 +123,8 @@ var Post = React.createClass({
     if(this.state.post.comment_count > 0)
       hideCommentHolder = true;
     var holderClass = classSet({
-      'hide': !(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded)
+      'hide': !(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded),
+      'newcomment-holder':true
     });
     return (
       <PanelContainer noControls >

@@ -4,10 +4,17 @@ moment.locale('zh-cn');
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var MoreComments = require('./more_comments.jsx');
+var CollapsibleContent = require('./collapsible_content.jsx');
 var Authentication = require('../../mixins/authentication.jsx');
 
 var SingleComment = React.createClass({
   mixins:[Authentication],
+  getInitialState: function () {
+    return {
+      expanded: false,
+      contentStyle: { maxHeight: '54px' }
+    };
+  },
   _handleLike: function(){
 
   },
@@ -54,7 +61,7 @@ var SingleComment = React.createClass({
               </Row>
               <Row>
                 <Col xs={12} style={{padding:0}}>
-                  <div className='comment-content'>{this.props.comment.content}</div>
+                  <CollapsibleContent className='comment-content' content={this.props.comment.content}/>
                 </Col>
               </Row>
             </Grid>

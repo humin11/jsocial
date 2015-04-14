@@ -42,6 +42,7 @@
 <submitComment '发表评论'>
 <commentCount '{{$num}} 条评论'>
 <hideCommentCount '隐藏评论'>
+<expandCommentContent '剩余内容'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
@@ -55,3 +56,5 @@
 <delete '删除'>
 <modify '修改'>
 <reply '回复'>
+<collapse '收起'>
+<expand '展开'>

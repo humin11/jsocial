@@ -66,7 +66,10 @@ html.social body .sidebar-nav > li.active:after {
   top: 10px;
   position: relative;
 }
-
+.newcomment-holder {
+  color: #999;
+  font-size: 12px;
+}
 .newcomment {
   margin-top:0;
   border-top: 0;
@@ -88,7 +91,9 @@ html.social body .sidebar-nav > li.active:after {
       max-height:200px;
       min-height: 80px;
       outline: 0;
-      font-size: 16px;
+      line-height:1.4;
+      color: #404040;
+      font-size: 13px;
       word-wrap: break-word;
       overflow-x: hidden;
       overflow-y: auto;
@@ -152,10 +157,12 @@ html.social body .sidebar-nav > li.active:after {
       }
     }
     .comment-content {
-      color: #404040;
-      font-size: 13px;
       max-width:250px;
       word-wrap: break-word;
+      overflow: hidden;
+      line-height:1.4;
+      color: #404040;
+      font-size: 13px;
     }
     .comment-toolbar {
       float: right;
@@ -169,11 +176,23 @@ html.social body .sidebar-nav > li.active:after {
         }
       }
     }
+
     &:hover, &:focus {
+      .content-toolbar span{
+        color: #427fed;
+      }
       .comment-toolbar {
         display: inline;
       }
     }
+  }
+}
+
+.content-toolbar span{
+  font-size: 12px;
+  cursor: pointer;
+  &:hover, &:focus {
+    text-decoration: underline;
   }
 }
 

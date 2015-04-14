@@ -64,7 +64,8 @@ var NewComment = React.createClass({
       'newcomment': true
     });
     var collapsedClass = classSet({
-      'hide': this.props.expanded || this.props.hideHolder
+      'hide': this.props.expanded || this.props.hideHolder,
+      'newcomment-holder': true
     });
 
     var expandedClass = classSet({
