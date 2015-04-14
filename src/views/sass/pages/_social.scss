@@ -59,28 +59,44 @@ html.social body .sidebar-nav > li.active:after {
   }
 }
 
-.comment-editor-main {
+.comment-avatar {
+  width: 30px;
+  height: 30px;
+  vertical-align: top;
+  top: 10px;
   position: relative;
-  margin: 10px 15px 12px 0;
-  padding: 4px 0 0 8px;
-  outline: 0;
-  border: 1px solid #c4c4c4;
-  font-size: 16px;
-  word-wrap: break-word;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  .comment-editor {
+}
+
+.newcomment {
+  margin-top:0;
+  border-top: 0;
+  padding:15px 25px 15px 25px;
+  background-color: #f5f5f5;
+  .newcomment-main {
     position: relative;
-    max-height:200px;
-    min-height: 80px;
+    top: 10px;
+    margin-left:-5px;
+    padding: 4px 0 0 8px;
     outline: 0;
+    border: 1px solid #c4c4c4;
     font-size: 16px;
     word-wrap: break-word;
     overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #fff;
+    overflow-y: hidden;
+    .newcomment-editor {
+      position: relative;
+      max-height:200px;
+      min-height: 80px;
+      outline: 0;
+      font-size: 16px;
+      word-wrap: break-word;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: #fff;
+    }
   }
 }
+
 .morecomments {
   margin: 10px 0 0 0;
   cursor: pointer;
@@ -108,18 +124,9 @@ html.social body .sidebar-nav > li.active:after {
   overflow-x: hidden;
   overflow-y: hidden;
   .comment {
-    padding-top: 12.5px;
-    padding-bottom: 12.5px;
-    img {
-      width: 30px;
-      height: 30px;
-      vertical-align: top;
-      top: 10px;
-      position: relative;
-    }
+    padding: 12.5px 0 12.5px 0;
     .comment-main {
       text-align: left;
-      max-width:250px;
       padding-left: 12.5px;
       display: inline-block;
       vertical-align: middle;
@@ -147,8 +154,8 @@ html.social body .sidebar-nav > li.active:after {
     .comment-content {
       color: #404040;
       font-size: 13px;
+      max-width:250px;
       word-wrap: break-word;
-      margin-left: 40px;
     }
     .comment-toolbar {
       float: right;

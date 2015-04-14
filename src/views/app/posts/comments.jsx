@@ -34,17 +34,33 @@ var SingleComment = React.createClass({
       deleteBtn = <Icon glyph='icon-fontello-cancel-circle icon-1-and-quarter-x' onClick={this._handleDelete}/>;
     }
     return (
-      <div className='comment' style={{borderBottom: '1px solid #EAEDF1'}}>
-        <img src={this.props.comment.author.avatar} />
-        <div className='comment-main'>
-          <div className='comment-avatar-name fg-darkgrayishblue75'>{this.props.comment.author.name}</div>
-          <div className='comment-date'>{create_at}</div>
-        </div>
-        <div className='comment-toolbar hidden-sm hidden-xs fg-text text-right'>
-          {likeBtn} {replyBtn} {modifyBtn} {deleteBtn}
-        </div>
-        <div className='comment-content'>{this.props.comment.content}</div>
-      </div>
+      <Grid className='comment'>
+        <Row>
+          <Col xs={2}>
+            <img src={this.props.comment.author.avatar} className="comment-avatar"/>
+          </Col>
+          <Col xs={10} className='comment-main'>
+            <Grid>
+              <Row>
+                <Col xs={6} style={{padding:0}}>
+                  <div className='comment-avatar-name fg-darkgrayishblue75'>{this.props.comment.author.name}</div>
+                  <div className='comment-date'>{create_at}</div>
+                </Col>
+                <Col xs={6} style={{padding:0}}>
+                  <div className='comment-toolbar hidden-sm hidden-xs fg-text text-right'>
+                    {likeBtn} {replyBtn} {modifyBtn} {deleteBtn}
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} style={{padding:0}}>
+                  <div className='comment-content'>{this.props.comment.content}</div>
+                </Col>
+              </Row>
+            </Grid>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 });
@@ -82,7 +98,7 @@ var Comments = React.createClass({
       'morecomments':true
     });
     return (
-      <PanelFooter style={{padding: 25, paddingTop: 0, paddingBottom: 0, backgroundColor:'#f5f5f5'}} >
+      <PanelFooter style={{padding: '0 25px 0 25px', backgroundColor:'#f5f5f5'}} >
         <MoreComments className={moreCommentClass} expanded={this.props.expanded} post={this.props.post}/>
         <div ref="commentsMain" className="comments">
           {comments}

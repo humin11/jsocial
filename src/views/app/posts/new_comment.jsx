@@ -50,7 +50,8 @@ var NewComment = React.createClass({
       return null;
     var holder = l20n.ctx.getSync('inputNewComment');
     var footerClass = classSet({
-      'hide': !this.props.expanded && this.props.hideHolder
+      'hide': !this.props.expanded && this.props.hideHolder,
+      'newcomment': true
     });
     var collapsedClass = classSet({
       'hide': this.props.expanded || this.props.hideHolder
@@ -59,10 +60,6 @@ var NewComment = React.createClass({
     var expandedClass = classSet({
       'hide': !this.props.expanded
     });
-    var footerPadding = '15px 25px 15px 25px';
-    if(this.props.expanded) {
-      footerPadding = '15px 0 15px 0';
-    }
     var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     if(this.state.disabledOkBtn) {
       okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
@@ -72,20 +69,19 @@ var NewComment = React.createClass({
       cancelBtn = <Button ref='cancelBtn' disabled style={{marginLeft:'4px'}} bsStyle='darkgray50' onClick={this._handleCancel}><Entity entity='cancel'/></Button>;
     }
     return (
-      <PanelFooter style={{marginTop:0, padding: footerPadding, borderTop: 0,backgroundColor:'#f5f5f5'}} className={footerClass}>
+      <PanelFooter className={footerClass} style={{borderTop:0}}>
         <Input className={collapsedClass} type='text' placeholder={holder}  onClick={this._onExpand}
                style={{border: '1px solid #d8d8d8'}}/>
-        <Grid className={expandedClass}>
+        <Grid className={expandedClass} >
           <Row>
-            <Col xs={2}>
-              <img src={this.state.user.avatar} width='30' height='30'
-                   style={{verticalAlign:'top',top:10,position:'relative'}}/>
+            <Col xs={2} style={{padding:0}}>
+              <img src={this.state.user.avatar} className="comment-avatar"/>
             </Col>
-            <Col xs={9} className="comment-editor-main bg-white">
-              <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder={holder} className="comment-editor"></div>
+            <Col xs={10} className="newcomment-main bg-white">
+              <div ref="commentContent" onKeyUp={this._handleChange} contentEditable placeholder={holder} className="newcomment-editor"></div>
             </Col>
           </Row>
-          <div className='text-right' style={{paddingRight:'10px'}} >
+          <div className='text-right' style={{marginTop:'20px',marginRight:'-20px'}}>
             {okBtn}
             {cancelBtn}
           </div>
