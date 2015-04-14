@@ -177,6 +177,11 @@ html.social body .sidebar-nav > li.active:after {
   }
 }
 
+.post-toolbar {
+  >button {
+    border-width: 0;
+  }
+}
 
 
 .recommend-person {

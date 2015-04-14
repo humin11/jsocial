@@ -151,18 +151,18 @@ var Post = React.createClass({
             {img}
           </div>
         </PanelBody>
-        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
+        <PanelFooter noRadius className='fg-black75 bg-white post-toolbar' style={{padding: '10px 10px', margin: 0}}>
           <Grid style={{marginRight:'-30px'}}>
             <Row>
               <Col xs={2} sm={2} style={{marginLeft:'-20px'}}>
                 <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
-                  <Icon glyph='icon-fontello-heart-1' />
+                  <Icon glyph='icon-fontello-thumbs-up-1' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
                 </Button>
               </Col>
               <Col xs={2} sm={2}>
                 <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
-                  <Icon glyph='icon-stroke-gap-icons-Share' />
+                  <Icon glyph='icon-fontello-share' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
                 </Button>
               </Col>
