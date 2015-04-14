@@ -58,6 +58,7 @@ var Post = React.createClass({
         newCommentExpanded: true
       });
     }
+    ReactBootstrap.Dispatcher.emit('newcomment:reset',this.state.post._id);
   },
   _onCommentRemove: function(post) {
     if(post._id == this.state.post._id) {
@@ -88,7 +89,7 @@ var Post = React.createClass({
     if(reshareActive) {
       post.reshare_count--;
       reshareActive = false;
-    }else{
+    } else {
       post.reshare_count++;
       reshareActive = true;
     }
@@ -121,12 +122,9 @@ var Post = React.createClass({
     var hideCommentHolder = false;
     if(this.state.post.comment_count > 0)
       hideCommentHolder = true;
-    var commentHolder = null;
-    if(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded) {
-      commentHolder = <Input type='text' placeholder={holder}
-                             onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
-                             style={{border: '1px solid #d8d8d8'}}/>;
-    }
+    var holderClass = classSet({
+      'hide': !(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded)
+    });
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 25, paddingTop: 12.5}}>
@@ -151,25 +149,27 @@ var Post = React.createClass({
             {img}
           </div>
         </PanelBody>
-        <PanelFooter noRadius className='fg-black75 bg-white post-toolbar' style={{padding: '10px 10px', margin: 0}}>
-          <Grid style={{marginRight:'-30px'}}>
-            <Row>
-              <Col xs={2} sm={2} style={{marginLeft:'-20px'}}>
-                <Button xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+        <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
+          <Grid style={{paddingLeft:'0',paddingRight:'0'}}>
+            <Row style={{marginLeft:'0',marginRight:'5px'}}>
+              <Col xs={2} style={{paddingLeft:'0',paddingRight:'0'}}>
+                <Button style={{borderWidth:'1px'}} xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
                   <Icon glyph='icon-fontello-thumbs-up-1' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
                 </Button>
               </Col>
-              <Col xs={2} sm={2}>
-                <Button xs style={{marginLeft:'5px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
+              <Col xs={2} style={{paddingLeft:'15px',paddingRight:'0'}}>
+                <Button xs style={{borderWidth:'1px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
                   <Icon glyph='icon-fontello-share' />
                   <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
                 </Button>
               </Col>
-              <Col xs={6}  sm={6} style={{marginLeft:'20px'}}>
-                {commentHolder}
+              <Col xs={6} style={{paddingLeft:'35px',paddingRight:'0'}}>
+                <Input className={holderClass} type='text' placeholder={holder}
+                       onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
+                       style={{border: '1px solid #d8d8d8'}}/>
               </Col>
-              <Col sm={2} hidden-xs  style={{marginLeft:'-20px'}}>
+              <Col xs={2} hidden-xs hidden-sm style={{paddingLeft:'35px',paddingRight:'0'}}>
                 <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
               </Col>
             </Row>

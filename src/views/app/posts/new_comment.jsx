@@ -11,12 +11,22 @@ var NewComment = React.createClass({
       disabledCancelBtn: false
     };
   },
+  componentDidMount: function() {
+    ReactBootstrap.Dispatcher.on('newcomment:reset',this._onReset);
+  },
+  componentWillUnmount: function() {
+    ReactBootstrap.Dispatcher.off('newcomment:reset',this._onReset);
+  },
+  _onReset: function(id){
+    if(id == this.props.source._id) {
+      this.refs.commentContent.getDOMNode().innerHTML = '';
+      this.setState({
+        disabledOkBtn: true,
+        disabledCancelBtn: false
+      });
+    }
+  },
   _onExpand: function(){
-    this.refs.commentContent.getDOMNode().innerHTML = '';
-    this.setState({
-      disabledOkBtn: true,
-      disabledCancelBtn: false
-    });
     ReactBootstrap.Dispatcher.emit('newcomment:expand',this.props.source._id);
   },
   _handleOk: function(){
