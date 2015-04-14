@@ -4,6 +4,7 @@ var UsersStore = require('../../stores/users_store.jsx');
 var PostStore = require('../../stores/posts_store.jsx');
 var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
+var CollapsibleContent = require('./collapsible_content.jsx');
 var Authentication = require('../../mixins/authentication.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
@@ -128,7 +129,7 @@ var Post = React.createClass({
     });
     return (
       <PanelContainer noControls >
-        <PanelBody style={{padding: 25, paddingTop: 12.5}}>
+        <PanelBody style={{padding: 25, paddingTop: 12.5}} className="post">
           <div className='inbox-avatar'>
             <img src={this.state.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
             <div className='inbox-avatar-name'>
@@ -141,11 +142,7 @@ var Post = React.createClass({
               </div>
             </div>
           </div>
-          <div>
-            <div className='fg-text'>
-              {this.state.post.content}
-            </div>
-          </div>
+          <CollapsibleContent className="post-content" content={this.state.post.content} maxHeight={"100px"}/>
           <div style={{margin: -25, marginTop: 25}}>
             {img}
           </div>

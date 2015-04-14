@@ -188,11 +188,26 @@ html.social body .sidebar-nav > li.active:after {
   }
 }
 
-.content-toolbar span{
+.content-toolbar span {
   font-size: 12px;
   cursor: pointer;
   &:hover, &:focus {
     text-decoration: underline;
+  }
+}
+
+.post {
+  .post-content {
+    color: #404040;
+    font-size: 13px;
+    line-height: 1.4;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+  &:hover, &:focus {
+    .content-toolbar span {
+      color: #427fed;
+    }
   }
 }
 

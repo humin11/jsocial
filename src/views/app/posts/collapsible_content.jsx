@@ -37,7 +37,7 @@ var CollapsibleContent = React.createClass({
       'hide': !this.state.expanded
     });
     var contentStyle = {};
-    if(br.length > this.props.maxRow || content.length > this.props.maxChar){
+    if(br && br.length > this.props.maxRow || content.length > this.props.maxChar){
       contentStyle = this.state.contentStyle;
       contentToolbar =
         <div className="content-toolbar">
@@ -46,8 +46,8 @@ var CollapsibleContent = React.createClass({
         </div>;
     }
     return (
-      <div>
-      <div className={this.props.className} dangerouslySetInnerHTML={{__html: content}} style={contentStyle}></div>
+      <div style={this.props.style}>
+        <div className={this.props.className} dangerouslySetInnerHTML={{__html: content}} style={contentStyle} />
         {contentToolbar}
       </div>
     );
