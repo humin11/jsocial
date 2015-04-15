@@ -4,10 +4,17 @@ moment.locale('zh-cn');
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var MoreComments = require('./more_comments.jsx');
+var CollapsibleContent = require('./collapsible_content.jsx');
 var Authentication = require('../../mixins/authentication.jsx');
 
 var SingleComment = React.createClass({
   mixins:[Authentication],
+  getInitialState: function () {
+    return {
+      expanded: false,
+      contentStyle: { maxHeight: '54px' }
+    };
+  },
   _handleLike: function(){
 
   },
@@ -24,14 +31,14 @@ var SingleComment = React.createClass({
       editFlag = true;
     }
     text = l20n.ctx.getSync('modify');
-    var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 icon-1-and-quarter-x'/>;
-    var replyBtn = <Icon glyph='icon-fontello-reply-1 icon-1-and-quarter-x'/>;
+    var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 '/>;
+    var replyBtn = <Icon glyph='icon-fontello-reply-1 '/>;
     var modifyBtn = null;
     var deleteBtn = null;
     if(editFlag){
       replyBtn = null;
-      modifyBtn = <Icon glyph='icon-fontello-edit icon-1-and-quarter-x'/>;
-      deleteBtn = <Icon glyph='icon-fontello-cancel-circle icon-1-and-quarter-x' onClick={this._handleDelete}/>;
+      modifyBtn = <Icon glyph='icon-fontello-edit '/>;
+      deleteBtn = <Icon glyph='icon-fontello-cancel-circle' onClick={this._handleDelete}/>;
     }
     return (
       <Grid className='comment'>
@@ -41,7 +48,7 @@ var SingleComment = React.createClass({
           </Col>
           <Col xs={10} className='comment-main'>
             <Grid>
-              <Row>
+              <Row style={{minHeight:'48px'}}>
                 <Col xs={6} style={{padding:0}}>
                   <div className='comment-avatar-name fg-darkgrayishblue75'>{this.props.comment.author.name}</div>
                   <div className='comment-date'>{create_at}</div>
@@ -54,7 +61,7 @@ var SingleComment = React.createClass({
               </Row>
               <Row>
                 <Col xs={12} style={{padding:0}}>
-                  <div className='comment-content'>{this.props.comment.content}</div>
+                  <CollapsibleContent className='comment-content' content={this.props.comment.content}/>
                 </Col>
               </Row>
             </Grid>

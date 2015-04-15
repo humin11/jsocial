@@ -123,18 +123,18 @@ var Menu = React.createClass({
         return;
       this.hide();
     }.bind(this));
-    $('body').bind('mouseover.menu.'+this._currentElement.ref, function(e) {
-      clearTimeout(this.timer);
-      if(parent.find(e.target).length)
-        return;
-      if(this.props.noTimer)
-        return this.hide();
-      this.timer = setTimeout(function() {
-        try {
-          this.hide();
-        } catch(e) {}
-      }.bind(this), 500);
-    }.bind(this));
+    //$('body').bind('mouseover.menu.'+this._currentElement.ref, function(e) {
+    //  clearTimeout(this.timer);
+    //  if(parent.find(e.target).length)
+    //    return;
+    //  if(this.props.noTimer)
+    //    return this.hide();
+    //  this.timer = setTimeout(function() {
+    //    try {
+    //      this.hide();
+    //    } catch(e) {}
+    //  }.bind(this), 5000);
+    //}.bind(this));
   },
   componentWillUnmount: function() {
     $('body').unbind('click.menu.'+this._currentElement.ref);

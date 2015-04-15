@@ -92,7 +92,7 @@ var MongoApi = {
     }
     this.model.OutFormat.hide = hide;
     if (params.url) {
-      this.url = assign(MongoApi.Controller.prototype.url,params.url);
+      this.url = assign({},MongoApi.Controller.prototype.baseurl,params.url);
     }
     this.DB = new MongoApi.DB(params.table);
     this.DB.SimpleFormat = this.SimpleFormat;
@@ -152,7 +152,7 @@ MongoApi.Controller.prototype = {
     return result;
   },
 
-  url: {
+  baseurl: {
     insert: function (req, res) {
       var model = MongoApi.ConvertObjectId(req.body);
       model = this.applyDefault(model, req);
@@ -304,16 +304,14 @@ MongoApi.DB.prototype = {
     var model = removemodel;
     if (!model.query) {
       model = {
-        query: {"_id": model["_id"]},
-        model: removemodel
+        query: {"_id": model["_id"]}
       };
     };
     this.connect(function (collection,next) {
-      collection.remove(
-        model.query, {safe: true}, function(err){
-          callback(err,next);
-        });
-    });
+      collection.remove(model.query, function(err){
+        callback(err,next);
+      }.bind(this));
+    }.bind(this));
   },
   count: function (querymodel, callback) {
     this.connect(function (collection,next) {

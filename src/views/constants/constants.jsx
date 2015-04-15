@@ -6,6 +6,7 @@ var keyMirror = require('keymirror');
 module.exports = keyMirror({
   POSTS_INIT: null,
   POSTS_CREATE: null,
+  POSTS_DELETE: null,
   COMMENTS_CREATE: null,
   COMMENTS_MORE: null,
   COMMENTS_DELETE: null,
