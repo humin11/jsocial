@@ -203,10 +203,34 @@ html.social body .sidebar-nav > li.active:after {
     line-height: 1.4;
     overflow: hidden;
     word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+  }
+  .post-toolbar {
+    float: right;
+    .icon-ikons-arrow-down {
+      position: absolute;
+      right: 2px;
+      display: none;
+      opacity: .7;
+      cursor: pointer;
+      &:hover, &:focus {
+        opacity: 1;
+      }
+    }
+    .post-menu {
+      border-radius: 2px;
+      box-shadow: 0 2px 40px rgba(0,0,0,.4);
+      -webkit-box-shadow: 0 2px 40px rgba(0,0,0,.4);
+      color: #333;
+      font-size: 13px;
+    }
   }
   &:hover, &:focus {
     .content-toolbar span {
       color: #427fed;
+    }
+    .post-toolbar .icon-ikons-arrow-down{
+      display: inline;
     }
   }
 }

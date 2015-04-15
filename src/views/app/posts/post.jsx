@@ -114,6 +114,17 @@ var Post = React.createClass({
       likeActive: likeActive
     });
   },
+  _handleMenu: function(){
+    this.refs.postmenu.show();
+  },
+  _onPostMenuClick: function(props){
+    if(props.action == "delete"){
+      AppDispatcher.dispatch({
+        type: ActionTypes.POSTS_DELETE,
+        id:this.state.post._id
+      });
+    }
+  },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
     var holder = l20n.ctx.getSync('inputNewComment');
@@ -128,21 +139,38 @@ var Post = React.createClass({
       'newcomment-holder':true
     });
     return (
-      <PanelContainer noControls >
-        <PanelBody style={{padding: 25, paddingTop: 12.5}} className="post">
+      <PanelContainer noControls className="post">
+        <PanelBody style={{ padding:'12.5px 25px 25px 25px' }} >
           <div className='inbox-avatar'>
             <img src={this.state.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
             <div className='inbox-avatar-name'>
               <div className='fg-darkgrayishblue75'>{this.state.post.author.name}</div>
               <div className='fg-text'><small>{create_at}</small></div>
             </div>
-            <div className='inbox-date hidden-sm hidden-xs fg-text text-right'>
-              <div style={{position: 'relative', top: 0}}>
-                <Icon className='fg-gray hide' glyph='icon-ikons-arrow-down icon-1-and-quarter-x'/>
+            <div className='post-toolbar hidden-sm hidden-xs fg-text text-right'>
+              <div style={{position: 'relative', top: 0}} className="dropdown">
+                <Icon ref="toolbtn" glyph='icon-ikons-arrow-down' onClick={this._handleMenu} />
+                <Menu alignRight ref='postmenu' className='post-menu' alwaysInactive onItemSelect={this._onPostMenuClick}>
+                  <MenuItem href='#' action="delete">
+                    <Entity entity='deletePost' />
+                  </MenuItem>
+                  <MenuItem href='#' action="modify">
+                    <Entity entity='modifyPost' />
+                  </MenuItem>
+                  <MenuItem href='#' action="hide">
+                    <Entity entity='hidePost' />
+                  </MenuItem>
+                  <MenuItem href='#' action="deny_comment">
+                    <Entity entity='denyComment' />
+                  </MenuItem>
+                  <MenuItem href='#' action="deny_reshare">
+                    <Entity entity='denyReshare' />
+                  </MenuItem>
+                </Menu>
               </div>
             </div>
           </div>
-          <CollapsibleContent className="post-content" content={this.state.post.content} maxHeight={"100px"}/>
+          <CollapsibleContent className="post-content" content={this.state.post.content} maxHeight={"108px"}/>
           <div style={{margin: -25, marginTop: 25}}>
             {img}
           </div>
@@ -173,7 +201,7 @@ var Post = React.createClass({
             </Row>
           </Grid>
         </PanelFooter>
-        <Comments post={this.state.post} expanded={this.state.expandedMoreComment}/>
+        <Comments post={this.state.post} expanded={this.state.expandedMoreComment} />
         <NewComment source={{_id: this.state.post._id, type: 'post'}}
                     expanded={this.state.newCommentExpanded}
                     hideHolder={!hideCommentHolder} />

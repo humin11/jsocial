@@ -43,6 +43,11 @@
 <commentCount '{{$num}} 条评论'>
 <hideCommentCount '隐藏评论'>
 <expandCommentContent '剩余内容'>
+<deletePost '删除信息'>
+<modifyPost '修改信息'>
+<hidePost '忽略此信息'>
+<denyComment '禁止发表评论'>
+<denyReshare '禁止转发'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>

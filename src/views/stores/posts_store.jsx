@@ -29,6 +29,15 @@ function updatePost(post,comment){
   return null;
 }
 
+function removePost(id){
+  for(var i=0; i < _posts.length; i++) {
+    if (_posts[i]._id == id) {
+      _posts.splice(i,1);
+      return;
+    }
+  }
+}
+
 function removeComment(post,comment){
   for(var i=0; i < _posts.length; i++) {
     if (_posts[i]._id == post._id) {
@@ -156,6 +165,19 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           _posts.push(obj);
           UserStore.getUser().post_count++;
+          PostStore.emitChange();
+        }
+      });
+      break;
+    case ActionTypes.POSTS_DELETE:
+      $.ajax({
+        url: '/posts/remove',
+        type: "POST",
+        contentType: "application/json",
+        data : JSON.stringify({_id:action.id}),
+        success: function(obj){
+          removePost(action.id);
+          UserStore.getUser().post_count--;
           PostStore.emitChange();
         }
       });

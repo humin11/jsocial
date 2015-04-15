@@ -133,7 +133,7 @@ var Menu = React.createClass({
         try {
           this.hide();
         } catch(e) {}
-      }.bind(this), 500);
+      }.bind(this), 5000);
     }.bind(this));
   },
   componentWillUnmount: function() {
