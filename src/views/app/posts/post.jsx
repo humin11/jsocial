@@ -165,6 +165,7 @@ var Post = React.createClass({
     return (
       <PanelContainer noControls className="post">
         <div ref="post-delete" className={deleteClass} style={{height:this.state.removeHolderHeight}}>
+          <div style={{height:this.state.removeHolderHeight/2-100}}></div>
           <div>
             <Icon glyph="icon-fontello-ok" style={{fontSize: 60}}  className="fg-red"/>
           </div>
