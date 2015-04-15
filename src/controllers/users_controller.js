@@ -1,8 +1,8 @@
 var passport = require('passport');
-var MongoApi = require("../modules/mongoapi")
-var MongoController = MongoApi.Controller
-var ModelDefault = MongoApi.ModelDefault
-var assign = require('object-assign')
+var MongoApi = require("../modules/mongoapi");
+var MongoController = MongoApi.Controller;
+var ModelDefault = MongoApi.ModelDefault;
+var assign = require('object-assign');
 
 module.exports = new MongoController({
   table: "users",
