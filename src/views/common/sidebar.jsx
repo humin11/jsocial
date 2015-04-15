@@ -1,6 +1,5 @@
 var ChatComponent = require('./chat.jsx')
 var l20n = require('../global/vendor/l20n/l20n.jsx');
-var UsersStore = require('../stores/users_store.jsx');
 var ApplicationSidebar = React.createClass({
   render: function() {
     return (
@@ -523,27 +522,8 @@ var NoLoggedIn = React.createClass({
 });
 
 var SidebarSection = React.createClass({
-  getInitialState: function () {
-    return {
-      isLoggedIn: UsersStore.isLoggedIn()
-    };
-  },
-  componentDidMount: function() {
-    UsersStore.addChangeListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onChange);
-  },
-  _onChange: function(){
-    this.setState({isLoggedIn: UsersStore.isLoggedIn()});
-  },
   render: function() {
-    var userSection = null;
-    if(this.state.isLoggedIn){
-      userSection = <LoggedIn user={UsersStore.getUser()} />;
-    }else{
-      userSection = <NoLoggedIn />;
-    }
+    var userSection = this.props.user.isLoggedIn() ? <LoggedIn {...this.props} />:<NoLoggedIn />;
     return (
       <div id='sidebar' {...this.props}>
         {userSection}

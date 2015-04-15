@@ -1,4 +1,3 @@
-var UsersStore = require("../stores/users_store.jsx");
 var LoginPage = require("../app/login.jsx");
 
 var Authentication = {
@@ -12,20 +11,22 @@ var Authentication = {
   //}
   getInitialState: function () {
     return {
-      user: UsersStore.getUser(),
-      isLoggedIn: UsersStore.isLoggedIn()
+      user: this.props.user,
+      store: this.props.store
     };
   },
-  componentDidMount: function() {
-    UsersStore.addChangeListener(this._onLogin);
+  componentDidMount: function () {
+    if (this.state.store)
+      store.addChangeListener(this._onLogin);
   },
-  componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onLogin);
+  componentWillUnmount: function () {
+    if (this.state.store)
+      store.removeChangeListener(this._onLogin);
   },
-  _onLogin: function(){
+  _onLogin: function (user, store) {
     this.setState({
-      user: UsersStore.getUser(),
-      isLoggedIn: UsersStore.isLoggedIn()
+      user: user,
+      store: store
     });
   }
 };

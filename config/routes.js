@@ -7,6 +7,7 @@ var routes = require('../src/routes.jsx');
 var html = require('./template');
 var fs = require('fs');
 
+
 var renderApp = function(req, res, cb) {
   var router = ReactRouter.create({
     routes: routes,
@@ -19,11 +20,24 @@ var renderApp = function(req, res, cb) {
     }
   });
   router.run(function(Handler, state) {
-    if(state.routes[0].name === 'not-found') {
+    if (state.routes[0].name === 'not-found') {
       cb({notFound: true}, React.renderToStaticMarkup(React.createElement(Handler)));
       return;
     }
-    cb(null, React.renderToStaticMarkup(React.createElement(Handler)));
+    if (state.routes.length>1){
+      console.log(state.routes[1]);
+
+      var name = state.routes[1].handler.displayName.toLowerCase();
+      req.user={
+        _id : "552d1444b963878558c52fa2"
+      };
+      try{
+        require("./pagestore/" + name)(Handler,req,cb);
+      }catch(err){
+        cb(null, React.renderToStaticMarkup(React.createElement(Handler, {server: true, req: req})));
+      }
+    }
+
   });
 };
 
@@ -44,8 +58,8 @@ module.exports = function(app, passport) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With');
     var isRTL = req.cookies.rubix_dir === 'rtl' ? true : false;
-    renderApp(req, res, function(err, h, token) {
-      h = html(isRTL).replace(new RegExp('{container}', 'g'), h || '');
+    renderApp(req, res, function(err, h, script) {
+      h = html(isRTL).replace(new RegExp('{container}', 'g'), h || '').replace(new RegExp('{storescript}', 'g'), script || '');
       if (!err) {
         res.sendHTML(h);
       } else if (err.redirect) {
@@ -55,9 +69,4 @@ module.exports = function(app, passport) {
       }
     });
   });
-  //app.post("/auth/user", authController.getCurrentUser);
-  //app.post("/auth", authController.signIn);
-  // secured routes
-  //app.post("/posts/create", postController.create);
-  //app.post("/posts/list", postController.list);
 };

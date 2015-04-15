@@ -21,8 +21,8 @@ var users = require('./views/app/users.jsx');
 /* ROUTES */
 module.exports = (
   <Route handler={ReactRouter.RouteHandler}>
-    <DefaultRoute handler={posts} />
-    <Route path='/' handler={posts} />
+    <DefaultRoute handler={users}/>
+    <Route path='/' handler={users}/>
     <Route path='/gallery' handler={gallery} />
     <Route path='/posts' handler={posts} />
     <Route path='/blogs' handler={blogs} />
