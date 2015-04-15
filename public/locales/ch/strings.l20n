@@ -48,6 +48,7 @@
 <hidePost '忽略此信息'>
 <denyComment '禁止发表评论'>
 <denyReshare '禁止转发'>
+<hadDelete '信息已被删除'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
@@ -63,3 +64,4 @@
 <reply '回复'>
 <collapse '收起'>
 <expand '展开'>
+<close '关闭'>
