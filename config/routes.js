@@ -25,8 +25,6 @@ var renderApp = function(req, res, cb) {
       return;
     }
     if (state.routes.length>1){
-      console.log(state.routes[1]);
-
       var name = state.routes[1].handler.displayName.toLowerCase();
       req.user={
         _id : "552d1444b963878558c52fa2"
