@@ -4,11 +4,10 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
-var UsersStore = require('../stores/users_store.jsx');
 var UserInfo = require('./user/base_info.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var UserModel =  require('../models/user_model');
+var StoreFollowed = require('../mixins/store_followed');
 
 var classSet = React.addons.classSet;
 
@@ -20,7 +19,7 @@ var Body = React.createClass({
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
             <Col sm={4} collapseRight>
-              [**{this.props.user.get().username}**]
+              [**{this.props.models.user.get().username}**]
             </Col>
           </Row>
         </Grid>
@@ -30,26 +29,19 @@ var Body = React.createClass({
 });
 
 var Users = React.createClass({
-  componentWillMount: function() {
-    if (!this.props.server)
-      SystemInitStore({UsersStore: UsersStore});
+  mixins: [StoreFollowed,SidebarMixin],
+  getInitialState: function (){
+    return {useStores:["users_store"]};
   },
-  mixins: [SidebarMixin],
   render: function () {
-    var user = this.props.user;
-    var usersStore = null;
-    if (!user) {
-      user = UsersStore.get();
-      usersStore = UsersStore;
-    }
     var classes = classSet({
       'container-open': this.state.open
     });
     return (
       <Container id='container' className={classes}>
-        <Sidebar user={user} store={usersStore}/>
+        <Sidebar models={this.state.models} stores={this.state.stores}/>
         <Header pressed/>
-        <Body user={user} store={usersStore}/>
+        <Body models={this.state.models} stores={this.state.stores}/>
         <Footer />
       </Container>
     );

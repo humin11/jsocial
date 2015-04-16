@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var FansModel = require('../models/fans_model.jsx');
+var FansModel = require('../models/fans_model');
 
 var FANS_CHANGE = 'fans';
 

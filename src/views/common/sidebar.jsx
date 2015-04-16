@@ -477,10 +477,10 @@ var LoggedIn = React.createClass({
         <Grid>
           <Row className='fg-white'>
             <Col xs={4} collapseRight>
-              <img src={this.props.user.avatar} width='40' height='40' style={{borderRadius: '20px'}} />
+              <img src={this.props.models.user.get().avatar} width='40' height='40' style={{borderRadius: '20px'}} />
             </Col>
             <Col xs={8} collapseLeft id='avatar-col'>
-              <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{this.props.user.name}</div>
+              <div style={{top: 23, fontSize: 16, lineHeight: 1, position: 'relative'}}>{this.props.models.user.get().name}</div>
               <div>
                 <Progress id='demo-progress' value={30} min={0} max={100} color='#ffffff'/>
                 <Link to='/app/lock'><Icon id='demo-icon' bundle='fontello' glyph='lock-5' /></Link>
@@ -523,7 +523,7 @@ var NoLoggedIn = React.createClass({
 
 var SidebarSection = React.createClass({
   render: function() {
-    var userSection = this.props.user.isLoggedIn() ? <LoggedIn {...this.props} />:<NoLoggedIn />;
+    var userSection = this.props.models.user.isLoggedIn() ? <LoggedIn {...this.props} />:<NoLoggedIn />;
     return (
       <div id='sidebar' {...this.props}>
         {userSection}

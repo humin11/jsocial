@@ -7,8 +7,10 @@ var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
 var UserStore = assign(new EventEmitter2({maxListeners: 99999}), {
+  modelName : "user",
+  name : "UsersStore",
   set: function (user) {
-    _user.set(user)
+    _user.set(user);
     this.emitChange();
   },
   get:function(){

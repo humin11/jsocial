@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var FollowedModel = require('../models/followed_model.jsx');
+var FollowedModel = require('../models/followed_model');
 var assign = require('object-assign');
 var _initCalled = false;
 
