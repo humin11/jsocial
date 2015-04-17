@@ -13,10 +13,8 @@ var StoreMixin = {
         models = {};
         for(var name in stores){
           var item = stores[name];
-          console.log(name);
           models[item.modelName] = item.get();
         }
-        console.log("OK");
       }
     }
     if (!this.props.server){

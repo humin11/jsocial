@@ -11,7 +11,6 @@ var UserStore = assign(new EventEmitter2({maxListeners: 99999}), {
   name : "UsersStore",
   set: function (user) {
     _user.set(user);
-    console.log(user);
     this.emitChange();
   },
   get:function(){

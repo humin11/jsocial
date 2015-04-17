@@ -31,13 +31,12 @@ var Body = React.createClass({
 
 var Users = React.createClass({
   mixins: [StoreMixin,SidebarMixin],
-  getInitialState: function (){
-    return {useStores:["users_store"]};
+  getDefaultProps:function(){
+    return {
+      useStores:["users_store"]
+    };
   },
   render: function () {
-    console.log(1);
-    console.log(this.state.models);
-    console.log(this.state.stores);
     var classes = classSet({
       'container-open': this.state.open
     });

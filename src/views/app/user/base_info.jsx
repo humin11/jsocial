@@ -11,7 +11,6 @@ var BaseInfo = React.createClass({
     var avatar="";
     var name=""
 
-    console.log(1);
     if (this.props.models) {
       if (this.props.models.users) {
         var user = this.props.models.users.get();
