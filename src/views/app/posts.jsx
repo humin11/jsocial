@@ -44,6 +44,7 @@ var Body = React.createClass({
       else
         stream[index] = [<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
     }
+    console.log()
     return (
       <Container id='body' className='social'>
         <Grid>
@@ -57,7 +58,7 @@ var Body = React.createClass({
               {stream[1]}
             </Col>
             <Col sm={4} collapseRight>
-              <Recommend models={this.props.models} stores={this.state.stores} className="hidden-sm hidden-xs"></Recommend>
+              <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
               {stream[2]}
             </Col>
           </Row>

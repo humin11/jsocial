@@ -13,6 +13,8 @@ User_Model.prototype = {
     return this._user;
   },
   hasFollowed: function(userid){
+    if (!this._user.followed)
+      return false;
     for(var i=0;i < this._user.followed.length;i++){
       if(this._user.followed[i]._id == userid){
         return true;
