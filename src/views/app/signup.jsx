@@ -20,9 +20,11 @@ var Body = React.createClass({
     var password = this.refs.password.getValue();
     AppDispatcher.dispatch({
       type: ActionTypes.USERS_SIGNUP,
-      username: username,
-      email: email,
-      password: password
+      data:{
+        username: username,
+        email: email,
+        password: password
+      }
     });
   },
   retryTransition: function () {

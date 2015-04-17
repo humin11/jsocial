@@ -23,8 +23,10 @@ var LoginPage = React.createClass({
     var password = this.refs.password.getValue();
     AppDispatcher.dispatch({
       type: ActionTypes.USERS_LOGIN,
-      username: username,
-      password: password
+      data:{
+        username: username,
+        password: password
+      }
     });
     LoginPage.firstLogin = false;
   },
@@ -34,7 +36,7 @@ var LoginPage = React.createClass({
       LoginPage.attemptedTransition = null;
       transition.retry();
     } else {
-      if(UsersStore.isLoggedIn())
+      if(UsersStore.get().isLoggedIn())
         this.transitionTo("/");
       else if(!LoginPage.firstLogin)
         this.setState({error:true});

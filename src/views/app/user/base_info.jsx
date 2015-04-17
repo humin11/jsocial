@@ -11,21 +11,28 @@ var BaseInfo = React.createClass({
     var avatar="";
     var name=""
 
-    if (this.props.user){
-      name = this.props.user.name;
-      if(this.props.user.fans){
-        this.props.user.fans.forEach(function(){fansCount++;});
-      }
-      if (this.props.user.followed){
-        this.props.user.followed.forEach(function(){followedCount++;});
-      }
-      post_count = this.props.user.post_count
-
-      if (this.props.user.avatar){
-        avatar = this.props.user.avatar;
+    console.log(1);
+    if (this.props.models) {
+      if (this.props.models.users) {
+        var user = this.props.models.users.get();
+        name = user.username;
+        if (this.props.users.fans) {
+          this.props.users.fans.forEach(function () {
+            fansCount++;
+          });
+        }
+        if (this.props.user.followed) {
+          this.props.user.followed.forEach(function () {
+            followedCount++;
+          });
+        }
+        post_count = this.props.user.post_count;
+        if (this.props.user.avatar) {
+          avatar = this.props.user.avatar;
+        }
       }
     }
-    var style = this.props.style;
+    var style = {};//this.props.style;
     style.padding = 12.5;
     return (
         <Grid style={style}>

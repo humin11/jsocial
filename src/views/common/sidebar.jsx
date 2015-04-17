@@ -523,6 +523,7 @@ var NoLoggedIn = React.createClass({
 
 var SidebarSection = React.createClass({
   render: function() {
+    console.log(this.props.models);
     var userSection = this.props.models.user.isLoggedIn() ? <LoggedIn {...this.props} />:<NoLoggedIn />;
     return (
       <div id='sidebar' {...this.props}>

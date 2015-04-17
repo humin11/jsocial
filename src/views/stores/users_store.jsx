@@ -11,6 +11,7 @@ var UserStore = assign(new EventEmitter2({maxListeners: 99999}), {
   name : "UsersStore",
   set: function (user) {
     _user.set(user);
+    console.log(user);
     this.emitChange();
   },
   get:function(){
@@ -34,7 +35,7 @@ AppDispatcher.register(function(action) {
         url: "/users/insert",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(action),
+        data : JSON.stringify(action.data),
         success: function(obj){
           UserStore.set(obj.user);
         }
@@ -45,7 +46,7 @@ AppDispatcher.register(function(action) {
         url: "/users/login",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(action),
+        data : JSON.stringify(action.data),
         success: function(obj){
           UserStore.set(obj.user);
         }

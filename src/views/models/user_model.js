@@ -12,8 +12,8 @@ User_Model.prototype = {
   get: function () {
     return this._user;
   },
-  isLoggedIn:function(){
-    return this._id==null;
+  isLoggedIn:function() {
+    return this._user._id != null;
   }
 };
 module.exports = User_Model;

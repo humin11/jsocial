@@ -20,6 +20,7 @@ var Body = React.createClass({
           <Row>
             <Col sm={4} collapseRight>
               [**{this.props.models.user.get().username}**]
+              <UserInfo models={this.props.models}/>
             </Col>
           </Row>
         </Grid>
@@ -34,6 +35,9 @@ var Users = React.createClass({
     return {useStores:["users_store"]};
   },
   render: function () {
+    console.log(1);
+    console.log(this.state.models);
+    console.log(this.state.stores);
     var classes = classSet({
       'container-open': this.state.open
     });

@@ -6,97 +6,20 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
 var UserStore = require('./users_store.jsx');
-
-var _posts = [];
+var PostsModel = require('../models/posts_model');
+var _posts = new PostsModel();
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
-var POST_CHANGE_EVENT = 'post:change';
-var POST_REMOVE_EVENT = 'post:remove';
-var COMMENTS_CHANGE_EVENT = 'comments:change';
-var COMMENT_REMOVE_EVENT = 'comment:remove';
-
-function updatePost(post,comment){
-  for(var i=0; i < _posts.length; i++){
-    if(_posts[i]._id == post._id){
-      if(_posts[i].morecomments) {
-        post.morecomments = _posts[i].morecomments;
-        if(comment)
-          post.morecomments.push(comment);
-      }
-      _posts[i] = post;
-      return post;
-    }
-  }
-  return null;
-}
-
-function removePost(id){
-  for(var i=0; i < _posts.length; i++) {
-    if (_posts[i]._id == id) {
-      _posts.splice(i,1);
-      return;
-    }
-  }
-}
-
-function removeComment(post,comment){
-  for(var i=0; i < _posts.length; i++) {
-    if (_posts[i]._id == post._id) {
-      if(_posts[i].morecomments) {
-        post.morecomments = _posts[i].morecomments;
-        for(var j=0; j < post.morecomments.length; j++){
-          if(comment._id == post.morecomments[j]._id){
-            post.morecomments.splice(j,1);
-            break;
-          }
-        }
-      }
-      _posts[i] = post;
-      return post;
-    }
-  }
-  return null;
-}
-
-function updatePostComments(id,comments){
-  for(var i=0; i < _posts.length; i++){
-    if(_posts[i]._id == id){
-      if(_posts[i].morecomments)
-        _posts[i].morecomments.push(comments);
-      else
-        _posts[i].morecomments = comments;
-      return _posts[i];
-    }
-  }
-  return null;
-}
 
 var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
-  getPosts: function(){
+  modelName : "posts",
+  name : "PostStore",
+  get: function(){
     return _posts;
   },
-  getComments: function(id){
-    for(var i=0; i < _posts.length; i++){
-      if(_posts[i]._id == id){
-        return _posts[i].comments;
-      }
-    }
-    return [];
-  },
-  getPost: function(id){
-    for(var i=0; i < _posts.length; i++){
-      if(_posts[i]._id == id){
-        return _posts[i];
-      }
-    }
-    return null;
-  },
-  clearMoreComments: function(id){
-    for(var i=0; i < _posts.length; i++){
-      if(_posts[i]._id == id){
-        delete _posts[i].morecomments;
-      }
-    }
+  set: function(obj){
+    _posts.set(obj);
+    this.emitChange();
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -106,42 +29,6 @@ var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
   },
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
-  emitPostRemove: function(id,height) {
-    this.emit(POST_REMOVE_EVENT,id,height);
-  },
-  addPostRemoveListener: function(callback) {
-    this.on(POST_REMOVE_EVENT, callback);
-  },
-  removePostRemoveListener: function(callback) {
-    this.removeListener(POST_REMOVE_EVENT, callback);
-  },
-  emitPostChange: function(post) {
-    this.emit(POST_CHANGE_EVENT,post);
-  },
-  addPostChangeListener: function(callback) {
-    this.on(POST_CHANGE_EVENT, callback);
-  },
-  removePostChangeListener: function(callback) {
-    this.removeListener(POST_CHANGE_EVENT, callback);
-  },
-  emitCommentsChange: function(post) {
-    this.emit(COMMENTS_CHANGE_EVENT,post);
-  },
-  addCommentsChangeListener: function(callback) {
-    this.on(COMMENTS_CHANGE_EVENT, callback);
-  },
-  removeCommentsChangeListener: function(callback) {
-    this.removeListener(COMMENTS_CHANGE_EVENT, callback);
-  },
-  emitCommentRemove: function(post) {
-    this.emit(COMMENT_REMOVE_EVENT,post);
-  },
-  addCommentRemoveListener: function(callback) {
-    this.on(COMMENT_REMOVE_EVENT, callback);
-  },
-  removeCommentRemoveListener: function(callback) {
-    this.removeListener(COMMENT_REMOVE_EVENT, callback);
   }
 });
 
@@ -158,9 +45,9 @@ AppDispatcher.register(function(action) {
         type: "POST",
         contentType: "application/json",
         success: function(obj){
+          _initCalled = true;
           if (obj) {
-            _posts = obj;
-            _initCalled = true;
+            _posts.set(obj);
             PostStore.emitChange();
           }
         }
@@ -174,7 +61,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify({content:action.content}),
         success: function(obj){
           _posts.push(obj);
-          UserStore.getUser().post_count++;
+          UserStore.get().post_count++;
           PostStore.emitChange();
         }
       });
@@ -186,9 +73,9 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({_id:action.id}),
         success: function(obj){
-          removePost(action.id);
-          UserStore.getUser().post_count--;
-          PostStore.emitPostRemove(action.id,action.height);
+          _posts.removePost(action.id);
+          UserStore.get().post_count--;
+          PostStore.emitChange();
         }
       });
       break;
@@ -199,8 +86,8 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
-          updatePost(obj.post,obj.comment);
-          PostStore.emitPostChange(obj.post);
+          _posts.updatePost(obj.post,obj.comment);
+          PostStore.emitChange();
         }
       });
       break;
@@ -211,8 +98,8 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify({query:action.data}),
         success: function(arr){
-          var post = updatePostComments(action.data.source._id,arr);
-          PostStore.emitCommentsChange(post);
+          _posts.updatePostComments(action.data.source._id,arr);
+          PostStore.emitChange();
         }
       });
       break;
@@ -223,8 +110,8 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
-          var post = removeComment(obj,action.data);
-          PostStore.emitCommentRemove(post);
+          _posts.removeComment(obj,action.data);
+          PostStore.emitChange();
         }
       });
       break;

@@ -10,7 +10,7 @@ var UsersStore = require('../../stores/users_store.jsx');
 var Recommend = React.createClass({
   getInitialState: function() {
     return {
-      isLoggedIn: UsersStore.isLoggedIn(),
+      isLoggedIn: UsersStore.get().isLoggedIn(),
       people: RecommendStore.getRecommendPeople()
     };
   },
@@ -25,7 +25,7 @@ var Recommend = React.createClass({
   },
   _onChange: function() {
     this.setState({
-      isLoggedIn: UsersStore.isLoggedIn(),
+      isLoggedIn: UsersStore.get().isLoggedIn(),
       people: RecommendStore.getRecommendPeople()
     });
   },

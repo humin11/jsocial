@@ -10,18 +10,21 @@ var Authentication = {
   //  }
   //}
   getInitialState: function () {
+    console.log("------");
+    console.log(this.props.models.user);
     return {
-      user: this.props.user,
-      store: this.props.store
+      user: this.props.models.user,
+      store: this.props.stores.UsersStore,
+      isLoggedIn: this.props.models.user.isLoggedIn()
     };
   },
   componentDidMount: function () {
     if (this.state.store)
-      store.addChangeListener(this._onLogin);
+      this.state.store.addChangeListener(this._onLogin);
   },
   componentWillUnmount: function () {
     if (this.state.store)
-      store.removeChangeListener(this._onLogin);
+      this.state.store.removeChangeListener(this._onLogin);
   },
   _onLogin: function (user, store) {
     this.setState({
