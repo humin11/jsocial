@@ -7,7 +7,7 @@ var Footer = require('../common/footer.jsx');
 var UserInfo = require('./user/base_info.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var StoreFollowed = require('../mixins/store_followed');
+var StoreMixin = require('../mixins/store_mixin');
 
 var classSet = React.addons.classSet;
 
@@ -29,7 +29,7 @@ var Body = React.createClass({
 });
 
 var Users = React.createClass({
-  mixins: [StoreFollowed,SidebarMixin],
+  mixins: [StoreMixin,SidebarMixin],
   getInitialState: function (){
     return {useStores:["users_store"]};
   },

@@ -1,5 +1,5 @@
 var assign = require('object-assign');
-var StoreFollowed = {
+var StoreMixin = {
   componentWillMount: function() {
     var models = this.props.models;
     var stores = this.props.stores;
@@ -22,4 +22,4 @@ var StoreFollowed = {
     this.state.stores = stores;
   }
 };
-module.exports = StoreFollowed;
+module.exports = StoreMixin;
