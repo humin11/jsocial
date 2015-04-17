@@ -8,27 +8,13 @@ var BaseInfo = React.createClass({
     var fansCount = 0;
     var followedCount = 0;
     var post_count = 0;
-    var avatar="";
-    var name=""
 
     if (this.props.models) {
       if (this.props.models.users) {
         var user = this.props.models.users.get();
-        name = user.username;
-        if (this.props.users.fans) {
-          this.props.users.fans.forEach(function () {
-            fansCount++;
-          });
-        }
-        if (this.props.user.followed) {
-          this.props.user.followed.forEach(function () {
-            followedCount++;
-          });
-        }
-        post_count = this.props.user.post_count;
-        if (this.props.user.avatar) {
-          avatar = this.props.user.avatar;
-        }
+        fansCount = user.fans.length;
+        followedCount = user.followed.length;
+        post_count = user.post_count;
       }
     }
     var style = {};//this.props.style;
@@ -39,7 +25,7 @@ var BaseInfo = React.createClass({
             <Link to="/">
               <Col xs={4} className="text-center" style={{borderRight:"1px solid #AAAAAA"}}>
                 <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{followedCount}</strong></div>
-                <div style={{marginLeft:'5px',fontSize:12}}><Entity entity='followCount'/></div>
+                <div style={{marginLeft:'5px',fontSize:12}}><Entity entity='followedCount'/></div>
               </Col>
             </Link>
             <Link to="/">

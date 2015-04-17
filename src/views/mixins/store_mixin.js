@@ -3,6 +3,7 @@ var StoreMixin = {
   getInitialState: function() {
     var models = this.props.models;
     var stores = this.props.stores;
+    console.log(models);
     if (!stores){
       if (this.props.useStores){
         stores = {};
@@ -10,10 +11,12 @@ var StoreMixin = {
           var store = require("../stores/" + name + ".jsx");
           stores[store.name] = store;
         });
-        models = {};
-        for(var name in stores){
-          var item = stores[name];
-          models[item.modelName] = item.get();
+        if (!models){
+          models = {};
+          for(var name in stores){
+            var item = stores[name];
+            models[item.modelName] = item.get();
+          }
         }
       }
     }

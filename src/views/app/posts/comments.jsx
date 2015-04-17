@@ -30,7 +30,6 @@ var SingleComment = React.createClass({
     if(this.state.isLoggedIn && this.state.user._id == this.props.comment.author._id){
       editFlag = true;
     }
-    text = l20n.ctx.getSync('modify');
     var likeBtn = <Icon glyph='icon-fontello-thumbs-up-1 '/>;
     var replyBtn = <Icon glyph='icon-fontello-reply-1 '/>;
     var modifyBtn = null;
@@ -95,7 +94,7 @@ var Comments = React.createClass({
     if(this.props.expanded)
       commentArray = this.props.post.morecomments;
     commentArray.forEach(function (c) {
-      comments['comment-' + c._id] = <SingleComment comment={c}/>;
+      comments['comment-' + c._id] = <SingleComment models={this.props.models} stores={this.props.stores} comment={c}/>;
     });
     var hideMoreComment = false;
     if(this.props.post.comment_count < 3)

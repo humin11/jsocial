@@ -58,7 +58,7 @@ var NewComment = React.createClass({
   render: function () {
     if(!this.state.isLoggedIn)
       return null;
-    var holder = l20n.ctx.getSync('inputNewComment');
+    var holder = <Entity entity='inputNewComment' />;
     var footerClass = classSet({
       'hide': !this.props.expanded && this.props.hideHolder,
       'newcomment': true

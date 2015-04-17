@@ -20,10 +20,10 @@ var MoreComments = React.createClass({
     }
   },
   render: function(){
-    var text = l20n.ctx.getSync('commentCount',{num:this.props.post.comment_count});
+    var text = <Entity entity='commentCount' data={{num: this.props.post.comment_count}}/>;
     var icon = <Icon glyph='icon-ikons-arrow-down' />;
     if(this.props.expanded){
-      text = l20n.ctx.getSync('hideCommentCount',null);
+      text = <Entity entity='hideCommentCount' />;
       icon = <Icon glyph='icon-ikons-arrow-up' />;
     }
     return (

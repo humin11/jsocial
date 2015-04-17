@@ -40,9 +40,9 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 3;
       if(stream[index])
-        stream[index].push(<PostSummary key={obj._id} post={obj} />);
+        stream[index].push(<PostSummary models={this.props.models} key={obj._id} post={obj} />);
       else
-        stream[index] = [<PostSummary key={obj._id} post={obj} />];
+        stream[index] = [<PostSummary models={this.props.models} key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='social'>
@@ -57,7 +57,7 @@ var Body = React.createClass({
               {stream[1]}
             </Col>
             <Col sm={4} collapseRight>
-              <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
+              <Recommend models={this.props.models} className="hidden-sm hidden-xs"></Recommend>
               {stream[2]}
             </Col>
           </Row>

@@ -1,7 +1,5 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var UsersStore = require('../../stores/users_store.jsx');
-var PostStore = require('../../stores/posts_store.jsx');
 var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
@@ -135,7 +133,7 @@ var Post = React.createClass({
   },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-    var holder = l20n.ctx.getSync('inputNewComment');
+    var holder = <Entity entity='inputNewComment' />;
     var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
@@ -230,7 +228,7 @@ var Post = React.createClass({
               </Row>
             </Grid>
           </PanelFooter>
-          <Comments post={this.state.post} expanded={this.state.expandedMoreComment} />
+          <Comments models={this.props.models} post={this.state.post} expanded={this.state.expandedMoreComment} />
           <NewComment source={{_id: this.state.post._id, type: 'post'}}
                       expanded={this.state.newCommentExpanded}
                       hideHolder={!hideCommentHolder} />

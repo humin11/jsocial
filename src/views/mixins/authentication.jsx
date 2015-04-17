@@ -1,9 +1,12 @@
 var Authentication = {
   getInitialState: function () {
+    var user = this.props.models ? this.props.models.user : null;
+    var store = this.props.stores ? this.props.stores.UsersStore : null;
+    var islogin = user ? user.isLoggedIn():false;
     return {
-      user: this.props.models.user,
-      store: this.props.stores.UsersStore,
-      isLoggedIn: this.props.models.user.isLoggedIn()
+      user: user,
+      store: store,
+      isLoggedIn: islogin
     };
   },
   componentDidMount: function () {

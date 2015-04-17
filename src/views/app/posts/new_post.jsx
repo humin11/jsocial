@@ -15,7 +15,7 @@ var NewPost = React.createClass({
   render: function () {
     if(!this.state.isLoggedIn)
       return null;
-    var holder = l20n.ctx.getSync('inputNewPost');
+    var holder = <Entity entity='inputNewPost' />;
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
