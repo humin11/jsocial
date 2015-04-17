@@ -29,6 +29,9 @@ var renderApp = function(req, res, cb) {
       //req.user={
       //  _id : "552d1444b963878558c52fa2"
       //};
+      console.log("user:");
+      console.log(req.user);
+
       try{
         require("./pagestore/" + name)(Handler,req,cb);
       }catch(err){

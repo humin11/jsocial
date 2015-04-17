@@ -11,9 +11,10 @@ module.exports = function(Handler,req,sender) {
   PostsController.DB.find({index:1,count:20,query:{}}, function (err, obj, next) {
     var posts = new PostsModel();
     var user = new UserModel();
+    user.set(req.user);
     posts.set(obj);
     next();
 
-    PageStore(sender,req,Handler,{PostsStore:obj},{posts:posts,user:user});
+    PageStore(sender,req,Handler,{PostsStore:obj,UsersStore:req.user},{posts:posts,user:user});
   });
 }
