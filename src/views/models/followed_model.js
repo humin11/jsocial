@@ -11,10 +11,10 @@ Followed_Model.prototype = {
     return this._followedMap[userid];
   },
   setFans : function(fans) {
-    _followed = fans;
-    _followedMap = {};
-    _followed.forEach(function(fan){
-      _followedMap[fan._id] = fan;
+    this._followed = fans;
+    this._followedMap = {};
+    this._followed.forEach(function(fan){
+      this._followedMap[fan._id] = fan;
     });
   }
 };

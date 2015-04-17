@@ -15,11 +15,10 @@ var NewPost = React.createClass({
   render: function () {
     if(!this.state.isLoggedIn)
       return null;
-    var holder = <Entity entity='inputNewPost' />;
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
-          <Textarea rows='3' placeholder={holder} style={{border: 'none'}} ref="postContent"/>
+          <Entity rows='3' entity="inputNewPost"  componentClass="placeholder" style={{border: 'none'}} ref="postContent"/>
         </PanelBody>
         <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
           <Grid>

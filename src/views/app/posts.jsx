@@ -40,9 +40,9 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 3;
       if(stream[index])
-        stream[index].push(<PostSummary models={this.props.models} key={obj._id} post={obj} />);
+        stream[index].push(<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />);
       else
-        stream[index] = [<PostSummary models={this.props.models} key={obj._id} post={obj} />];
+        stream[index] = [<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='social'>
@@ -57,7 +57,7 @@ var Body = React.createClass({
               {stream[1]}
             </Col>
             <Col sm={4} collapseRight>
-              <Recommend models={this.props.models} className="hidden-sm hidden-xs"></Recommend>
+              <Recommend models={this.props.models} stores={this.state.stores} className="hidden-sm hidden-xs"></Recommend>
               {stream[2]}
             </Col>
           </Row>
@@ -73,7 +73,7 @@ var Posts = React.createClass({
   mixins: [StoreMixin,SidebarMixin],
   getDefaultProps:function(){
     return {
-      useStores:["users_store","posts_store"]
+      useStores:["users_store","posts_store","recommend_store"]
     };
   },
   componentWillMount: function(){
@@ -85,12 +85,16 @@ var Posts = React.createClass({
     //});
   },
   render: function() {
+    console.log(this.props.models);
     var classes = classSet({
       'container-open': this.state.open
     });
     return (
       <Container id='container' className={classes}>
+        <Sidebar models={this.state.models} stores={this.state.stores}/>
+        <Header pressed />
         <Body models={this.state.models} stores={this.state.stores}/>
+        <Footer />
       </Container>
     );
   }

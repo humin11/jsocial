@@ -5,28 +5,27 @@ var Follow = require('./follow.jsx');
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var RecommendStore = require('../../stores/recommend_store.jsx');
-var UsersStore = require('../../stores/users_store.jsx');
+var Authentication = require('../../mixins/authentication.jsx');
 
 var Recommend = React.createClass({
+  mixins:[Authentication],
   getInitialState: function() {
     return {
-      isLoggedIn: UsersStore.get().isLoggedIn(),
-      people: RecommendStore.getRecommendPeople()
+      people: this.props.models.recommend.get()
     };
   },
   componentDidMount: function() {
-    RecommendStore.addChangeListener(this._onChange);
-    UsersStore.addChangeListener(this._onChange);
+    if(this.props.stores)
+      this.props.stores.RecommendStore.addChangeListener(this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.RECOMMEND_PEOPLE });
   },
   componentWillUnmount: function() {
-    RecommendStore.removeChangeListener(this._onChange);
-    UsersStore.removeChangeListener(this._onChange);
+    if(this.props.stores)
+      this.props.stores.RecommendStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
     this.setState({
-      isLoggedIn: UsersStore.get().isLoggedIn(),
-      people: RecommendStore.getRecommendPeople()
+      people: this.props.models.recommend.get()
     });
   },
   render: function(){
@@ -43,12 +42,12 @@ var Recommend = React.createClass({
                 <div className='fg-darkgrayishblue75'>{p.name}</div>
               </div>
               <div className='inbox-date text-right'>
-                <Follow user={p} ></Follow>
+                <Follow person={p} models={this.props.models} stores={this.state.stores} ></Follow>
               </div>
             </div>
           </Col>
         </Row>
-    });
+    }.bind(this));
     return (
       <PanelContainer {...this.props} noControls id="recommend-people">
         <PanelHeader className='bg-orange75 fg-white '>

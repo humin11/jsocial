@@ -5,12 +5,19 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var _people = [];
+var RecommendModel = require('../models/recommend_model');
+var _people = new RecommendModel();
 var CHANGE_EVENT = 'change';
 
 var RecommendStore = assign(new EventEmitter2({maxListeners: 99999}), {
-  getRecommendPeople: function () {
+  modelName : "recommend",
+  name : "RecommendStore",
+  get: function(){
     return _people;
+  },
+  set: function(obj){
+    _people.set(obj);
+    this.emitChange();
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -34,7 +41,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         success: function(obj){
           if (obj) {
-            _people = obj;
+            _people.set(obj);
             RecommendStore.emitChange();
           }
         }

@@ -133,7 +133,6 @@ var Post = React.createClass({
   },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-    var holder = <Entity entity='inputNewComment' />;
     var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
@@ -218,9 +217,9 @@ var Post = React.createClass({
                   </Button>
                 </Col>
                 <Col xs={6} style={{paddingLeft:'35px',paddingRight:'0'}}>
-                  <Input className={holderClass} type='text' placeholder={holder}
+                  <Entity className={holderClass} type='text' entity="inputNewComment" componentClass="placeholder"
                          onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
-                         style={{border: '1px solid #d8d8d8'}}/>
+                         style={{border: '1px solid #d8d8d8'}} />
                 </Col>
                 <Col xs={2} hidden-xs hidden-sm style={{paddingLeft:'35px',paddingRight:'0'}}>
                   <img src='/imgs/avatars/avatar1.png' width='25' height='25' />

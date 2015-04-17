@@ -95,7 +95,7 @@ var Comments = React.createClass({
       commentArray = this.props.post.morecomments;
     commentArray.forEach(function (c) {
       comments['comment-' + c._id] = <SingleComment models={this.props.models} stores={this.props.stores} comment={c}/>;
-    });
+    }.bind(this));
     var hideMoreComment = false;
     if(this.props.post.comment_count < 3)
       hideMoreComment = true;
