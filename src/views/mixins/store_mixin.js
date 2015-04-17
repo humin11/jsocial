@@ -3,7 +3,6 @@ var StoreMixin = {
   getInitialState: function() {
     var models = this.props.models;
     var stores = this.props.stores;
-    console.log(models);
     if (!stores){
       if (this.props.useStores){
         stores = {};
