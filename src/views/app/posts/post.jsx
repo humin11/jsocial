@@ -25,21 +25,13 @@ var Post = React.createClass({
     };
   },
   componentDidMount: function() {
-    PostStore.addPostChangeListener(this._onChange);
-    PostStore.addPostRemoveListener(this._afterRemove);
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
-    PostStore.addCommentsChangeListener(this._onMoreCommentsExpand);
-    PostStore.addCommentRemoveListener(this._onCommentRemove);
     ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   componentWillUnmount: function() {
-    PostStore.removePostChangeListener(this._onChange);
-    PostStore.removePostRemoveListener(this._afterRemove);
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
-    PostStore.removeCommentsChangeListener(this._onMoreCommentsExpand);
-    PostStore.removeCommentRemoveListener(this._onCommentRemove);
     ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onMoreCommentsCollapse);
   },
   _onChange: function(post) {
