@@ -1,17 +1,5 @@
-var LoginPage = require("../app/login.jsx");
-
 var Authentication = {
-  //statics: {
-  //  willTransitionTo: function (transition) {
-  //    if (!UsersStore.isLoggedIn()) {
-  //      LoginPage.attemptedTransition = transition;
-  //      transition.redirect("/login");
-  //    }
-  //  }
-  //}
   getInitialState: function () {
-    console.log("------");
-    console.log(this.props.models.user);
     return {
       user: this.props.models.user,
       store: this.props.stores.UsersStore,

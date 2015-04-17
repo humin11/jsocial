@@ -11,9 +11,9 @@ var _posts = new PostsModel();
 var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
-var PostStore = assign(new EventEmitter2({maxListeners: 99999}), {
+var PostsStore = assign(new EventEmitter2({maxListeners: 99999}), {
   modelName : "posts",
-  name : "PostStore",
+  name : "PostsStore",
   get: function(){
     return _posts;
   },
@@ -48,7 +48,7 @@ AppDispatcher.register(function(action) {
           _initCalled = true;
           if (obj) {
             _posts.set(obj);
-            PostStore.emitChange();
+            PostsStore.emitChange();
           }
         }
       });
@@ -62,7 +62,7 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           _posts.push(obj);
           UserStore.get().post_count++;
-          PostStore.emitChange();
+          PostsStore.emitChange();
         }
       });
       break;
@@ -75,7 +75,7 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           _posts.removePost(action.id);
           UserStore.get().post_count--;
-          PostStore.emitChange();
+          PostsStore.emitChange();
         }
       });
       break;
@@ -87,7 +87,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify(action.data),
         success: function(obj){
           _posts.updatePost(obj.post,obj.comment);
-          PostStore.emitChange();
+          PostsStore.emitChange();
         }
       });
       break;
@@ -99,7 +99,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify({query:action.data}),
         success: function(arr){
           _posts.updatePostComments(action.data.source._id,arr);
-          PostStore.emitChange();
+          PostsStore.emitChange();
         }
       });
       break;
@@ -111,7 +111,7 @@ AppDispatcher.register(function(action) {
         data : JSON.stringify(action.data),
         success: function(obj){
           _posts.removeComment(obj,action.data);
-          PostStore.emitChange();
+          PostsStore.emitChange();
         }
       });
       break;
@@ -122,4 +122,4 @@ AppDispatcher.register(function(action) {
 
 });
 
-module.exports = PostStore;
+module.exports = PostsStore;

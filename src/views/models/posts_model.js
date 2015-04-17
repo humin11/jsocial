@@ -1,50 +1,50 @@
 var Posts_Model=function(){
-  this.posts = [];
+  this._posts = [];
 };
 
 Posts_Model.prototype = {
   set: function (posts) {
-    this.posts = posts ? posts : [];
+    this._posts = posts ? posts : [];
   },
   get: function () {
-    return this.posts;
+    return this._posts;
   },
   clearMoreComments: function (id) {
     for(var i=0; i < this.posts.length; i++){
-      if(this.posts[i]._id == id){
-        delete this.posts[i].morecomments;
+      if(this._posts[i]._id == id){
+        delete this._posts[i].morecomments;
         return;
       }
     }
   },
   push: function(post){
-    this.posts.push(post);
+    this._posts.push(post);
   },
   updatePost: function (post, comment) {
-    for (var i = 0; i < this.posts.length; i++) {
-      if (this.posts[i]._id == post._id) {
+    for (var i = 0; i < this._posts.length; i++) {
+      if (this._posts[i]._id == post._id) {
         if (post.morecomments){
-          this.posts[i].morecomments = post.morecomments;
+          this._posts[i].morecomments = post.morecomments;
           if (comment)
-            this.posts[i].morecomments.push(comment);
+            this._posts[i].morecomments.push(comment);
         }
         return;
       }
     }
   },
   removePost: function (id) {
-    for (var i = 0; i < this.posts.length; i++) {
-      if (this.posts[i]._id == id) {
-        this.posts.splice(i, 1);
+    for (var i = 0; i < this._posts.length; i++) {
+      if (this._posts[i]._id == id) {
+        this._posts.splice(i, 1);
         return;
       }
     }
   },
   removeComment: function (post, comment) {
-    for (var i = 0; i < this.posts.length; i++) {
-      if (this.posts[i]._id == post._id) {
-        if (this.posts[i].morecomments) {
-          post.morecomments = this.posts[i].morecomments;
+    for (var i = 0; i < this._posts.length; i++) {
+      if (this._posts[i]._id == post._id) {
+        if (this._posts[i].morecomments) {
+          post.morecomments = this._posts[i].morecomments;
           for (var j = 0; j < post.morecomments.length; j++) {
             if (comment._id == post.morecomments[j]._id) {
               post.morecomments.splice(j, 1);
@@ -52,18 +52,18 @@ Posts_Model.prototype = {
             }
           }
         }
-        this.posts[i] = post;
+        this._posts[i] = post;
         return;
       }
     }
   },
   updatePostComments: function (id, comments) {
-    for (var i = 0; i < this.posts[i].length; i++) {
-      if (this.posts[i]._id == id) {
-        if (this.posts[i].morecomments)
-          this.posts[i].morecomments.push(comments);
+    for (var i = 0; i < this._posts[i].length; i++) {
+      if (this._posts[i]._id == id) {
+        if (this._posts[i].morecomments)
+          this._posts[i].morecomments.push(comments);
         else
-          this.posts[i].morecomments = comments;
+          this._posts[i].morecomments = comments;
         return;
       }
     }

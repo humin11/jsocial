@@ -42,7 +42,7 @@ var Post = React.createClass({
       });
     }
   },
-  _afterRemove: function(id,height){
+  _afterRemove: function(id,height) {
     if(id == this.state.post._id) {
       this.setState({
         toBeDelete: true,
@@ -57,7 +57,7 @@ var Post = React.createClass({
       });
     }
   },
-  _onNewCommentExpand: function(id){
+  _onNewCommentExpand: function(id) {
     if(id == this.state.post._id) {
       this.setState({
         newCommentExpanded: true

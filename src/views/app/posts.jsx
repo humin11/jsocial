@@ -17,20 +17,22 @@ var StoreMixin = require('../mixins/store_mixin');
 
 
 var Body = React.createClass({
-  //getInitialState: function() {
-  //  return {data: PostStore.getPosts()};
-  //},
+  getInitialState: function () {
+    return {
+      data: this.props.models.posts.get()
+    };
+  },
   componentDidMount: function() {
     $('html').addClass('social');
-    this.props.stores.PostStore.addChangeListener(this._onChange);
+    this.props.stores.PostsStore.addChangeListener(this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.POSTS_INIT });
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
-    this.props.stores.PostStore.removeChangeListener(this._onChange);
+    this.props.stores.PostsStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({data: this.props.stores.PostStore.getPosts()});
+    this.setState({data: this.props.models.posts.get()});
   },
   render: function() {
     var stream = [];
@@ -83,16 +85,12 @@ var Posts = React.createClass({
     //});
   },
   render: function() {
-    console.log(this.props);
     var classes = classSet({
       'container-open': this.state.open
     });
     return (
       <Container id='container' className={classes}>
-        <Sidebar models={this.state.models} stores={this.state.stores}/>
-        <Header pressed />
         <Body models={this.state.models} stores={this.state.stores}/>
-        <Footer />
       </Container>
     );
   }
