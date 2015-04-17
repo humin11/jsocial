@@ -3600,11 +3600,6 @@ var Entity = React.createClass({
         <ComponentClass {...props} value={this.state.entity} />
       );
     }
-    if(ComponentClass === 'placeholder') {
-      return (
-        this.state.entity
-      );
-    }
     if(this.props.dangerouslySetInnerHTML) {
       return (
         <ComponentClass {...props} dangerouslySetInnerHTML={{__html: this.state.entity}} />
