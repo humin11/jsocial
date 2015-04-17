@@ -25,5 +25,7 @@ module.exports = keyMirror({
   CHAT_SEND:null,
   CHAT_ARRIVE:null,
   FOLLOW_INIT:null,
-  PERSON_LOAD:null
+  PERSON_LOAD:null,
+  USERS_FOLLOW:null,
+  USERS_UNFOLLOW:null
 });

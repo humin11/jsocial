@@ -6,8 +6,9 @@ var ActionTypes = require('../../constants/constants.jsx');
 var UsersStore = require('../../stores/users_store.jsx');
 var Follow = React.createClass({
   getInitialState: function() {
+    console.log();
     return {
-      followed: UsersStore.hasFollowed(this.props.user._id)
+      followed: this.props.models.user.hasFollowed(this.props.person._id)
     };
   },
   _handleFollow: function(){
@@ -24,14 +25,16 @@ var Follow = React.createClass({
     }
   },
   componentDidMount: function() {
-    UsersStore.addChangeListener(this._onChange);
+    if(this.props.stores)
+      this.props.stores.UsersStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
-    UsersStore.removeChangeListener(this._onChange);
+    if(this.props.stores)
+      this.props.stores.UsersStore.removeChangeListener(this._onChange);
   },
   _onChange: function(){
     this.setState({
-      followed: UsersStore.hasFollowed(this.props.user._id)
+      followed: this.props.models.user.hasFollowed(this.props.person._id)
     });
   },
   render: function(){

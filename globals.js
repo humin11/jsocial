@@ -137,5 +137,4 @@ global.SidebarMixin = ReactBootstrap.SidebarMixin;
 global.SidebarNavItem = ReactBootstrap.SidebarNavItem;
 global.SidebarControls = ReactBootstrap.SidebarControls;
 global.SidebarControlBtn = ReactBootstrap.SidebarControlBtn;
-
 global.Entity = require('./src/views/global/vendor/l20n/l20n.jsx').Entity;

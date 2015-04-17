@@ -19,13 +19,19 @@ var Post = React.createClass({
       newCommentExpanded: false,
       expandedMoreComment: false,
       toBeDelete: false,
-      removeHolderHeight: 0
+      removeHolderHeight: 0,
+      entity: ''
     };
   },
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
     ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
+    l20n.ctx.localize(['inputNewComment'], function(l) {
+      this.setState({
+        entity: l20n.ctx.getSync('inputNewComment')
+      });
+    }.bind(this));
   },
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
@@ -133,7 +139,6 @@ var Post = React.createClass({
   },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
-    var holder = <Entity entity='inputNewComment' />;
     var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
@@ -218,9 +223,9 @@ var Post = React.createClass({
                   </Button>
                 </Col>
                 <Col xs={6} style={{paddingLeft:'35px',paddingRight:'0'}}>
-                  <Input className={holderClass} type='text' placeholder={holder}
+                  <Input className={holderClass} type='text' placeholder={this.state.entity}
                          onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
-                         style={{border: '1px solid #d8d8d8'}}/>
+                         style={{border: '1px solid #d8d8d8'}} />
                 </Col>
                 <Col xs={2} hidden-xs hidden-sm style={{paddingLeft:'35px',paddingRight:'0'}}>
                   <img src='/imgs/avatars/avatar1.png' width='25' height='25' />

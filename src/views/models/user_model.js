@@ -12,6 +12,14 @@ User_Model.prototype = {
   get: function () {
     return this._user;
   },
+  hasFollowed: function(userid){
+    for(var i=0;i < this._user.followed.length;i++){
+      if(this._user.followed[i]._id == userid){
+        return true;
+      }
+    }
+    return false;
+  },
   isLoggedIn:function() {
     return this._user._id != null;
   }
