@@ -3,8 +3,9 @@ var Authentication = {
     var user = this.props.models ? this.props.models.user : null;
     var store = this.props.stores ? this.props.stores.UsersStore : null;
     var islogin = user ? user.isLoggedIn():false;
+    var _user = user ? user.get():false;
     return {
-      user: user,
+      user: _user,
       store: store,
       isLoggedIn: islogin
     };
