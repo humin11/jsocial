@@ -5,9 +5,7 @@ var PageStore = function(templatesend,req,Handler,store,models) {
     req: req,
     models: models
   };
-  console.log(1);
   var readerPage = React.renderToStaticMarkup(React.createElement(Handler, props));
-  console.log(2);
   templatesend(null, readerPage, script);
 }
 
