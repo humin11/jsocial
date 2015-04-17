@@ -10,7 +10,7 @@ Posts_Model.prototype = {
     return this._posts;
   },
   clearMoreComments: function (id) {
-    for(var i=0; i < this.posts.length; i++){
+    for(var i=0; i < this._posts.length; i++){
       if(this._posts[i]._id == id){
         delete this._posts[i].morecomments;
         return;
@@ -23,11 +23,12 @@ Posts_Model.prototype = {
   updatePost: function (post, comment) {
     for (var i = 0; i < this._posts.length; i++) {
       if (this._posts[i]._id == post._id) {
-        if (post.morecomments){
-          this._posts[i].morecomments = post.morecomments;
-          if (comment)
-            this._posts[i].morecomments.push(comment);
+        if(this._posts[i].morecomments) {
+          post.morecomments = this._posts[i].morecomments;
+          if(comment)
+            post.morecomments.push(comment);
         }
+        this._posts[i] = post;
         return;
       }
     }

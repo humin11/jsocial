@@ -86,7 +86,7 @@ var Post = React.createClass({
   },
   _onMoreCommentsCollapse: function(id){
     if(id == this.state.post._id) {
-      PostStore.clearMoreComments(id);
+      this.props.models.posts.clearMoreComments(id);
       this.setState({
         expandedMoreComment: false
       });
@@ -135,7 +135,7 @@ var Post = React.createClass({
     }
   },
   _handleRefresh: function(){
-    PostStore.emitChange();
+    this.props.stores.PostsStore.emitChange();
   },
   render: function() {
     var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
