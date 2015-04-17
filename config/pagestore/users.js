@@ -4,9 +4,9 @@ var UserModel= require("../../src/views/models/user_model");
 var PageStore = require("./page_store");
 
 module.exports = function(Handler,req,sender) {
-  var user = new UserModel();
   UsersController.DB.findOne({_id: MongoApi.ObjectId(req.user._id)}, function (err, obj, next) {
-    user.set(object);
+    var user = new UserModel();
+    user.set(obj);
     next();
     PageStore(sender,req,Handler,{UsersStore:obj},{user:user});
   });

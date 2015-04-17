@@ -1,0 +1,16 @@
+/**
+ * Created by macbookpro on 15/4/17.
+ */
+var MongoApi = require('../../src/modules/mongoapi');
+var PostsController = require("../../src/controllers/posts_controller");
+var PostsModel= require("../../src/views/models/posts_model");
+var PageStore = require("./page_store");
+
+module.exports = function(Handler,req,sender) {
+  PostsController.DB.find({index:1,count:20,query:{}}, function (err, obj, next) {
+    var posts = new PostsModel();
+    posts.set(obj);
+    next();
+    PageStore(sender,req,Handler,{PostsStore:obj},{posts:posts});
+  });
+}
