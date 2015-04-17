@@ -4,6 +4,18 @@ var Authentication = require('../../mixins/authentication.jsx');
 
 var NewPost = React.createClass({
   mixins:[Authentication],
+  getInitialState: function() {
+    return {
+      entity: ''
+    };
+  },
+  componentDidMount: function() {
+    l20n.ctx.localize(['inputNewPost'], function(l) {
+      this.setState({
+        entity: l20n.ctx.getSync('inputNewPost')
+      });
+    }.bind(this));
+  },
   _handleClick: function(){
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
@@ -18,7 +30,7 @@ var NewPost = React.createClass({
     return (
       <PanelContainer noControls >
         <PanelBody style={{padding: 12.5}}>
-          <Entity rows='3' entity="inputNewPost"  componentClass="placeholder" style={{border: 'none'}} ref="postContent"/>
+          <Textarea rows='3' placeholder={this.state.entity} style={{border: 'none'}} ref="postContent"/>
         </PanelBody>
         <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
           <Grid>

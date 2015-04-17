@@ -19,13 +19,19 @@ var Post = React.createClass({
       newCommentExpanded: false,
       expandedMoreComment: false,
       toBeDelete: false,
-      removeHolderHeight: 0
+      removeHolderHeight: 0,
+      entity: ''
     };
   },
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
     ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
+    l20n.ctx.localize(['inputNewComment'], function(l) {
+      this.setState({
+        entity: l20n.ctx.getSync('inputNewComment')
+      });
+    }.bind(this));
   },
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
@@ -217,7 +223,7 @@ var Post = React.createClass({
                   </Button>
                 </Col>
                 <Col xs={6} style={{paddingLeft:'35px',paddingRight:'0'}}>
-                  <Entity className={holderClass} type='text' entity="inputNewComment" componentClass="placeholder"
+                  <Input className={holderClass} type='text' placeholder={this.state.entity}
                          onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
                          style={{border: '1px solid #d8d8d8'}} />
                 </Col>

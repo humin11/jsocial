@@ -8,11 +8,17 @@ var NewComment = React.createClass({
   getInitialState: function () {
     return {
       disabledOkBtn: true,
-      disabledCancelBtn: false
+      disabledCancelBtn: false,
+      entity: ''
     };
   },
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('newcomment:reset',this._onReset);
+    l20n.ctx.localize(['inputNewComment'], function(l) {
+      this.setState({
+        entity: l20n.ctx.getSync('inputNewComment')
+      });
+    }.bind(this));
   },
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('newcomment:reset',this._onReset);
@@ -81,7 +87,7 @@ var NewComment = React.createClass({
     }
     return (
       <PanelFooter className={footerClass} style={{borderTop:0}}>
-        <Input className={collapsedClass} type='text' placeholder={holder}  onClick={this._onExpand}
+        <Input className={collapsedClass} type='text' placeholder={this.state.entity} onClick={this._onExpand}
                style={{border: '1px solid #d8d8d8'}}/>
         <Grid className={expandedClass} >
           <Row>

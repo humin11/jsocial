@@ -85,7 +85,6 @@ var Posts = React.createClass({
     //});
   },
   render: function() {
-    console.log(this.props.models);
     var classes = classSet({
       'container-open': this.state.open
     });
