@@ -233,8 +233,8 @@ var Post = React.createClass({
               </Row>
             </Grid>
           </PanelFooter>
-          <Comments models={this.props.models} post={this.state.post} expanded={this.state.expandedMoreComment} />
-          <NewComment source={{_id: this.state.post._id, type: 'post'}}
+          <Comments models={this.props.models} stores={this.state.stores} post={this.state.post} expanded={this.state.expandedMoreComment} />
+          <NewComment models={this.props.models} stores={this.state.stores} source={{_id: this.state.post._id, type: 'post'}}
                       expanded={this.state.newCommentExpanded}
                       hideHolder={!hideCommentHolder} />
         </div>

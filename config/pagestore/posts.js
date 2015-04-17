@@ -16,9 +16,6 @@ module.exports = function(Handler,req,sender) {
     user.set(req.user);
     posts.set(obj);
     next();
-
-
-
     PageStore(sender,req,Handler,{PostsStore:obj,UsersStore:req.user},{posts:posts,user:user,recommend:recommend});
   });
 }
