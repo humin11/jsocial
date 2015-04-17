@@ -13,6 +13,7 @@ module.exports = function(Handler,req,sender) {
     var user = new UserModel();
     posts.set(obj);
     next();
+
     PageStore(sender,req,Handler,{PostsStore:obj},{posts:posts,user:user});
   });
 }
