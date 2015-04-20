@@ -5,7 +5,7 @@ var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var MoreComments = require('./more_comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
-var Authentication = require('../../mixins/authentication.jsx');
+var Authentication = require('../../mixins/auth_mixin.jsx');
 
 var SingleComment = React.createClass({
   mixins:[Authentication],

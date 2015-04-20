@@ -1,5 +1,5 @@
 var passport = require('passport');
-var MongoApi = require("../modules/mongoapi");
+var MongoApi = require("../utils/mongoapi");
 var MongoController = MongoApi.Controller;
 var ModelDefault = MongoApi.ModelDefault;
 var assign = require('object-assign');

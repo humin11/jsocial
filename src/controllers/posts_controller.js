@@ -1,4 +1,4 @@
-var MongoApi = require("../modules/mongoapi");
+var MongoApi = require("../utils/mongoapi");
 var MongoController = MongoApi.Controller;
 var ModelDefault = MongoApi.ModelDefault;
 var ModelCheck = MongoApi.ModelCheck;

@@ -4,7 +4,7 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var UsersStore = require('../../stores/users_store.jsx');
-var ReactDom = require('../../mixins/react_Dom.jsx');
+var ReactDom = require('../../mixins/data_mixin.jsx');
 
 var Follow = React.createClass({
   mixins: [ReactDom],

@@ -1,9 +1,9 @@
-var Fans_Model=function(){
+var FansModel=function(){
   this._fans=[];
   this._fansMap={};
 };
 
-Fans_Model.prototype = {
+FansModel.prototype = {
   getFans:function(){
     return this._fans;
   },
@@ -11,11 +11,11 @@ Fans_Model.prototype = {
     return this._fansMap[userid];
   },
   setFans : function(fans) {
-    _fans = fans;
-    _fansMap = {};
-    _fans.forEach(function(fan){
-      _fansMap[fan._id] = fan;
+    this._fans = fans;
+    this._fansMap = {};
+    this._fans.forEach(function(fan){
+      this._fansMap[fan._id] = fan;
     });
   }
 };
-module.exports = Fans_Model;
+module.exports = FansModel;

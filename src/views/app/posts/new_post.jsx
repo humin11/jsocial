@@ -1,6 +1,6 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var Authentication = require('../../mixins/authentication.jsx');
+var Authentication = require('../../mixins/auth_mixin.jsx');
 
 var NewPost = React.createClass({
   mixins:[Authentication],

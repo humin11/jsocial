@@ -5,7 +5,7 @@ var Follow = require('./follow.jsx');
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var RecommendStore = require('../../stores/recommend_store.jsx');
-var Authentication = require('../../mixins/authentication.jsx');
+var Authentication = require('../../mixins/auth_mixin.jsx');
 
 var Recommend = React.createClass({
   mixins:[Authentication],

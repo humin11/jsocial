@@ -1,9 +1,9 @@
-var Followed_Model=function(){
+var FollowedModel=function(){
   this._followed=[];
   this._followedMap={};
 };
 
-Followed_Model.prototype = {
+FollowedModel.prototype = {
   getFollowed:function(){
     return this._followed;
   },
@@ -18,4 +18,4 @@ Followed_Model.prototype = {
     });
   }
 };
-module.exports = Followed_Model;
+module.exports = FollowedModel;

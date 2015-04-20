@@ -1,8 +1,8 @@
-var Posts_Model=function(){
+var PostsModel=function(){
   this._posts = [];
 };
 
-Posts_Model.prototype = {
+PostsModel.prototype = {
   set: function (posts) {
     this._posts = posts ? posts : [];
   },
@@ -70,4 +70,4 @@ Posts_Model.prototype = {
     }
   }
 };
-module.exports = Posts_Model;
+module.exports = PostsModel;

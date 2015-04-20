@@ -1,4 +1,4 @@
-var ReactDom = {
+var DataMixin = {
   addChangeListener(storeName, fun){
     if (this.props.store) {
       if (this.props.store[storeName]) {
@@ -37,10 +37,10 @@ var ReactDom = {
     return def;
   },
   getDefaultValue(property, def){
-    var propertys = property.split('.');
-    var result = this.props.models[propertys[0]].get();
-    for (var i = 1; i < propertys.length; i++) {
-      result = result[propertys[i]];
+    var properties = property.split('.');
+    var result = this.props.models[properties[0]].get();
+    for (var i = 1; i < properties.length; i++) {
+      result = result[properties[i]];
       if (!result)
         return def;
     }
@@ -64,4 +64,4 @@ var ReactDom = {
     return result;
   }
 }
-module.exports = ReactDom;
+module.exports = DataMixin;

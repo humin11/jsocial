@@ -1,8 +1,8 @@
-var Recommend_Model=function(){
+var RecommendModel=function(){
   this._people = [];
 };
 
-Recommend_Model.prototype = {
+RecommendModel.prototype = {
   set: function (people) {
     this._people = people ? people : [];
   },
@@ -11,4 +11,4 @@ Recommend_Model.prototype = {
   }
 }
 
-module.exports = Recommend_Model;
+module.exports = RecommendModel;

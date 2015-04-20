@@ -3,7 +3,7 @@ var ActionTypes = require('../../constants/constants.jsx');
 var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
-var Authentication = require('../../mixins/authentication.jsx');
+var Authentication = require('../../mixins/auth_mixin.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;

@@ -27,7 +27,7 @@ var renderApp = function(req, res, cb) {
     if (state.routes.length>1){
       var name = state.routes[1].handler.displayName.toLowerCase();
       try{
-        require("./pagestore/" + name)(Handler,req,cb);
+        require("../src/renderers/" + name)(Handler,req,cb);
       }catch(err){
         cb(null, React.renderToStaticMarkup(React.createElement(Handler, {server: true, req: req})));
       }

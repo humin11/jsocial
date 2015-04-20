@@ -5,7 +5,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var RecommendModel = require('../models/recommend_model');
+var RecommendModel = require('../../models/recommend_model');
 var _people = new RecommendModel();
 var CHANGE_EVENT = 'change';
 

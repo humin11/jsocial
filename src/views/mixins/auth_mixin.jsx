@@ -1,4 +1,4 @@
-var Authentication = {
+var AuthMixin = {
   getInitialState: function () {
     var user = this.props.models ? this.props.models.user : null;
     var store = this.props.stores ? this.props.stores.UsersStore : null;
@@ -26,4 +26,4 @@ var Authentication = {
   }
 };
 
-module.exports = Authentication;
+module.exports = AuthMixin;

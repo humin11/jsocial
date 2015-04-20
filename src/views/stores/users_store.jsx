@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var assign = require('object-assign');
-var UserModel = require('../models/user_model');
+var UserModel = require('../../models/user_model');
 var _user = new UserModel();
 var _initCalled = false;
 var CHANGE_EVENT = 'change';

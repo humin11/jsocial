@@ -3,7 +3,7 @@
  */
 var LocalStrategy = require('passport-local').Strategy;
 var userController = require('../src/controllers/users_controller');
-var MongoApi = require("../src/modules/mongoapi")
+var MongoApi = require("../src/utils/mongoapi")
 
 var serialize = function(user, done) {
   done(null, user);

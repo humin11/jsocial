@@ -1,8 +1,8 @@
-var User_Model=function(){
+var UserModel=function(){
   this._user = {};
 };
 
-User_Model.prototype = {
+UserModel.prototype = {
   set: function (user) {
     this._user = user;
     if (!user) {
@@ -26,4 +26,4 @@ User_Model.prototype = {
     return this._user._id != null;
   }
 };
-module.exports = User_Model;
+module.exports = UserModel;

@@ -44,7 +44,6 @@ var Body = React.createClass({
       else
         stream[index] = [<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
     }
-    console.log()
     return (
       <Container id='body' className='social'>
         <Grid>

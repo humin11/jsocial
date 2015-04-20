@@ -1,6 +1,6 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var ReactDom = require('../../mixins/react_Dom.jsx');
+var ReactDom = require('../../mixins/data_mixin.jsx');
 
 var Followed = React.createClass({
   mixins: [ReactDom],

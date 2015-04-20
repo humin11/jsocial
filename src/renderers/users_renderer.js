@@ -1,7 +1,7 @@
-var MongoApi = require('../../src/modules/mongoapi');
-var UsersController = require("../../src/controllers/users_controller");
-var UserModel= require("../../src/views/models/user_model");
-var PageStore = require("./page_store");
+var MongoApi = require('../utils/mongoapi');
+var UsersController = require("../controllers/users_controller");
+var UserModel= require("../models/user_model");
+var PageStore = require("./page_renderer");
 
 module.exports = function(Handler,req,sender) {
   UsersController.DB.findOne({_id: MongoApi.ObjectId(req.user._id)}, function (err, obj, next) {
