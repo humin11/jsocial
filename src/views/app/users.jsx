@@ -8,10 +8,12 @@ var UserInfo = require('./user/base_info.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
+var ReactDom = require('../mixins/react_Dom.jsx');
 
 var classSet = React.addons.classSet;
 
 var Body = React.createClass({
+  mixins: [ReactDom],
   render: function() {
     return (
       <Container id='body' className='users'>
@@ -19,8 +21,8 @@ var Body = React.createClass({
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
             <Col sm={4} collapseRight>
-              [**{this.props.models.user.get().username}**]
-              <UserInfo models={this.props.models}/>
+              [**{this.getData("user").username}**]
+              <UserInfo {...this.props}/>
             </Col>
           </Row>
         </Grid>
@@ -37,9 +39,9 @@ var Users = React.createClass({
     });
     return (
       <Container id='container' className={classes}>
-        <Sidebar models={this.state.models} stores={this.state.stores}/>
+        <Sidebar {...this.state}/>
         <Header pressed/>
-        <Body models={this.state.models} stores={this.state.stores}/>
+        <Body {...this.state}/>
         <Footer />
       </Container>
     );

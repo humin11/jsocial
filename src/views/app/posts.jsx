@@ -86,9 +86,9 @@ var Posts = React.createClass({
     });
     return (
       <Container id='container' className={classes}>
-        <Sidebar models={this.state.models} stores={this.state.stores}/>
+        <Sidebar {...this.state}/>
         <Header pressed />
-        <Body models={this.state.models} stores={this.state.stores}/>
+        <Body {...this.state}/>
         <Footer />
       </Container>
     );

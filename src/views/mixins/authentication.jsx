@@ -11,12 +11,12 @@ var Authentication = {
     };
   },
   componentDidMount: function () {
-    if (this.state.store)
-      this.state.store.addChangeListener(this._onLogin);
+    if (this.props.store)
+      this.props.store.addChangeListener(this._onLogin);
   },
   componentWillUnmount: function () {
-    if (this.state.store)
-      this.state.store.removeChangeListener(this._onLogin);
+    if (this.props.store)
+      this.props.store.removeChangeListener(this._onLogin);
   },
   _onLogin: function (user, store) {
     this.setState({

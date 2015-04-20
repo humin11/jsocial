@@ -21,6 +21,10 @@ var StoreMixin = {
     if (!this.props.server){
       SystemInitStore(stores);
     }
+    if (!this.props.server){
+      window.models = models;
+      window.stores = stores;
+    }
     return {models:models,stores:stores};
   }
 };
