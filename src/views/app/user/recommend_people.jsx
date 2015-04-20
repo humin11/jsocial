@@ -15,8 +15,6 @@ var Recommend = React.createClass({
     };
   },
   componentDidMount: function() {
-    console.log("***");
-    console.log(this.props.stores);
     if(this.props.stores)
       this.props.stores.RecommendStore.addChangeListener(this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.RECOMMEND_PEOPLE });

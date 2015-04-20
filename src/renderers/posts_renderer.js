@@ -10,21 +10,25 @@ var RecommendModel = require("../models/recommend_model");
 var PageStore = require("./page_renderer");
 
 module.exports = function(Handler,req,sender) {
-  PostsController.DB.find({index:1,count:20,query:{}}, function (err, obj, next1) {
+  PostsController.DB.find({index:1,count:20,query:{}}, function (err, obj1, next1) {
     var posts = new PostsModel();
     var user = new UserModel();
     var recommend = new RecommendModel();
 
     if (req.user){
-      UsersController.DB.findOne({_id: MongoApi.ObjectId(req.user._id)},function(err,object,next2){
-        user.set(object);
+      UsersController.DB.findOne({_id: MongoApi.ObjectId(req.user._id)},function(err,obj2,next2){
+        user.set(obj2);
         next2();
+
+        posts.set(obj1);
+        next1();
+        PageStore(sender,req,Handler,{PostsStore:posts.get(),UsersStore:user.get()},{posts:posts,user:user,recommend:recommend});
       });
     }
-
-    posts.set(obj);
-    next1();
-
-    PageStore(sender,req,Handler,{PostsStore:obj,UsersStore:req.user},{posts:posts,user:user,recommend:recommend});
+    else{
+      posts.set(obj1);
+      next1();
+      PageStore(sender,req,Handler,{PostsStore:posts.get(),UsersStore:user.get()},{posts:posts,user:user,recommend:recommend});
+    }
   });
 }
