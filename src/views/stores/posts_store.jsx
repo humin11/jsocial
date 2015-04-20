@@ -19,7 +19,6 @@ var PostsStore = assign(new EventEmitter2({maxListeners: 99999}), {
   },
   set: function(obj){
     _posts.set(obj);
-    this.emitChange();
   },
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -58,7 +57,7 @@ AppDispatcher.register(function(action) {
         url: '/posts/insert',
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify({content:action.content}),
+        data : JSON.stringify(action.data),
         success: function(obj){
           _posts.push(obj);
           UserStore.get().post_count++;
@@ -71,9 +70,9 @@ AppDispatcher.register(function(action) {
         url: '/posts/remove',
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify({_id:action.id}),
+        data : JSON.stringify(action.data),
         success: function(obj){
-          _posts.removePost(action.id);
+          _posts.removePost(action.data._id);
           UserStore.get().post_count--;
           PostsStore.emitChange();
         }
@@ -88,6 +87,8 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           _posts.updatePost(obj.post,obj.comment);
           PostsStore.emitChange();
+          ReactBootstrap.Dispatcher.emit('newcomment:collapse',obj.post._id);
+          ReactBootstrap.Dispatcher.emit('morecomments:change',obj.post);
         }
       });
       break;
@@ -100,6 +101,7 @@ AppDispatcher.register(function(action) {
         success: function(arr){
           _posts.updatePostComments(action.data.source._id,arr);
           PostsStore.emitChange();
+          ReactBootstrap.Dispatcher.emit('morecomments:expand',action.data.source._id);
         }
       });
       break;

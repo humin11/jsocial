@@ -59,12 +59,13 @@ PostsModel.prototype = {
     }
   },
   updatePostComments: function (id, comments) {
-    for (var i = 0; i < this._posts[i].length; i++) {
+    for (var i = 0; i < this._posts.length; i++) {
       if (this._posts[i]._id == id) {
         if (this._posts[i].morecomments)
           this._posts[i].morecomments.push(comments);
         else
           this._posts[i].morecomments = comments;
+
         return;
       }
     }

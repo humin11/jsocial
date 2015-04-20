@@ -9,6 +9,47 @@ var MoreComments = React.createClass({
       expanded: false
     };
   },
+  getInitialState: function () {
+    return {
+      entity: ''
+    };
+  },
+  componentDidMount: function() {
+    ReactBootstrap.Dispatcher.on('morecomments:change',this._onChange);
+    ReactBootstrap.Dispatcher.on('morecomments:expand',this._showHide);
+    ReactBootstrap.Dispatcher.on('morecomments:collapse',this._showCount);
+    l20n.ctx.localize(['commentCount'], function(l) {
+      this.setState({
+        entity: l20n.ctx.getSync('commentCount',{num:this.props.post.comment_count})
+      });
+    }.bind(this));
+  },
+  componentWillUnmount: function() {
+    ReactBootstrap.Dispatcher.off('morecomments:change',this._onChange);
+    ReactBootstrap.Dispatcher.off('morecomments:expand',this._showHide);
+    ReactBootstrap.Dispatcher.off('morecomments:collapse',this._showCount);
+  },
+  _onChange: function(post) {
+    if(post._id == this.props.post._id) {
+      this.setState({
+        entity: l20n.ctx.getSync('commentCount',{num:post.comment_count})
+      });
+    }
+  },
+  _showHide: function(id) {
+    if(id == this.props.post._id) {
+      this.setState({
+        entity: l20n.ctx.getSync('hideCommentCount')
+      });
+    }
+  },
+  _showCount: function(id){
+    if(id == this.props.post._id) {
+      this.setState({
+        entity: l20n.ctx.getSync('commentCount',{num:this.props.post.comment_count})
+      });
+    }
+  },
   _handleClick:function(){
     if(this.props.expanded){
       ReactBootstrap.Dispatcher.emit('morecomments:collapse',this.props.post._id);
@@ -20,10 +61,9 @@ var MoreComments = React.createClass({
     }
   },
   render: function(){
-    var text = <Entity entity='commentCount' data={{num: this.props.post.comment_count}}/>;
+    var text = this.state.entity;
     var icon = <Icon glyph='icon-ikons-arrow-down' />;
     if(this.props.expanded){
-      text = <Entity entity='hideCommentCount' />;
       icon = <Icon glyph='icon-ikons-arrow-up' />;
     }
     return (
