@@ -4,3 +4,4 @@ prebuild/scaffold
 public/css/app
 public/css/fonts
 public/video
+public/js/common
