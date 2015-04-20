@@ -30,7 +30,7 @@ var MoreComments = React.createClass({
     ReactBootstrap.Dispatcher.off('morecomments:collapse',this._showCount);
   },
   _onChange: function(post) {
-    if(post._id == this.props.post._id) {
+    if(post._id == this.props.post._id && !this.props.expanded) {
       this.setState({
         entity: l20n.ctx.getSync('commentCount',{num:post.comment_count})
       });
