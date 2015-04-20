@@ -22,12 +22,12 @@ var Body = React.createClass({
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
             <Col sm={4} collapseRight>
-              [**{this.getDefaultValue("user.username","")}**]
+              {this.getDefaultValue("user.username","")}
               <UserInfo {...this.props}/>
-              <AllFollowed {...this.props}/>
             </Col>
           </Row>
         </Grid>
+        <AllFollowed {...this.props}/>
       </Container>
     );
   }
