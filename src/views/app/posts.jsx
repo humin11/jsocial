@@ -72,11 +72,6 @@ var Body = React.createClass({
 
 var Posts = React.createClass({
   mixins: [StoreMixin,SidebarMixin],
-  getDefaultProps:function(){
-    return {
-      useStores:["users_store","posts_store","recommend_store"]
-    };
-  },
   componentWillMount: function(){
 
   },

@@ -12,7 +12,7 @@ var FollowedStore = assign(new EventEmitter2({maxListeners: 99999}),{
   hasFollowed: function(userid){
     return _followedMap[userid];
   },
-  getFollowed: function () {
+  get: function () {
     return _followed;
   },
   emitFollowedChange: function() {

@@ -31,11 +31,6 @@ var Body = React.createClass({
 
 var Users = React.createClass({
   mixins: [StoreMixin,SidebarMixin],
-  getDefaultProps:function(){
-    return {
-      useStores:["users_store"]
-    };
-  },
   render: function () {
     var classes = classSet({
       'container-open': this.state.open

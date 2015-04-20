@@ -9,7 +9,7 @@ var _fans = new FansModel();
 var _store = null;
 
 var FansStore = assign(new EventEmitter2({maxListeners: 99999}),{
-  getFans:function(){
+  get:function(){
     return _fans;
   },
   emitFansChange: function() {
