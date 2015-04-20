@@ -25,8 +25,9 @@ var renderApp = function(req, res, cb) {
       return;
     }
     if (state.routes.length>1){
-      var name = state.routes[1].handler.displayName.toLowerCase();
+      var name = state.routes[1].handler.displayName.toLowerCase() + '_renderer';
       try{
+        console.log("../src/renderers/" + name);
         require("../src/renderers/" + name)(Handler,req,cb);
       }catch(err){
         cb(null, React.renderToStaticMarkup(React.createElement(Handler, {server: true, req: req})));
