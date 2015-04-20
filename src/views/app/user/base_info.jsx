@@ -15,19 +15,19 @@ var BaseInfo = React.createClass({
           <Row>
             <Link to="/">
               <Col xs={4} className="text-center" style={{borderRight:"1px solid #AAAAAA"}}>
-                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultData("user.followed.length",0)}</strong></div>
+                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultValue("user.followed.length",0)}</strong></div>
                 <div style={{marginLeft:'5px',fontSize:12}}><Entity entity='followedCount'/></div>
               </Col>
             </Link>
             <Link to="/">
               <Col xs={4} className="text-center"  style={{borderRight:"1px solid #AAAAAA"}}>
-                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultData("user.fans.length",0)}</strong></div>
+                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultValue("user.fans.length",0)}</strong></div>
                 <div style={{marginLeft:'5px',fontSize:12}}><Entity entity='fansCount'/></div>
               </Col>
             </Link>
             <Link to="/">
               <Col xs={4} className="text-center">
-                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultData("user.post_count",0)}</strong></div>
+                <div style={{marginLeft:'5px',fontSize:20}} className="infonum"><strong>{this.getDefaultValue("user.post_count",0)}</strong></div>
                 <div style={{marginLeft:'5px',fontSize:12}}><strong><Entity entity='postCount'/></strong></div>
               </Col>
             </Link>

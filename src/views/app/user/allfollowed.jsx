@@ -1,6 +1,9 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
+var ReactDom = require('../../mixins/react_Dom.jsx');
+
 var Followed = React.createClass({
+  mixins: [ReactDom],
   render: function(){
     return (
       <PanelContainer noControls >
@@ -36,35 +39,13 @@ var Followed = React.createClass({
   }
 });
 
-var reactList=function(stores,name,listcount,row,col){
-  var cols=[];
-  for(var i=0;i<listcount;i++) {
-    cols[i] = [];
-  }
-  if (stores){
-    for(var i=0;i<stores[name].length;i++){
-      var index = i % cols.length;
-      var f = cols[index];
-      f[f.length] = row(stores[name][i]);
-    }
-  }
-  var result=[];
-  for(var i=0;i<cols.length;i++){
-    result[i] = col(cols[i]);
-  }
-  return result;
-};
-
 var AllFollowed = React.createClass({
+  mixins: [ReactDom],
   render: function(){
-    var result = reactList(this.props.users,"followed",4,function(data){
-      return <Followed followed = {data}/>
-    },
-      function(col){
-        return <Col sm={3} collapseRight>{col}</Col>;
-      }
+    var result = this.reactList("user.followed",4,
+      function(data){return <Followed followed = {data}/>;},
+      function(col){return <Col sm={3} collapseRight>{col}</Col>;}
     );
-    console.log(result);
     return (
         <Grid id="allfollowed">
           <Row>

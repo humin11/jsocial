@@ -9,6 +9,7 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
 var ReactDom = require('../mixins/react_Dom.jsx');
+var AllFollowed = require('./user/allfollowed.jsx');
 
 var classSet = React.addons.classSet;
 
@@ -21,8 +22,9 @@ var Body = React.createClass({
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
             <Col sm={4} collapseRight>
-              [**{this.getData("user").username}**]
+              [**{this.getDefaultValue("user.username","")}**]
               <UserInfo {...this.props}/>
+              <AllFollowed {...this.props}/>
             </Col>
           </Row>
         </Grid>
