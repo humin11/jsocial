@@ -20,8 +20,6 @@ var Post = React.createClass({
       reshareTextStyle: 'fg-white',
       newCommentExpanded: false,
       expandedMoreComment: false,
-      toBeDelete: false,
-      removeHolderHeight: 0,
       entity: ''
     };
   },
@@ -37,14 +35,6 @@ var Post = React.createClass({
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
-  },
-  _afterRemove: function(id,height) {
-    if(id == this.props.post._id) {
-      this.setState({
-        toBeDelete: true,
-        removeHolderHeight: height
-      });
-    }
   },
   _onNewCommentCollapse: function(id) {
     if(id == this.props.post._id) {
@@ -96,6 +86,7 @@ var Post = React.createClass({
     }
   },
   _handleRefresh: function(){
+    this.props.models.posts.removePost(this.props.post._id);
     this.props.stores.PostsStore.emitChange();
   },
   render: function() {
@@ -110,18 +101,24 @@ var Post = React.createClass({
       'hide': !(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded),
       'newcomment-holder':true
     });
+    var toBeDelete = false;
+    if(this.props.post.toBeDelete)
+      toBeDelete = true;
     var deleteClass = classSet({
-      'hide': !this.state.toBeDelete,
+      'hide': !toBeDelete,
       'text-center':true,
       'vertical-center':true
     });
     var postClass = classSet({
-      'hide': this.state.toBeDelete
+      'hide': toBeDelete
     });
+    var removeHolderHeight = 0;
+    if(this.props.post.toBeDelete)
+      removeHolderHeight = this.props.post.height;
     return (
       <PanelContainer noControls className="post">
-        <div ref="post-delete" className={deleteClass} style={{height:this.state.removeHolderHeight}}>
-          <div style={{height:this.state.removeHolderHeight/2-100}}></div>
+        <div ref="post-delete" className={deleteClass} style={{height:removeHolderHeight}}>
+          <div style={{height:removeHolderHeight/2-100}}></div>
           <div>
             <Icon glyph="icon-fontello-ok" style={{fontSize: 60}}  className="fg-red"/>
           </div>

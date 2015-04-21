@@ -40,9 +40,9 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 3;
       if(stream[index])
-        stream[index].push(<SinglePost models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />);
+        stream[index].push(<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />);
       else
-        stream[index] = [<SinglePost models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
+        stream[index] = [<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='social'>

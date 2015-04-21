@@ -72,7 +72,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         data : JSON.stringify(action.data),
         success: function(obj){
-          _posts.removePost(action.data._id);
+          _posts.tagRemovePost(action.data._id,action.height);
           UserStore.get().post_count--;
           PostsStore.emitChange();
         }
