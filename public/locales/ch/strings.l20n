@@ -38,6 +38,7 @@
 
 <!-- POST -->
 <inputNewPost '分享新鲜事...'>
+<uploadImage '拖拽图片到这里'>
 <inputNewComment '发表评论...'>
 <submitComment '发表评论'>
 <commentCount '{{$num}} 条评论'>
