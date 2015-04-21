@@ -6,7 +6,9 @@
 var routes = require('../src/routes.jsx');
 var html = require('./template');
 var fs = require('fs');
-
+var formidable = require('formidable');
+var util = require('util');
+var path = require('path');
 
 var renderApp = function(req, res, cb) {
   var router = ReactRouter.create({
@@ -48,6 +50,19 @@ module.exports = function(app, passport) {
       require("../src/controllers/" + file).binding(app);
     });
   });
+  app.post('/upload', function(req, res) {
+    var form = new formidable.IncomingForm();
+    console.log(form.uploadDir);
+    form.uploadDir = "/Users/macbookpro/programs/jsocial";
+    form.keepExtensions = true;
+    form.parse(req, function (err, fields, files) {
+      // `file` is the name of the <input> field of type `file`
+      console.log(fields);
+      console.log(files);
+      res.send("OK");
+    });
+  });
+
   app.get('*', function(req, res, next) {
     if(req.url === '/favicon.ico') return next();
     res.header('Access-Control-Allow-Origin', '*');
