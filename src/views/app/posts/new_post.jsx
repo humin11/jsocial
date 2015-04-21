@@ -27,7 +27,7 @@ var NewPost = React.createClass({
     }
     $(this.refs.uploadImg.getDOMNode()).dropzone({
       paramName: "file",
-      url: '/photos/upload',
+      url: '/upload',
       addRemoveLinks: true,
       uploadMultiple: false,
       maxFiles:1,
