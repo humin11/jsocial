@@ -10,12 +10,14 @@ var classSet = React.addons.classSet;
 
 var Post = React.createClass({
   mixins:[Authentication],
+  propTypes: {
+    post: React.PropTypes.object
+  },
   getInitialState: function () {
     return {
       likeActive: false,
       reshareActive: false,
       reshareTextStyle: 'fg-white',
-      post: this.props.post,
       newCommentExpanded: false,
       expandedMoreComment: false,
       toBeDelete: false,
@@ -26,7 +28,6 @@ var Post = React.createClass({
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.on('newcomment:collapse',this._onNewCommentCollapse);
-    ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onMoreCommentsCollapse);
     l20n.ctx.localize(['inputNewComment'], function(l) {
       this.setState({
         entity: l20n.ctx.getSync('inputNewComment')
@@ -36,18 +37,9 @@ var Post = React.createClass({
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('newcomment:expand',this._onNewCommentExpand);
     ReactBootstrap.Dispatcher.off('newcomment:collapse',this._onNewCommentCollapse);
-    ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onMoreCommentsCollapse);
-  },
-  _onChange: function(post) {
-    if(post._id == this.state.post._id) {
-      this.setState({
-        post: post,
-        newCommentExpanded: false
-      });
-    }
   },
   _afterRemove: function(id,height) {
-    if(id == this.state.post._id) {
+    if(id == this.props.post._id) {
       this.setState({
         toBeDelete: true,
         removeHolderHeight: height
@@ -55,70 +47,39 @@ var Post = React.createClass({
     }
   },
   _onNewCommentCollapse: function(id) {
-    if(id == this.state.post._id) {
+    if(id == this.props.post._id) {
       this.setState({
         newCommentExpanded: false
       });
     }
   },
   _onNewCommentExpand: function(id) {
-    if(id == this.state.post._id) {
+    if(id == this.props.post._id) {
       this.setState({
         newCommentExpanded: true
       });
     }
-    ReactBootstrap.Dispatcher.emit('newcomment:reset',this.state.post._id);
-  },
-  _onCommentRemove: function(post) {
-    if(post._id == this.state.post._id) {
-      this.setState({
-        post: post
-      });
-    }
-  },
-  _onMoreCommentsExpand: function(post) {
-    if(post._id == this.state.post._id) {
-      this.setState({
-        post: post,
-        expandedMoreComment: true
-      });
-    }
-  },
-  _onMoreCommentsCollapse: function(id){
-    if(id == this.state.post._id) {
-      this.props.models.posts.clearMoreComments(id);
-      this.setState({
-        expandedMoreComment: false
-      });
-    }
+    ReactBootstrap.Dispatcher.emit('newcomment:reset',this.props.post._id);
   },
   _handleReshare: function() {
-    var post = this.state.post;
     var reshareActive = this.state.reshareActive;
     if(reshareActive) {
-      post.reshare_count--;
       reshareActive = false;
     } else {
-      post.reshare_count++;
       reshareActive = true;
     }
     this.setState({
-      post: post,
       reshareActive: reshareActive
     });
   },
   _handleLike: function() {
-    var post = this.state.post;
     var likeActive = this.state.likeActive;
     if(likeActive) {
-      post.like_count--;
       likeActive = false;
     }else{
-      post.like_count++;
       likeActive = true;
     }
     this.setState({
-      post: post,
       likeActive: likeActive
     });
   },
@@ -129,7 +90,7 @@ var Post = React.createClass({
     if(props.action == "delete"){
       AppDispatcher.dispatch({
         type: ActionTypes.POSTS_DELETE,
-        id:this.state.post._id,
+        data:{_id:this.props.post._id},
         height: $(this.refs.post.getDOMNode()).height()
       });
     }
@@ -138,12 +99,12 @@ var Post = React.createClass({
     this.props.stores.PostsStore.emitChange();
   },
   render: function() {
-    var create_at = moment(this.state.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
+    var create_at = moment(this.props.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
     var img = null;
     if(this.props.img)
       img = <Img responsive src={this.props.img}/>;
     var hideCommentHolder = false;
-    if(this.state.post.comment_count > 0)
+    if(this.props.post.comment_count > 0)
       hideCommentHolder = true;
     var holderClass = classSet({
       'hide': !(this.state.isLoggedIn && !hideCommentHolder && !this.state.newCommentExpanded),
@@ -174,9 +135,9 @@ var Post = React.createClass({
         <div ref="post" className={postClass}>
           <PanelBody style={{ padding:'12.5px 25px 25px 25px'}} className="post-body">
             <div className='inbox-avatar'>
-              <img src={this.state.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
+              <img src={this.props.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
               <div className='inbox-avatar-name'>
-                <div className='fg-darkgrayishblue75'>{this.state.post.author.name}</div>
+                <div className='fg-darkgrayishblue75'>{this.props.post.author.name}</div>
                 <div className='fg-text'><small>{create_at}</small></div>
               </div>
               <div className='post-toolbar hidden-sm hidden-xs fg-text text-right'>
@@ -202,7 +163,7 @@ var Post = React.createClass({
                 </div>
               </div>
             </div>
-            <CollapsibleContent className="post-content" content={this.state.post.content} maxHeight={"108px"}/>
+            <CollapsibleContent className="post-content" content={this.props.post.content} maxHeight={"108px"}/>
             <div style={{margin: -25, marginTop: 25}}>
               {img}
             </div>
@@ -213,18 +174,18 @@ var Post = React.createClass({
                 <Col xs={2} style={{paddingLeft:'0',paddingRight:'0'}}>
                   <Button style={{borderWidth:'1px'}} xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
                     <Icon glyph='icon-fontello-thumbs-up-1' />
-                    <span style={{marginLeft:'5px'}}>{this.state.post.like_count}</span>
+                    <span style={{marginLeft:'5px'}}>{this.props.post.like_count}</span>
                   </Button>
                 </Col>
                 <Col xs={2} style={{paddingLeft:'15px',paddingRight:'0'}}>
                   <Button xs style={{borderWidth:'1px'}} ref='reshareCount' outlined bsStyle='default' active={this.state.reshareActive} onClick={this._handleReshare}>
                     <Icon glyph='icon-fontello-share' />
-                    <span style={{marginLeft:'5px'}}>{this.state.post.reshare_count}</span>
+                    <span style={{marginLeft:'5px'}}>{this.props.post.reshare_count}</span>
                   </Button>
                 </Col>
                 <Col xs={6} style={{paddingLeft:'35px',paddingRight:'0'}}>
                   <Input className={holderClass} type='text' placeholder={this.state.entity}
-                         onClick={this._onNewCommentExpand.bind(this,this.state.post._id)}
+                         onClick={this._onNewCommentExpand.bind(this,this.props.post._id)}
                          style={{border: '1px solid #d8d8d8'}} />
                 </Col>
                 <Col xs={2} hidden-xs hidden-sm style={{paddingLeft:'35px',paddingRight:'0'}}>
@@ -233,8 +194,8 @@ var Post = React.createClass({
               </Row>
             </Grid>
           </PanelFooter>
-          <Comments models={this.props.models} stores={this.state.stores} post={this.state.post} expanded={this.state.expandedMoreComment} />
-          <NewComment models={this.props.models} stores={this.state.stores} source={{_id: this.state.post._id, type: 'post'}}
+          <Comments models={this.props.models} stores={this.state.stores} post={this.props.post} />
+          <NewComment models={this.props.models} stores={this.state.stores} source={{_id: this.props.post._id, type: 'post'}}
                       expanded={this.state.newCommentExpanded}
                       hideHolder={!hideCommentHolder} />
         </div>

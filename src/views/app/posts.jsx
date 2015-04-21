@@ -12,7 +12,7 @@ var ActionTypes = require('../constants/constants.jsx');
 
 var Recommend = require('./user/recommend_people.jsx');
 var NewPost = require('./posts/new_post.jsx');
-var PostSummary = require('./posts/post.jsx');
+var SinglePost = require('./posts/post.jsx');
 var StoreMixin = require('../mixins/store_mixin');
 
 
@@ -40,9 +40,9 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 3;
       if(stream[index])
-        stream[index].push(<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />);
+        stream[index].push(<SinglePost models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />);
       else
-        stream[index] = [<PostSummary models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
+        stream[index] = [<SinglePost models={this.props.models} stores={this.state.stores} key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='social'>

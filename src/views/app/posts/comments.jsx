@@ -72,28 +72,45 @@ var SingleComment = React.createClass({
 });
 
 var Comments = React.createClass({
-  destroyScrollbar: function() {
-    $(this.refs.commentsMain.getDOMNode()).perfectScrollbar('destroy');
-  },
-  initializeScrollbar: function() {
-    $(this.refs.commentsMain.getDOMNode()).perfectScrollbar({
-      suppressScrollX: true
-    });
+  getInitialState: function () {
+    return {
+      expanded: false
+    };
   },
   componentDidMount: function() {
     if(!Modernizr.touch) {
-      this.initializeScrollbar();
+      $(this.refs.commentsMain.getDOMNode()).perfectScrollbar({
+        suppressScrollX: true
+      });
     }
+    ReactBootstrap.Dispatcher.on('morecomments:expand',this._onExpand);
+    ReactBootstrap.Dispatcher.on('morecomments:collapse',this._onCollapse);
   },
   componentWillUnmount: function() {
-    this.destroyScrollbar();
+    $(this.refs.commentsMain.getDOMNode()).perfectScrollbar('destroy');
+    ReactBootstrap.Dispatcher.off('morecomments:expand',this._onExpand);
+    ReactBootstrap.Dispatcher.off('morecomments:collapse',this._onCollapse);
+  },
+  _onExpand: function(id) {
+    if(id == this.props.post._id) {
+      this.setState({
+        expanded: true
+      });
+    }
+  },
+  _onCollapse: function(id){
+    if(id == this.props.post._id) {
+      this.props.models.posts.clearMoreComments(id);
+      this.setState({
+        expanded: false
+      });
+    }
   },
   render: function () {
     var comments = {};
     var commentArray = this.props.post.comments;
-    if(this.props.expanded)
+    if(this.state.expanded)
       commentArray = this.props.post.morecomments;
-
     commentArray.forEach(function (c) {
       comments['comment-' + c._id] = <SingleComment models={this.props.models} stores={this.props.stores} comment={c}/>;
     }.bind(this));
@@ -106,7 +123,7 @@ var Comments = React.createClass({
     });
     return (
       <PanelFooter style={{padding: '0 25px 0 25px', backgroundColor:'#f5f5f5'}} >
-        <MoreComments className={moreCommentClass} expanded={this.props.expanded} post={this.props.post}/>
+        <MoreComments className={moreCommentClass} expanded={this.state.expanded} post={this.props.post}/>
         <div ref="commentsMain" className="comments">
           {comments}
         </div>

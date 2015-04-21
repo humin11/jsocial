@@ -20,7 +20,7 @@ var NewPost = React.createClass({
     var content = this.refs.postContent.getDOMNode().value;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
-      content:content
+      data: {content:content}
     });
     this.refs.postContent.getDOMNode().value = '';
   },
