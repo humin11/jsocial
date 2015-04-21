@@ -33,6 +33,15 @@ PostsModel.prototype = {
       }
     }
   },
+  tagRemovePost: function (id,height) {
+    for (var i = 0; i < this._posts.length; i++) {
+      if (this._posts[i]._id == id) {
+        this._posts[i].toBeDelete = true;
+        this._posts[i].height = height;
+        return;
+      }
+    }
+  },
   removePost: function (id) {
     for (var i = 0; i < this._posts.length; i++) {
       if (this._posts[i]._id == id) {

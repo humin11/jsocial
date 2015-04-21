@@ -27,6 +27,8 @@ var CollapsibleContent = React.createClass({
     }
   },
   render: function(){
+    if(!this.props.content)
+      return null;
     var content = this.props.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
     var br = content.match(/<br>/g);
     var contentToolbar = null;
