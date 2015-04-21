@@ -4,7 +4,7 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var BaseInfo = require('./base_info.jsx');
-var ReactDom = require('../mixins/react_Dom.jsx');
+var ReactDom = require('../../mixins/data_mixin.jsx');
 
 var UserInfo = React.createClass({
   mixins: [ReactDom],

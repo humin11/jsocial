@@ -10,19 +10,19 @@ var Follow = React.createClass({
   mixins: [ReactDom],
   getInitialState: function() {
     return {
-      followed: this.getData("user","hasFollowed",this.props.person._id)
+      followed: this.getData("followed","hasFollowed",this.props.person._id)
     };
   },
   _handleFollow: function(){
     if(this.state.followed){
       AppDispatcher.dispatch({
         type: ActionTypes.USERS_UNFOLLOW,
-        user:this.props.user
+        person:this.props.person
       });
     }else{
       AppDispatcher.dispatch({
         type: ActionTypes.USERS_FOLLOW,
-        user:this.props.user
+        person:this.props.person
       });
     }
   },
@@ -34,16 +34,11 @@ var Follow = React.createClass({
   },
   _onChange: function(){
     this.setState({
-      followed: this.getData("user","hasFollowed",this.props.person._id)
+      followed: this.getData("followed","hasFollowed",this.props.person._id)
     });
   },
   render: function(){
-    var text = null;
-    if(this.state.followed) {
-      text = <Entity entity='unfollow'/>;
-    }else{
-      text = <Entity entity='follow'/>;
-    }
+    var text = this.state.followed ? <Entity entity='unfollow'/> : <Entity entity='follow'/>;
     return (
       <Button xs outlined bsStyle='default' onClick={this._handleFollow}>
 
