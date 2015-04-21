@@ -1,15 +1,15 @@
 var DataMixin = {
   addChangeListener(storeName, fun){
-    if (this.props.store) {
-      if (this.props.store[storeName]) {
-        this.props.store[storeName].addChangeListener(fun);
+    if (this.props.stores) {
+      if (this.props.stores[storeName]) {
+        this.props.stores[storeName].addChangeListener(fun);
       }
     }
   },
   removeChangeListener(storeName,fun){
-    if (this.props.store) {
-      if (this.props.store[storeName]) {
-        this.props.store[storeName].removeChangeListener(fun);
+    if (this.props.stores) {
+      if (this.props.stores[storeName]) {
+        this.props.stores[storeName].removeChangeListener(fun);
       }
     }
   },
@@ -28,8 +28,9 @@ var DataMixin = {
     for (var i = 3; i < arguments.length; i++) {
       params.push(arguments[i]);
     }
-    var m = this.getModel(model);
+    var m = this.props.models;
     if (m){
+      m = this.props.models[model];
       if (m[fun]){
         return m[fun](params);
       }

@@ -32,7 +32,6 @@ var RecommendStore = assign(new EventEmitter2({maxListeners: 99999}), {
 });
 
 AppDispatcher.register(function(action) {
-
   switch(action.type) {
     case ActionTypes.RECOMMEND_PEOPLE:
       $.ajax({
@@ -41,8 +40,7 @@ AppDispatcher.register(function(action) {
         contentType: "application/json",
         success: function(obj){
           if (obj) {
-            _people.set(obj);
-            RecommendStore.emitChange();
+            RecommendStore.set(obj);
           }
         }
       });

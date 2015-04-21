@@ -5,23 +5,22 @@ var Follow = require('./follow.jsx');
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var RecommendStore = require('../../stores/recommend_store.jsx');
-var Authentication = require('../../mixins/auth_mixin.jsx');
+var AuthMixin = require('../../mixins/auth_mixin.jsx');
+var DataMixin = require('../../mixins/data_mixin.jsx');
 
 var Recommend = React.createClass({
-  mixins:[Authentication],
+  mixins:[AuthMixin,DataMixin],
   getInitialState: function() {
     return {
       people: this.props.models.recommend.get()
     };
   },
   componentDidMount: function() {
-    if(this.props.stores)
-      this.props.stores.RecommendStore.addChangeListener(this._onChange);
+    this.addChangeListener("RecommendStore",this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.RECOMMEND_PEOPLE });
   },
   componentWillUnmount: function() {
-    if(this.props.stores)
-      this.props.stores.RecommendStore.removeChangeListener(this._onChange);
+    this.removeChangeListener("RecommendStore",this._onChange);
   },
   _onChange: function() {
     this.setState({
@@ -39,10 +38,10 @@ var Recommend = React.createClass({
             <div className='inbox-avatar'>
               <img src={p.avatar} width='40' height='40' style={{verticalAlign:'top',position:'relative'}} />
               <div className='inbox-avatar-name'>
-                <div className='fg-darkgrayishblue75'>{p.name}</div>
+                <div className='fg-darkgrayishblue75'>{p.username}</div>
               </div>
               <div className='inbox-date text-right'>
-                <Follow person={p} models={this.props.models} stores={this.state.stores} ></Follow>
+                <Follow person={p} {...this.props}></Follow>
               </div>
             </div>
           </Col>

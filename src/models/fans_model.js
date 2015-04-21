@@ -4,18 +4,18 @@ var FansModel=function(){
 };
 
 FansModel.prototype = {
-  getFans:function(){
+  get:function(){
     return this._fans;
   },
-  hasFans: function(userid){
-    return this._fansMap[userid];
-  },
-  setFans : function(fans) {
-    this._fans = fans;
+  set : function(fans) {
+    this._fans = fans?fans:[];
     this._fansMap = {};
     this._fans.forEach(function(fan){
       this._fansMap[fan._id] = fan;
     });
+  },
+  hasFans: function(userid){
+    return this._fansMap[userid];
   }
 };
 module.exports = FansModel;
