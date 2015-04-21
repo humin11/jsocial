@@ -52,8 +52,8 @@ module.exports = function(app, passport) {
   });
   app.post('/upload', function(req, res) {
     var form = new formidable.IncomingForm();
-    console.log(form.uploadDir);
-    form.uploadDir = "/Users/macbookpro/programs/jsocial";
+    //console.log(form.uploadDir);
+    form.uploadDir = "./public/avatar/";
     form.keepExtensions = true;
     form.parse(req, function (err, fields, files) {
       // `file` is the name of the <input> field of type `file`
