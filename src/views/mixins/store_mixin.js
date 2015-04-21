@@ -18,6 +18,7 @@ var StoreMixin = {
         }
       }
     }
+
     if (!this.props.server){
       SystemInitStore(stores);
     }

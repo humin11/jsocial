@@ -1,15 +1,15 @@
 var DataMixin = {
   addChangeListener(storeName, fun){
-    if (this.props.store) {
-      if (this.props.store[storeName]) {
-        this.props.store[storeName].addChangeListener(fun);
+    if (this.props.stores) {
+      if (this.props.stores[storeName]) {
+        this.props.stores[storeName].addChangeListener(fun);
       }
     }
   },
   removeChangeListener(storeName,fun){
-    if (this.props.store) {
-      if (this.props.store[storeName]) {
-        this.props.store[storeName].removeChangeListener(fun);
+    if (this.props.stores) {
+      if (this.props.stores[storeName]) {
+        this.props.stores[storeName].removeChangeListener(fun);
       }
     }
   },
