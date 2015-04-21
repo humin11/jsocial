@@ -38,10 +38,10 @@ var Recommend = React.createClass({
             <div className='inbox-avatar'>
               <img src={p.avatar} width='40' height='40' style={{verticalAlign:'top',position:'relative'}} />
               <div className='inbox-avatar-name'>
-                <div className='fg-darkgrayishblue75'>{p.name}</div>
+                <div className='fg-darkgrayishblue75'>{p.username}</div>
               </div>
               <div className='inbox-date text-right'>
-                <Follow person={p} models={this.props.models} stores={this.state.stores} ></Follow>
+                <Follow person={p} {...this.props}></Follow>
               </div>
             </div>
           </Col>

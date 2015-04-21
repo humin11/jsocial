@@ -28,8 +28,9 @@ var DataMixin = {
     for (var i = 3; i < arguments.length; i++) {
       params.push(arguments[i]);
     }
-    var m = this.getModel(model);
+    var m = this.props.models;
     if (m){
+      m = this.props.models[model];
       if (m[fun]){
         return m[fun](params);
       }

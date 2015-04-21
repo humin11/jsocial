@@ -12,6 +12,9 @@ var _followed = new FollowedModel();
 var FollowedStore = assign(new EventEmitter2({maxListeners: 99999}),{
   modelName : "followed",
   name : "FollowedStore",
+  set:function(followed) {
+    _followed.set(followed);
+  },
   get: function () {
     return _followed;
   },
@@ -37,33 +40,34 @@ AppDispatcher.register(function(action) {
         return;
       }
       _initCalled = true;
-      UserStore.addChangeListener(FollowedStore.userChange);
+      FollowedStore.set(UserStore.get().get().followed);
+      //UserStore.addChangeListener(FollowedStore.userChange);
       break;
     case ActionTypes.FOLLOW_ADD:
-      var follow = action.follow;
+      var person = action.person;
       $.ajax({
         url: "/users/follow",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(follow),
+        data : JSON.stringify(person),
         success: function(obj){
           if(obj){
-            _followed.add(follow);
+            _followed.add(person);
             FollowedStore.followedChange();
           }
         }
       });
       break;
     case ActionTypes.FOLLOW_REMOVE:
-      var follow = action.follow;
+      var person = action.person;
       $.ajax({
         url: "/users/unfollow",
         type: "POST",
         contentType: "application/json",
-        data : JSON.stringify(follow),
+        data : JSON.stringify(person),
         success: function(obj){
           if(obj){
-            _followed.remove(follow);
+            _followed.remove(person);
             FollowedStore.followedChange();
           }
         }
