@@ -57,9 +57,8 @@ module.exports = function(app, passport) {
     form.keepExtensions = true;
     form.parse(req, function (err, fields, files) {
       // `file` is the name of the <input> field of type `file`
-      console.log(fields);
-      console.log(files);
-      res.send("OK");
+      //console.log(files.path);
+      res.send(files.path);
     });
   });
 
