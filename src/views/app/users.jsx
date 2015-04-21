@@ -19,7 +19,13 @@ var Body = React.createClass({
     return (
       <Container id='body' className='users'>
         <Grid>
-          <Row><Col sm={4} collapseRight ></Col></Row>
+          <Row><Col sm={4} collapseRight >
+            <form action="/upload" method="post">
+              <input type="text" name="title"/>
+              <input type="file" name="file"/>
+              <input type="submit" value="Upload"/>
+            </form>
+          </Col></Row>
           <Row>
             <Col sm={4} collapseRight>
               {this.getDefaultValue("user.username","")}
