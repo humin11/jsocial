@@ -6,7 +6,8 @@ var NewPost = React.createClass({
   mixins:[Authentication],
   getInitialState: function() {
     return {
-      entity: ''
+      entity: '',
+      disabledOkBtn: true
     };
   },
   componentDidMount: function() {
@@ -15,22 +16,42 @@ var NewPost = React.createClass({
         entity: l20n.ctx.getSync('inputNewPost')
       });
     }.bind(this));
+    if(!Modernizr.touch) {
+      $(this.refs.postContent.getDOMNode()).perfectScrollbar({
+        suppressScrollX: true
+      });
+    }
+  },
+  componentWillUnmount: function() {
+    $(this.refs.postContent.getDOMNode()).perfectScrollbar('destroy');
+  },
+  _handleChange: function(){
+    if(this.refs.postContent.getDOMNode().innerText.length > 0){
+      this.setState({ disabledOkBtn: false });
+    }else{
+      this.setState({ disabledOkBtn: true });
+    }
   },
   _handleClick: function(){
-    var content = this.refs.postContent.getDOMNode().value;
+    var content = this.refs.postContent.getDOMNode().innerText;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
       data: {content:content}
     });
-    this.refs.postContent.getDOMNode().value = '';
+    this.refs.postContent.getDOMNode().innerHTML = '';
   },
   render: function () {
     if(!this.state.isLoggedIn)
       return null;
+
+    var btn = <Button onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>;
+    if(this.state.disabledOkBtn) {
+      btn = <Button disabled onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>;
+    }
     return (
-      <PanelContainer noControls >
-        <PanelBody style={{padding: 12.5}}>
-          <Textarea rows='3' placeholder={this.state.entity} style={{border: 'none'}} ref="postContent"/>
+      <PanelContainer noControls className="newpost">
+        <PanelBody style={{padding: 12.5}} className="newpost-main">
+          <div ref="postContent" onKeyUp={this._handleChange} contentEditable placeholder={this.state.entity} className="newpost-editor"></div>
         </PanelBody>
         <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
           <Grid>
@@ -40,7 +61,7 @@ var NewPost = React.createClass({
                 <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-calendar icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
               </Col>
               <Col xs={6} className='text-right' collapseLeft collapseRight>
-                <Button onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>
+                {btn}
               </Col>
             </Row>
           </Grid>

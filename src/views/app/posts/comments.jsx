@@ -122,7 +122,7 @@ var Comments = React.createClass({
       'morecomments':true
     });
     return (
-      <PanelFooter style={{padding: '0 25px 0 25px', backgroundColor:'#f5f5f5'}} >
+      <PanelFooter style={{padding: '0 0 0 25px', backgroundColor:'#f5f5f5'}} >
         <MoreComments className={moreCommentClass} expanded={this.state.expanded} post={this.props.post}/>
         <div ref="commentsMain" className="comments">
           {comments}
