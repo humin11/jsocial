@@ -19,7 +19,7 @@ var LocaleMenuItem = React.createClass({
         <Grid>
           <Row>
             <Col xs={2}>
-              <img src={'/imgs/flags/flags/flat/32/'+this.props.flag+'.png'} width='32' height='32' />
+              <img src={'/imgs/flags/flags/flat/32/'+this.props.flag+'.png'} width='32' height='20' />
             </Col>
             <Col xs={10}>
               <Entity className='lang-menu-text' entity='languageMenu' data={{lang: this.props.lang}} />
@@ -567,7 +567,6 @@ var Header = React.createClass({
                     <SidebarBtn />
                   </Col>
                   <Col xs={6} sm={4}>
-                    <Brand />
                   </Col>
                   <Col xs={3} sm={8}>
                     <Navigation pressed={this.props.pressed} />

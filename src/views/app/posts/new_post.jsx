@@ -61,7 +61,7 @@ var NewPost = React.createClass({
     });
     $('#postContent')[0].innerHTML = '';
     $("#uploadImg")[0].dropzone.removeAllFiles(true);
-    this.setState({ hideUpload:true});
+    this.setState({ hideUpload:true,disabledOkBtn: true});
   },
   _onClickUpload: function(){
     this.setState({ hideUpload: !this.state.hideUpload });
