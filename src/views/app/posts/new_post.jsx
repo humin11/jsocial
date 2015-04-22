@@ -79,10 +79,15 @@ var NewPost = React.createClass({
       'dropzone': true,
       'text-center':true
     });
+    var contentHolder = classSet({
+      'hide': !this.state.disabledOkBtn,
+      'content-holder': true
+    });
     return (
       <PanelContainer noControls className="newpost">
         <PanelBody style={{padding: 12.5}} className="newpost-main">
-          <div id="postContent" onKeyUp={this._handleChange} contentEditable placeholder={this.state.postHolder} className="newpost-editor"></div>
+          <div className={contentHolder} >{this.state.postHolder}</div>
+          <div id="postContent" onKeyUp={this._handleChange} contentEditable className="newpost-editor"></div>
           <div className={uploadClass} id="uploadImg">
             <div className="dz-default dz-message">
               <span>{this.state.uploadHolder}</span>
