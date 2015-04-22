@@ -21,11 +21,11 @@ var NewPost = React.createClass({
       });
     }.bind(this));
     if(!Modernizr.touch) {
-      $(this.refs.postContent.getDOMNode()).perfectScrollbar({
+      $("#postContent").perfectScrollbar({
         suppressScrollX: true
       });
     }
-    $(this.refs.uploadImg.getDOMNode()).dropzone({
+    $("#uploadImg").dropzone({
       paramName: "file",
       url: '/upload',
       addRemoveLinks: true,
@@ -77,8 +77,8 @@ var NewPost = React.createClass({
     return (
       <PanelContainer noControls className="newpost">
         <PanelBody style={{padding: 12.5}} className="newpost-main">
-          <div ref="postContent" onKeyUp={this._handleChange} contentEditable placeholder={this.state.postHolder} className="newpost-editor"></div>
-          <div className={uploadClass} ref="uploadImg">
+          <div id="postContent" onKeyUp={this._handleChange} contentEditable placeholder={this.state.postHolder} className="newpost-editor"></div>
+          <div className={uploadClass} id="uploadImg">
             <div className="dz-default dz-message">
               <span>{this.state.uploadHolder}</span>
             </div>
