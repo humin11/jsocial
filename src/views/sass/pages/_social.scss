@@ -256,6 +256,11 @@ html.social body .sidebar-nav > li.active:after {
     overflow: hidden;
     background-color: #fff;
   }
+  .dropzone {
+    border: 2px dashed #0087F7;
+    border-radius: 5px;
+    background: white;
+  }
 }
 
 .recommend-person {
