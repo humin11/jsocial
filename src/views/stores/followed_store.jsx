@@ -53,7 +53,8 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           if(obj){
             _followed.add(person);
-            FollowedStore.circleChange();
+            FollowedStore.userChange();
+            AppDispatcher.dispatch({ type: ActionTypes.POSTS_REFRESH });
           }
         }
       });
@@ -68,7 +69,8 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           if(obj){
             _followed.remove(person);
-            FollowedStore.circleChange();
+            FollowedStore.userChange();
+            AppDispatcher.dispatch({ type: ActionTypes.POSTS_REFRESH });
           }
         }
       });

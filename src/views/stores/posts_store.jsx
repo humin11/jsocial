@@ -32,25 +32,25 @@ var PostsStore = assign(new EventEmitter2({maxListeners: 99999}), {
 });
 
 AppDispatcher.register(function(action) {
-
   switch(action.type) {
-
     case ActionTypes.POSTS_INIT:
       if(_initCalled) {
         return;
       }
-      //$.ajax({
-      //  url: "/posts/find",
-      //  type: "POST",
-      //  contentType: "application/json",
-      //  success: function(obj){
-      //    _initCalled = true;
-      //    if (obj) {
-      //      _posts.set(obj);
-      //      PostsStore.emitChange();
-      //    }
-      //  }
-      //});
+      break;
+    case ActionTypes.POSTS_REFRESH:
+      $.ajax({
+        url: "/posts/find",
+        type: "POST",
+        contentType: "application/json",
+        success: function(obj){
+          _initCalled = true;
+          if (obj) {
+            _posts.set(obj);
+            PostsStore.emitChange();
+          }
+        }
+      });
       break;
     case ActionTypes.POSTS_CREATE:
       $.ajax({

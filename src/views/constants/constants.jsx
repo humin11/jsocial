@@ -7,6 +7,7 @@ module.exports = keyMirror({
   POSTS_INIT: null,
   POSTS_CREATE: null,
   POSTS_DELETE: null,
+  POSTS_REFRESH:null,
   COMMENTS_CREATE: null,
   COMMENTS_MORE: null,
   COMMENTS_DELETE: null,
@@ -27,5 +28,6 @@ module.exports = keyMirror({
   FOLLOW_INIT:null,
   PERSON_LOAD:null,
   USERS_FOLLOW:null,
-  USERS_UNFOLLOW:null
+  USERS_UNFOLLOW:null,
+  CIRCLE_INIT:null
 });

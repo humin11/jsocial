@@ -10,7 +10,7 @@ var ApplicationSidebar = React.createClass({
               <div className='sidebar-header'>PAGES</div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-pixelvicon-photo-gallery' name='Gallery' href='/gallery' />
+                  <SidebarNavItem glyph='icon-pixelvicon-photo-gallery' name={<Entity entity='sidebarCircle'/>} href='/circle' />
                   <SidebarNavItem glyph='icon-feather-share' name='Social' href='/posts' />
                   <SidebarNavItem glyph='icon-stroke-gap-icons-Blog' name={<span>Blog <BLabel className='bg-darkcyan fg-white'>2</BLabel></span>}>
                     <SidebarNav>
