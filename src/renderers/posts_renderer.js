@@ -14,7 +14,6 @@ module.exports = function(Handler,req,sender) {
   var usermodel = new UserModel();
   var recommendmodel = new RecommendModel();
   if (req.user) {
-    console.log(req.user);
     UsersController.DB.findOne({_id: MongoApi.ObjectId(req.user._id)}, function (err, user, next2) {
       usermodel.set(user);
       next2();
@@ -22,9 +21,7 @@ module.exports = function(Handler,req,sender) {
       user.followed.forEach(function(follow){
         list.push(MongoApi.ObjectId(follow._id));
       });
-      console.log(list);
       PostsController.DB.find({query:{'author._id':{$in:list}},index: 1, count: 20}, function (err, posts, next1) {
-        console.log(posts);
         postsmodel.set(posts);
         next1();
         PageStore(sender, req, Handler, {PostsStore: postsmodel.get(), UsersStore: usermodel.get()}, {
