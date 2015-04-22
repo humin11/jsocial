@@ -28,15 +28,15 @@ var NewPost = React.createClass({
     $("#uploadImg").dropzone({
       paramName: "file",
       url: '/upload',
-      addRemoveLinks: true,
+      addRemoveLinks: false,
       uploadMultiple: false,
       maxFiles:1,
       init: function() {
         this.on("removedfile", function(file) {
 
         });
-        this.on("successmultiple", function(filelist,responseJson,e){
-
+        this.on("success",function(file,obj,e){
+          alert(obj.name);
         });
       }
     });
