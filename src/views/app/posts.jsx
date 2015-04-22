@@ -36,7 +36,7 @@ var Body = React.createClass({
     var stream = [];
     for(var i=0;i<this.state.data.length;i++){
       var obj = this.state.data[i];
-      var index = i % 2;
+      var index = i % 3;
       if(stream[index])
         stream[index].push(<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />);
       else
@@ -50,6 +50,9 @@ var Body = React.createClass({
             <Col sm={4} collapseRight>
               <NewPost models={this.props.models} stores={this.props.stores}></NewPost>
               {stream[0]}
+            </Col>
+            <Col sm={4} collapseRight>
+              {stream[1]}
             </Col>
             <Col sm={4} collapseRight>
               <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
