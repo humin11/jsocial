@@ -22,6 +22,7 @@ var Body = React.createClass({
       type: ActionTypes.USERS_SIGNUP,
       data:{
         username: username,
+        name: username,
         email: email,
         password: password
       }
