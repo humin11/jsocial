@@ -274,9 +274,13 @@ html.social body .sidebar-nav > li.active:after {
   }
 }
 
+.recommend-header{
+  font: 300 13px Roboto,arial,sans-serif;
+  color: #404040;
+}
 .recommend-person {
   .col-xs-12 .inbox-avatar{
-    border-bottom: 1px solid #EAEDF1;
+    border-top: 1px solid #EAEDF1;
   }
   &:last-of-type {
     .col-xs-12 .inbox-avatar{

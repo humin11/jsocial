@@ -4,7 +4,7 @@ var openState = (!Modernizr.touch) ? (localStorage.getItem('sidebar-open-state')
 var SidebarMixin = {
   getInitialState: function() {
     return {
-      open: openState
+      open: false
     };
   },
   sidebarStateChangeCallback: function(open) {
