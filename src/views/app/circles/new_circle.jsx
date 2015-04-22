@@ -45,6 +45,7 @@ var NewCircle = React.createClass({
     $(this.refs.circleDescription.getDOMNode()).perfectScrollbar('destroy');
   },
   _handleChange: function(){
+    console.log(this.refs);
     if(this.refs.circleDescription.getDOMNode().innerText.length > 0){
       this.setState({ disabledOkBtn: false });
     }else{
@@ -52,11 +53,17 @@ var NewCircle = React.createClass({
     }
   },
   _handleClick: function(){
-    var content = this.refs.circleDescription.getDOMNode().innerText;
+    var name = this.refs.circleName.getDOMNode().value;
+    var description = this.refs.circleDescription.getDOMNode().innerText;
+
     AppDispatcher.dispatch({
-      type: ActionTypes.POSTS_CREATE,
-      data: {content:content}
+      type: ActionTypes.CIRCLE_CREATE,
+      data: {name: name, description: description}
     });
+    console.log(name);
+    console.log(description);
+
+    this.refs.circleName.getDOMNode().value = '';
     this.refs.circleDescription.getDOMNode().innerHTML = '';
   },
   _onClickUpload: function(){
@@ -71,9 +78,9 @@ var NewCircle = React.createClass({
       'newcomment-holder': true
     });
 
-    var btn = <Button onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>;
+    var btn = <Button onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='circleCreate'/></Button>;
     if(this.state.disabledOkBtn) {
-      btn = <Button disabled onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='share'/></Button>;
+      btn = <Button disabled onClick={this._handleClick} bsStyle='darkgreen45'><Entity entity='circleCreate'/></Button>;
     }
     var uploadClass = classSet({
       'hide': this.state.hideUpload,
@@ -81,9 +88,11 @@ var NewCircle = React.createClass({
     });
     return (
       <PanelContainer noControls className="newpost">
-        <PanelBody style={{padding: 12.5}} className="newpost-main">
-          <Input className={collapsedClass} type='text' placeholder={this.state.entity}
+        <PanelBody style={{padding: 12.5}}>
+          <Entity entity='circleName'/>
+          <Input id="circleName" className={collapsedClass} type='text' placeholder={this.state.entity}
                  style={{border: '1px solid #d8d8d8'}}/>
+          <Entity entity='circleDescription'/>
           <div id="circleDescription" onKeyUp={this._handleChange} contentEditable placeholder={this.state.postHolder} className="newpost-editor"></div>
           <div className={uploadClass} id="uploadImg">
             <div className="dz-default dz-message">

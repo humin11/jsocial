@@ -51,6 +51,11 @@
 <denyReshare '禁止转发'>
 <hadDelete '信息已被删除'>
 
+<!-- CIRCLE -->
+<circleCreate '创建合作社'>
+<circleName '合作社名称'>
+<circleDescription '合作社描述'>
+
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
 <sidebarPost '微博'>

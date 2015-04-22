@@ -29,5 +29,6 @@ module.exports = keyMirror({
   PERSON_LOAD:null,
   USERS_FOLLOW:null,
   USERS_UNFOLLOW:null,
-  CIRCLE_INIT:null
+  CIRCLE_INIT:null,
+  CIRCLE_CREATE:null
 });
