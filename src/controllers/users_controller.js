@@ -10,7 +10,7 @@ module.exports = new MongoController({
     Default: {
       _id: ModelDefault.id,
       create_at: ModelDefault.now,
-      avatar: "/imgs/avatars/avatar0.png",
+      avatar: "/imgs/avatars/avatar1.png",
       followed: function(req,model){
         return [assign({},model)];
       }
@@ -18,7 +18,7 @@ module.exports = new MongoController({
     OutFormat: {
       hide: ["password"]
     },
-    SimpleFormat: ["_id","username","avatar"]
+    SimpleFormat: ["_id","name","avatar"]
   },
   url: {
     login: function (req, res, next) {

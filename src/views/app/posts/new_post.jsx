@@ -25,7 +25,7 @@ var NewPost = React.createClass({
         suppressScrollX: true
       });
     }
-    this.dropzone = new Dropzone("#uploadImg",{
+    $("#uploadImg").dropzone({
       paramName: "file",
       url: '/upload',
       addRemoveLinks: true,
@@ -60,7 +60,7 @@ var NewPost = React.createClass({
       data: {content:content,img:img}
     });
     $('#postContent')[0].innerHTML = '';
-    this.dropzone.removeAllFiles(true);
+    $("#uploadImg").dropzone.removeAllFiles(true);
     this.setState({ hideUpload:true});
   },
   _onClickUpload: function(){
