@@ -32,13 +32,13 @@ var PostsStore = assign(new EventEmitter2({maxListeners: 99999}), {
 });
 
 AppDispatcher.register(function(action) {
-
   switch(action.type) {
-
     case ActionTypes.POSTS_INIT:
       if(_initCalled) {
         return;
       }
+      break;
+    case ActionTypes.POSTS_REFRESH:
       $.ajax({
         url: "/posts/find",
         type: "POST",
