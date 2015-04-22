@@ -92,8 +92,8 @@ var Post = React.createClass({
   render: function() {
     var create_at = moment(this.props.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
     var img = null;
-    if(this.props.img)
-      img = <Img responsive src={this.props.img}/>;
+    if(this.props.post.img)
+      img = <Img responsive src={this.props.post.img} style={{maxHeight:'350px',maxWidth:'350px'}}/>;
     var hideCommentHolder = false;
     if(this.props.post.comment_count > 0)
       hideCommentHolder = true;
@@ -161,11 +161,11 @@ var Post = React.createClass({
               </div>
             </div>
             <CollapsibleContent className="post-content" content={this.props.post.content} maxHeight={"108px"}/>
-            <div style={{margin: -25, marginTop: 25}}>
+            <div style={{margin: "25px -15px -25px -15px"}} className="text-center">
               {img}
             </div>
           </PanelBody>
-          <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0}}>
+          <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0, borderTop:0}}>
             <Grid style={{paddingLeft:'0',paddingRight:'0'}}>
               <Row style={{marginLeft:'0',marginRight:'5px'}}>
                 <Col xs={2} style={{paddingLeft:'0',paddingRight:'0'}}>

@@ -25,39 +25,43 @@ var NewPost = React.createClass({
         suppressScrollX: true
       });
     }
-    $("#uploadImg").dropzone({
+    this.dropzone = new Dropzone("#uploadImg",{
       paramName: "file",
       url: '/upload',
-      addRemoveLinks: false,
+      addRemoveLinks: true,
       uploadMultiple: false,
       maxFiles:1,
       init: function() {
         this.on("removedfile", function(file) {
-
+          this.enable();
         });
         this.on("success",function(file,obj,e){
-          alert(obj.name);
+          this.disable();
+          $('#uploadFileName')[0].innerText=obj;
         });
       }
     });
   },
   componentWillUnmount: function() {
-    $(this.refs.postContent.getDOMNode()).perfectScrollbar('destroy');
+    $("#postContent").perfectScrollbar('destroy');
   },
   _handleChange: function(){
-    if(this.refs.postContent.getDOMNode().innerText.length > 0){
+    if($("#postContent")[0].innerText.length > 0){
       this.setState({ disabledOkBtn: false });
     }else{
       this.setState({ disabledOkBtn: true });
     }
   },
   _handleClick: function(){
-    var content = this.refs.postContent.getDOMNode().innerText;
+    var content = $("#postContent")[0].innerText;
+    var img = $("#uploadFileName")[0].innerText;
     AppDispatcher.dispatch({
       type: ActionTypes.POSTS_CREATE,
-      data: {content:content}
+      data: {content:content,img:img}
     });
-    this.refs.postContent.getDOMNode().innerHTML = '';
+    $('#postContent')[0].innerHTML = '';
+    this.dropzone.removeAllFiles(true);
+    this.setState({ hideUpload:true});
   },
   _onClickUpload: function(){
     this.setState({ hideUpload: !this.state.hideUpload });
@@ -72,7 +76,8 @@ var NewPost = React.createClass({
     }
     var uploadClass = classSet({
       'hide': this.state.hideUpload,
-      'dropzone': true
+      'dropzone': true,
+      'text-center':true
     });
     return (
       <PanelContainer noControls className="newpost">
@@ -83,6 +88,7 @@ var NewPost = React.createClass({
               <span>{this.state.uploadHolder}</span>
             </div>
           </div>
+          <div className="hide" id="uploadFileName"></div>
         </PanelBody>
         <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
           <Grid>

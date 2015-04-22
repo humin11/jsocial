@@ -55,7 +55,8 @@ module.exports = function(app, passport) {
     form.uploadDir = "./public/tmp/";
     form.keepExtensions = true;
     form.parse(req, function (err, fields, files) {
-      res.send({name: files.file.path});
+      var filename = files.file.path.replace(/public/,'');
+      res.send(filename);
     });
   });
 
