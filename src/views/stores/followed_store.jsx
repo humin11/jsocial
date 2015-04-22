@@ -53,7 +53,7 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           if(obj){
             _followed.add(person);
-            FollowedStore.followedChange();
+            FollowedStore.circleChange();
           }
         }
       });
@@ -68,7 +68,7 @@ AppDispatcher.register(function(action) {
         success: function(obj){
           if(obj){
             _followed.remove(person);
-            FollowedStore.followedChange();
+            FollowedStore.circleChange();
           }
         }
       });

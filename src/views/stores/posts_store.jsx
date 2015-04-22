@@ -39,18 +39,18 @@ AppDispatcher.register(function(action) {
       if(_initCalled) {
         return;
       }
-      $.ajax({
-        url: "/posts/find",
-        type: "POST",
-        contentType: "application/json",
-        success: function(obj){
-          _initCalled = true;
-          if (obj) {
-            _posts.set(obj);
-            PostsStore.emitChange();
-          }
-        }
-      });
+      //$.ajax({
+      //  url: "/posts/find",
+      //  type: "POST",
+      //  contentType: "application/json",
+      //  success: function(obj){
+      //    _initCalled = true;
+      //    if (obj) {
+      //      _posts.set(obj);
+      //      PostsStore.emitChange();
+      //    }
+      //  }
+      //});
       break;
     case ActionTypes.POSTS_CREATE:
       $.ajax({

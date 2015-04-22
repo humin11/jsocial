@@ -9,7 +9,7 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
 var ReactDom = require('../mixins/data_mixin.jsx');
-var AllFollowed = require('./user/allfollowed.jsx');
+var AllFollowed = require('./user/all_followed.jsx');
 
 var classSet = React.addons.classSet;
 
