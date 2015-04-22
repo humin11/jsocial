@@ -17,7 +17,7 @@ var signup = require('./views/app/signup.jsx');
 var lock = require('./views/app/lock.jsx');
 var users = require('./views/app/users.jsx');
 
-
+var circle = require('./views/app/circles.jsx');
 /* ROUTES */
 module.exports = (
   <Route handler={ReactRouter.RouteHandler}>
@@ -31,6 +31,7 @@ module.exports = (
     <Route path='/signup' handler={signup} />
     <Route path='/lock' handler={lock} />
     <Route path='/users' handler={users} />
+    <Route path='/circle' handler={circle} />
     <NotFoundRoute handler={notfound} />
 
   </Route>

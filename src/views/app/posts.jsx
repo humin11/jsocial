@@ -23,7 +23,6 @@ var Body = React.createClass({
   componentDidMount: function() {
     $('html').addClass('social');
     this.props.stores.PostsStore.addChangeListener(this._onChange);
-    AppDispatcher.dispatch({ type: ActionTypes.POSTS_INIT });
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');

@@ -13,6 +13,10 @@ module.exports = new MongoController({
       avatar: "/imgs/avatars/avatar1.png",
       followed: function(req,model){
         return [assign({},model)];
+      },
+      circles:[],
+      fans: function(req,model){
+        return [assign({},model)];
       }
     },
     OutFormat: {

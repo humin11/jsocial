@@ -1,5 +1,5 @@
 var assign = require('object-assign');
-var userStores = ["fans_store","followed_store","posts_store","recommend_store","users_store"];
+var userStores = ["fans_store","followed_store","posts_store","recommend_store","users_store","circles_store"];
 var StoreMixin = {
   getInitialState: function() {
     var models = this.props.models;
