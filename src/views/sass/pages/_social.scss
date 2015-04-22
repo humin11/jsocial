@@ -242,6 +242,17 @@ html.social body .sidebar-nav > li.active:after {
   border: 0;
   font-size: 16px;
   word-wrap: break-word;
+  .content-holder {
+    color: #ccc;
+    font-size: 14px;
+    position: absolute;
+    left: 12.5px;
+    top: 12.5px;
+    line-height: 1.4em;
+    height: 1.4em;
+    overflow: hidden;
+    white-space: nowrap;
+  }
   .newpost-editor {
     position: relative;
     margin-right: -12.5px;
@@ -254,7 +265,7 @@ html.social body .sidebar-nav > li.active:after {
     font-size: 13px;
     word-wrap: break-word;
     overflow: hidden;
-    background-color: #fff;
+    background-color: transparent;
   }
   .dropzone {
     border: 2px dashed #0087F7;
