@@ -45,6 +45,20 @@ module.exports = new MongoController({
         res.send({err:null,user:null});
       }
     },
+    getPosts:function(req,res){
+      if (req.user){
+        this.DB.findOne({_id: MongoApi.ObjectId(req.user._id)},function(err,object,next){
+          var list = [];
+          object.followed.forEach(function(follow){
+            list.push(follow._id);
+          });
+          res.send({err:null,user:object});
+          next();
+        });
+      } else {
+        res.send({err:null,user:null});
+      }
+    },
     findRecommend: function(req, res){
       if(req.user) {
         this.DB.findSimples({count: 3, query: {_id: {$ne: MongoApi.ObjectId(req.user._id)}}}, function (err, object, next) {
@@ -57,7 +71,7 @@ module.exports = new MongoController({
     },
     follow: function(req, res){
       if(req.user) {
-        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $push: {followed: req.body}}},function(err,next){
+        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $push: {followed: MongoApi.ConvertObjectId(req.body)}}},function(err,next){
           res.send(true);
           next();
         });
@@ -67,7 +81,7 @@ module.exports = new MongoController({
     },
     unfollow: function(req, res){
       if(req.user) {
-        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $pull: {followed: {_id: req.body._id}}}},function(err,next){
+        this.DB.update({query:{_id: MongoApi.ObjectId(req.user._id)},model:{ $pull: {followed: {_id: MongoApi.ObjectId(req.body._id)}}}},function(err,next){
           res.send(true);
           next();
         });
