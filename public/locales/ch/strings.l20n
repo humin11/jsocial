@@ -58,7 +58,7 @@
 
 <!-- COMMUNITY -->
 <communityJoined '你加入的合作社'>
-<communityInterest '你可能感兴趣的合作社'>
+<communityInterest '你可能喜欢的合作社'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
@@ -77,3 +77,4 @@
 <collapse '收起'>
 <expand '展开'>
 <close '关闭'>
+<join '加入'>

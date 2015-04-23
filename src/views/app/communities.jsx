@@ -28,12 +28,12 @@ var Body = React.createClass({
           <Row>
             <Col sm={3} collapseRight >
               <PanelContainer noControls>
-                <Grid className="community">
+                <Grid className="mycommunity">
                   <Row>
                     <Col sm={4}>
                       <img src="/imgs/covers/0.jpg" width="80" height="80" />
                     </Col>
-                    <Col sm={8} className="community-content">
+                    <Col sm={8} className="mycommunity-content">
                       <div>就爱吃草莓</div>
                       <div>123123位成员</div>
                     </Col>
@@ -43,12 +43,12 @@ var Body = React.createClass({
             </Col>
             <Col sm={3} collapseRight >
               <PanelContainer noControls>
-                <Grid className="community">
+                <Grid className="mycommunity">
                   <Row>
                     <Col sm={4}>
                       <img src="/imgs/covers/1.jpg" width="80" height="80" />
                     </Col>
-                    <Col sm={8} className="community-content">
+                    <Col sm={8} className="mycommunity-content">
                       <div>土豆团</div>
                       <div>123123位成员</div>
                     </Col>
@@ -58,12 +58,12 @@ var Body = React.createClass({
             </Col>
             <Col sm={3} collapseRight >
               <PanelContainer noControls>
-                <Grid className="community">
+                <Grid className="mycommunity">
                   <Row>
                     <Col sm={4}>
                       <img src="/imgs/covers/2.jpg" width="80" height="80" />
                     </Col>
-                    <Col sm={8} className="community-content">
+                    <Col sm={8} className="mycommunity-content">
                       <div>蚯蚓战士</div>
                       <div>123123位成员</div>
                     </Col>
@@ -82,16 +82,92 @@ var Body = React.createClass({
           </Row>
           <Row>
             <Col sm={3} collapseRight >
-
+              <PanelContainer noControls>
+                <Grid className="othercommunity">
+                  <Row>
+                    <Col sm={12} style={{padding:0}}>
+                      <img src="/imgs/covers/5.jpg" width="266" height="265" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={12} className="othercommunity-content">
+                      <div className="othercommunity-title">抢菜黑涩会</div>
+                      <div className="othercommunity-detail">123位成员 3,123条消息</div>
+                      <div className="othercommunity-toolbar">
+                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
+                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Grid>
+              </PanelContainer>
             </Col>
             <Col sm={3} collapseRight >
-
+              <PanelContainer noControls>
+                <Grid className="othercommunity">
+                  <Row>
+                    <Col sm={12} style={{padding:0}}>
+                      <img src="/imgs/covers/6.jpg" width="266" height="265" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={12} className="othercommunity-content">
+                      <div className="othercommunity-title">切西瓜不切菜</div>
+                      <div className="othercommunity-detail">32位成员 233条消息</div>
+                      <div className="othercommunity-toolbar">
+                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
+                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Grid>
+              </PanelContainer>
             </Col>
             <Col sm={3} collapseRight >
-
+              <PanelContainer noControls>
+                <Grid className="othercommunity">
+                  <Row>
+                    <Col sm={12} style={{padding:0}}>
+                      <img src="/imgs/covers/8.jpg" width="266" height="265" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={12} className="othercommunity-content">
+                      <div className="othercommunity-title">大番薯</div>
+                      <div className="othercommunity-detail">7位成员 56条消息</div>
+                      <div className="othercommunity-toolbar">
+                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
+                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Grid>
+              </PanelContainer>
             </Col>
             <Col sm={3} collapseRight >
-
+              <PanelContainer noControls>
+                <Grid className="othercommunity">
+                  <Row>
+                    <Col sm={12} style={{padding:0}}>
+                      <img src="/imgs/covers/9.jpg" width="266" height="265" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={12} className="othercommunity-content">
+                      <div className="othercommunity-title">有机绿色社</div>
+                      <div className="othercommunity-detail">12,331位成员 4,123条消息</div>
+                      <div className="othercommunity-toolbar">
+                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
+                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Grid>
+              </PanelContainer>
             </Col>
           </Row>
         </Grid>
