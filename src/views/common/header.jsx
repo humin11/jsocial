@@ -277,13 +277,13 @@ var Navigation = React.createClass({
           <NavItem divider />
           <NavItem className='hidden-sm'>
             <a href='#' onClick={this.handleSkinSwitch}>
-              <Icon glyph='icon-fontello-circle' className='fg-theme' style={{lineHeight: 1, fontSize: 24 }} />
+              <Icon glyph='icon-fontello-circle' className='fg-theme' />
             </a>
           </NavItem>
           <NavItem divider />
           <NavItem dropdown>
-            <DropdownButton id='flag-menu-btn' nav toggleOnHover container={this} menu='flag-menu'>
-              <img src={'/imgs/flags/flags/flat/32/' + this.state.selectedFlag + '.png'} width='32' height='32' />
+            <DropdownButton id='flag-menu-btn' nav container={this} menu='flag-menu'>
+              <img src={'/imgs/flags/flags/flat/32/' + this.state.selectedFlag + '.png'} width='16' height='16' />
             </DropdownButton>
             <Menu alignRight noTimer bsStyle='theme' ref='flag-menu' id='flag-menu' className='double-width' onItemSelect={this.changeFlag}  style={{paddingBottom: 0}}>
               <MenuItem header>
@@ -300,7 +300,7 @@ var Navigation = React.createClass({
           <NavItem divider />
           <DirectNavItem glyph='user-female' path='/users' className='small-font' />
           <NavItem dropdown className='small-font collapse-left'>
-            <DropdownButton nav toggleOnHover container={this} menu='settings-menu'>
+            <DropdownButton nav  container={this} menu='settings-menu'>
               <Icon bundle='fontello' glyph='cog-7' />
             </DropdownButton>
             <Menu alignRight noTimer bsStyle='theme' style={{width: 375}} ref='settings-menu' id='settings-menu' onItemSelect={this.changeViewport}>
@@ -356,9 +356,8 @@ var Navigation = React.createClass({
           <NavItem divider />
           <DirectNavItem glyph='mail-3' path='/app/mailbox/inbox' />
           <NavItem dropdown className='collapse-left'>
-            <DropdownButton nav toggleOnHover container={this} menu='bullhorn-menu'>
+            <DropdownButton nav  container={this} menu='bullhorn-menu'>
               <Icon bundle='fontello' glyph='bullhorn' />
-              <Badge className='fg-darkbrown bg-orange notification-badge'>3</Badge>
             </DropdownButton>
             <Menu alignRight noTimer id='notifications-menu' ref='bullhorn-menu' className='double-width' alwaysInactive>
               <MenuItem header>
@@ -445,9 +444,8 @@ var Navigation = React.createClass({
             </Menu>
           </NavItem>
           <NavItem dropdown className='collapse-left'>
-            <DropdownButton nav toggleOnHover container={this} menu='rss-menu'>
+            <DropdownButton nav  container={this} menu='rss-menu'>
               <Icon bundle='fontello' glyph='rss-1' />
-              <Badge className='fg-darkgreen bg-darkgreen40 notification-badge'>4</Badge>
             </DropdownButton>
             <Menu alignRight noTimer id='rss-menu' ref='rss-menu' className='double-width' alwaysInactive>
               <MenuItem header>Your news feed</MenuItem>

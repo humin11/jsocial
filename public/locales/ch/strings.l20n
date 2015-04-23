@@ -60,6 +60,8 @@
 <sidebarChat '聊天'>
 <sidebarPost '微博'>
 <sidebarCircle '合作社'>
+<sidebarHome '首页'>
+<sidebarBlog '博客'>
 
 <!-- COMMON -->
 <share '分享'>
