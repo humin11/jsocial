@@ -8,9 +8,13 @@ var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
 
 var MyCommunity = React.createClass({
+  mixins: [ReactRouter.State, ReactRouter.Navigation],
+  _handleClick:function(){
+    this.transitionTo("/community");
+  },
   render: function() {
     return (
-      <PanelContainer noControls>
+      <PanelContainer noControls onClick={this._handleClick}>
         <Grid className="mycommunity">
           <Row>
             <Col xs={4}>
@@ -115,7 +119,7 @@ var Body = React.createClass({
 });
 
 var Communities = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [StoreMixin,SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
   componentWillMount: function(){
 
   },

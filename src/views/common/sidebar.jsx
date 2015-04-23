@@ -12,7 +12,7 @@ var ApplicationSidebar = React.createClass({
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-fontello-home-1' name={<Entity entity='sidebarHome'/>} href='/posts' />
                   <SidebarNavItem glyph='icon-fontello-network' name={<Entity entity='sidebarCircle'/>} href='/circle' />
-                  <SidebarNavItem glyph='icon-fontello-feather-1' name={<Entity entity='sidebarCommunity'/>} href='/community' />
+                  <SidebarNavItem glyph='icon-fontello-feather-1' name={<Entity entity='sidebarCommunities'/>} href='/communities' />
                   <SidebarNavItem glyph='icon-fontello-article-alt-1' name={<Entity entity='sidebarBlog'/>} href='/blogs' />
                 </SidebarNav>
               </div>
