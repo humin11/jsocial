@@ -12,12 +12,8 @@ var ApplicationSidebar = React.createClass({
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-feather-share' name={<Entity entity='sidebarHome'/>} href='/posts' />
                   <SidebarNavItem glyph='icon-pixelvicon-photo-gallery' name={<Entity entity='sidebarCircle'/>} href='/circle' />
-                  <SidebarNavItem glyph='icon-stroke-gap-icons-Blog' name={<span><Entity entity='sidebarBlog'/> <BLabel className='bg-darkcyan fg-white'>2</BLabel></span>}>
-                    <SidebarNav>
-                      <SidebarNavItem glyph='icon-feather-layout' name='Blogs' href='/blogs' />
-                      <SidebarNavItem glyph='icon-feather-paper' name='Single Blog' href='/blog' />
-                    </SidebarNav>
-                  </SidebarNavItem>
+                  <SidebarNavItem glyph='icon-fontello-looped-square-interest' name={<Entity entity='sidebarCommunity'/>} href='/community' />
+                  <SidebarNavItem glyph='icon-stroke-gap-icons-Blog' name={<Entity entity='sidebarBlog'/>} href='/blogs' />
                 </SidebarNav>
               </div>
             </Col>
@@ -32,7 +28,6 @@ var ApplicationSidebar = React.createClass({
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem glyph='icon-ikons-login' name={<Entity entity='login'/>} href='/login' />
                   <SidebarNavItem glyph='icon-simple-line-icons-users' name={<Entity entity='signup'/>}  href='/signup' />
-                  <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href='/lock' />
                 </SidebarNav>
               </div>
             </Col>
