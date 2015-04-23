@@ -29,15 +29,26 @@ html.communities body .sidebar-nav > li.active:after {
 .mycommunity {
   height:80px;
   padding: 0 0;
+  cursor: pointer;
   .mycommunity-content {
     padding-top: 15px;
     div {
       margin-top: 5px;
+      &:first-of-type {
+        font-weight: bold;
+        &:hover, &:focus {
+          text-decoration: underline;
+        }
+      }
     }
+  }
+  &:hover, &:focus {
+    background-color: #f8f8f8;
   }
 }
 
 .othercommunity {
+  cursor: pointer;
   .othercommunity-content {
     margin-top: 20px;
     margin-bottom: 15px;

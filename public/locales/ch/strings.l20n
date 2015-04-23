@@ -59,6 +59,8 @@
 <!-- COMMUNITY -->
 <communityJoined '你加入的合作社'>
 <communityInterest '你可能喜欢的合作社'>
+<communityMemberCount '{{$num}} 个成员'>
+<communityPostCount '{{$num}} 条消息'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>

@@ -7,6 +7,56 @@ var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
 
+var MyCommunity = React.createClass({
+  render: function() {
+    return (
+      <PanelContainer noControls>
+        <Grid className="mycommunity">
+          <Row>
+            <Col xs={4}>
+              <img src={this.props.community.cover} width="80" height="80" />
+            </Col>
+            <Col xs={8} className="mycommunity-content">
+              <div>{this.props.community.title}</div>
+              <div><Entity entity='communityMemberCount' data={{num:this.props.community.member_count}}/></div>
+            </Col>
+          </Row>
+        </Grid>
+      </PanelContainer>
+    )
+  }
+});
+
+var InterestCommunity = React.createClass({
+  render: function() {
+    return (
+      <PanelContainer noControls>
+        <Grid className="othercommunity">
+          <Row>
+            <Col xs={12} style={{padding:0}}>
+              <img src={this.props.community.cover} width="266" height="265" />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} className="othercommunity-content">
+              <div className="othercommunity-title">{this.props.community.title}</div>
+              <div className="othercommunity-detail">
+                <Entity entity='communityMemberCount' data={{num:this.props.community.member_count}}/>&nbsp;&nbsp;
+                <Entity entity='communityPostCount' data={{num:this.props.community.post_count}}/>
+              </div>
+              <div className="othercommunity-toolbar">
+                <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
+                  <span style={{color:'#404040'}}><Entity entity='join'/></span>
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
+      </PanelContainer>
+    )
+  }
+});
+
 var Body = React.createClass({
   componentDidMount: function() {
     $('html').addClass('communities');
@@ -27,49 +77,13 @@ var Body = React.createClass({
           </Row>
           <Row>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="mycommunity">
-                  <Row>
-                    <Col xs={4}>
-                      <img src="/imgs/covers/0.jpg" width="80" height="80" />
-                    </Col>
-                    <Col xs={8} className="mycommunity-content">
-                      <div>就爱吃草莓</div>
-                      <div>123123位成员</div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <MyCommunity community={{cover:"/imgs/covers/0.jpg",title:"就爱吃草莓",member_count:"3,123",post_count:"56"}} />
             </Col>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="mycommunity">
-                  <Row>
-                    <Col xs={4}>
-                      <img src="/imgs/covers/1.jpg" width="80" height="80" />
-                    </Col>
-                    <Col xs={8} className="mycommunity-content">
-                      <div>土豆团</div>
-                      <div>123123位成员</div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <MyCommunity community={{cover:"/imgs/covers/1.jpg",title:"土豆团",member_count:"541",post_count:"123"}} />
             </Col>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="mycommunity">
-                  <Row>
-                    <Col xs={4}>
-                      <img src="/imgs/covers/2.jpg" width="80" height="80" />
-                    </Col>
-                    <Col xs={8} className="mycommunity-content">
-                      <div>蚯蚓战士</div>
-                      <div>123123位成员</div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <MyCommunity community={{cover:"/imgs/covers/2.jpg",title:"蚯蚓战士",member_count:"19",post_count:"43"}} />
             </Col>
             <Col sm={3} collapseRight >
 
@@ -82,92 +96,16 @@ var Body = React.createClass({
           </Row>
           <Row>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="othercommunity">
-                  <Row>
-                    <Col xs={12} style={{padding:0}}>
-                      <img src="/imgs/covers/5.jpg" width="266" height="265" />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12} className="othercommunity-content">
-                      <div className="othercommunity-title">抢菜黑涩会</div>
-                      <div className="othercommunity-detail">123位成员 3,123条消息</div>
-                      <div className="othercommunity-toolbar">
-                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
-                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <InterestCommunity community={{cover:"/imgs/covers/5.jpg",title:"抢菜黑涩会",member_count:"123",post_count:"3123"}} />
             </Col>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="othercommunity">
-                  <Row>
-                    <Col xs={12} style={{padding:0}}>
-                      <img src="/imgs/covers/6.jpg" width="266" height="265" />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12} className="othercommunity-content">
-                      <div className="othercommunity-title">切西瓜不切菜</div>
-                      <div className="othercommunity-detail">32位成员 233条消息</div>
-                      <div className="othercommunity-toolbar">
-                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
-                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <InterestCommunity community={{cover:"/imgs/covers/6.jpg",title:"切西瓜不切菜",member_count:"32",post_count:"233"}} />
             </Col>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls>
-                <Grid className="othercommunity">
-                  <Row>
-                    <Col xs={12} style={{padding:0}}>
-                      <img src="/imgs/covers/8.jpg" width="266" height="265" />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12} className="othercommunity-content">
-                      <div className="othercommunity-title">大番薯</div>
-                      <div className="othercommunity-detail">7位成员 56条消息</div>
-                      <div className="othercommunity-toolbar">
-                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
-                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <InterestCommunity community={{cover:"/imgs/covers/8.jpg",title:"大番薯",member_count:"7",post_count:"32"}} />
             </Col>
             <Col sm={3} collapseRight >
-              <PanelContainer noControls width="265">
-                <Grid className="othercommunity">
-                  <Row>
-                    <Col xs={12} style={{padding:0}} width="265" height="265" >
-                      <img src="/imgs/covers/9.jpg" width="265" height="265" />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12} className="othercommunity-content">
-                      <div className="othercommunity-title">有机绿色社</div>
-                      <div className="othercommunity-detail">12,331位成员 4,123条消息</div>
-                      <div className="othercommunity-toolbar">
-                        <Button style={{borderWidth:'1px'}} xs outlined bsStyle='default' >
-                          <span style={{color:'#404040'}}><Entity entity='join'/></span>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </Grid>
-              </PanelContainer>
+              <InterestCommunity community={{cover:"/imgs/covers/9.jpg",title:"有机绿色社",member_count:"12,331",post_count:"4,123"}} />
             </Col>
           </Row>
         </Grid>
