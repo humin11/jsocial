@@ -98,3 +98,32 @@ html.communities body .sidebar-nav > li.active:after {
     }
   }
 }
+.community-detail{
+  .community-toolbar {
+    margin-right:15px;
+    .rubix-icon {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    &:hover, &:focus {
+      .rubix-icon {
+        opacity: 1;
+      }
+    }
+  }
+  .community-summary {
+    bottom: 15px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    left: 15px;
+    line-height: 1.5;
+    position: absolute;
+    width: 190px;
+    &:hover, &:focus {
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+}

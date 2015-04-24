@@ -56,11 +56,19 @@ var CategoryList = React.createClass({
 var CommunityDetail = React.createClass({
   render: function () {
     return (
-      <PanelContainer noControls>
+      <PanelContainer noControls className="community-detail">
         <PanelBody style={{ paddingLeft:'12.5px'}}>
           <h3 style={{marginTop:0,fontWeight:'normal'}}>就爱吃草莓</h3>
           <div style={{color:'#aaa'}}>草莓有的是~</div>
-          <img src="/imgs/covers/0.jpg" width="265" height="265" style={{margin:"12.5px 0 0 -12.5px"}}/>
+          <div className="pull-right community-toolbar">
+            <Icon glyph="icon-fontello-cog-1" style={{fontSize: 24}} className="fg-darkgray"/>
+          </div>
+          <div style={{position:'relative',cursor:'pointer'}}>
+            <img src="/imgs/covers/0.jpg" width="265" height="265" style={{margin:"12.5px 0 0 -12.5px"}}/>
+            <div className="community-summary">
+              <Entity entity='communityMemberCount' data={{num:'62,232'}}/>
+            </div>
+          </div>
         </PanelBody>
         <CategoryList />
       </PanelContainer>
