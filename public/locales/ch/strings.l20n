@@ -61,6 +61,13 @@
 <communityInterest '你可能喜欢的合作社'>
 <communityMemberCount '{{$num}} 个成员'>
 <communityPostCount '{{$num}} 条消息'>
+<communityAllPost '所有信息'>
+<communityTextPost 'Text 纯文字'>
+<communityImagePost 'Image 图片'>
+<communityGIFPost 'GIF 动图'>
+<communityVideoPost 'Video 视频'>
+<communityEvent '活动'>
+<communityPhoto '照片'>
 
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>

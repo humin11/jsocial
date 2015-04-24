@@ -9,15 +9,60 @@ var StoreMixin = require('../../mixins/store_mixin');
 var NewPost = require('../posts/new_post.jsx');
 var SinglePost = require('../posts/post.jsx');
 
+var CategoryList = React.createClass({
+  render: function () {
+    return (
+      <div className="category-list">
+        <Link to="/community">
+          <div>
+            <Entity entity="communityAllPost"/>
+          </div>
+        </Link>
+        <Link to="/community/1/1" style={{textDecoration:'none'}}>
+          <div>
+            <Entity entity="communityTextPost"/>
+          </div>
+        </Link>
+        <Link to="/community/1/2">
+          <div>
+            <Entity entity="communityImagePost"/>
+          </div>
+        </Link>
+        <Link to="/community/1/3">
+          <div>
+            <Entity entity="communityGIFPost"/>
+          </div>
+        </Link>
+        <Link to="/community/1/4">
+          <div>
+            <Entity entity="communityVideoPost"/>
+          </div>
+        </Link>
+        <Link to="/community/events">
+          <div>
+            <Entity entity="communityEvent"/>
+          </div>
+        </Link>
+        <Link to="/community/photos/all">
+          <div>
+            <Entity entity="communityPhoto"/>
+          </div>
+        </Link>
+      </div>
+    );
+  }
+});
+
 var CommunityDetail = React.createClass({
   render: function () {
     return (
       <PanelContainer noControls>
-        <PanelBody style={{ padding:'0 25px 25px 25px'}} >
-          <h3>就爱吃草莓</h3>
-          <div>草莓有的是~</div>
-          <img src="/imgs/covers/0.jpg" width="265" height="265" style={{margin:"12.5px 0 25px -25px"}}/>
+        <PanelBody style={{ paddingLeft:'12.5px'}}>
+          <h3 style={{marginTop:0,fontWeight:'normal'}}>就爱吃草莓</h3>
+          <div style={{color:'#aaa'}}>草莓有的是~</div>
+          <img src="/imgs/covers/0.jpg" width="265" height="265" style={{margin:"12.5px 0 0 -12.5px"}}/>
         </PanelBody>
+        <CategoryList />
       </PanelContainer>
     );
   }

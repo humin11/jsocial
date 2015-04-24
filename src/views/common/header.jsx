@@ -5,7 +5,7 @@ var Brand = React.createClass({
     return (
       <NavHeader {...this.props}>
         <NavBrand tabIndex='-1'>
-          <img src='/imgs/logo.png' alt='rubix' width='111' height='28' />
+          <Icon glyph='icon-fontello-garden' style={{fontSize:28}} />
         </NavBrand>
       </NavHeader>
     );

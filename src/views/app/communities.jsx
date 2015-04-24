@@ -38,7 +38,7 @@ var InterestCommunity = React.createClass({
         <Grid className="othercommunity">
           <Row>
             <Col xs={12} style={{padding:0}}>
-              <img src={this.props.community.cover} width="266" height="265" />
+              <img src={this.props.community.cover} width="265" height="265" />
             </Col>
           </Row>
           <Row>
