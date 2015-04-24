@@ -1,5 +1,9 @@
 #body.social {
   background: #e5e5e5 !important;
+  -webkit-font-smoothing: antialiased;
+  font: normal 13px Roboto,arial,sans-serif;
+  color: #404040;
+
   .rubix-panel-container {
     border: 1px solid #d8d8d8;
   }

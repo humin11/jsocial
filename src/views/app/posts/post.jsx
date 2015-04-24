@@ -135,7 +135,7 @@ var Post = React.createClass({
               <img src={this.props.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
               <div className='inbox-avatar-name'>
                 <div className='fg-darkgrayishblue75'>{this.props.post.author.name}</div>
-                <div className='fg-text'><small>{create_at}</small></div>
+                <div className='fg-text' style={{marginTop:'8px'}}><small>{create_at}</small></div>
               </div>
               <div className='post-toolbar hidden-sm hidden-xs fg-text text-right'>
                 <div style={{position: 'relative', top: 0}} className="dropdown">
