@@ -22,30 +22,30 @@ var CommunityMember = React.createClass({
     return (
       <Grid className="community-members">
         <Row>
-          <Col sm={6} className="text-left">
+          <Col sm={6} xs={6} className="text-left">
             所有成员
           </Col>
-          <Col sm={6} className="text-right">
+          <Col sm={6} xs={6} className="text-right">
             634,232 个成员
           </Col>
         </Row>
         <Row>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[0]}
           </Col>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[1]}
           </Col>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[2]}
           </Col>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[3]}
           </Col>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[4]}
           </Col>
-          <Col sm={2}>
+          <Col sm={2} xs={2}>
             {stream[5]}
           </Col>
         </Row>
@@ -104,8 +104,9 @@ var CommunityDetail = React.createClass({
       <PanelContainer noControls className="community-detail">
         <PanelBody style={{ paddingLeft:'12.5px'}}>
           <h3 style={{marginTop:0,fontWeight:'normal'}}>就爱吃草莓</h3>
-          <div style={{color:'#aaa'}}>草莓有的是~</div>
+          <div style={{color:'#aaa',marginBottom:'20px'}}>草莓有的是~</div>
           <div className="pull-right community-toolbar">
+            <span style={{marginRight:'120px',color:'#ccc',fontSize:'16px',textDecoration: 'underline'}}>已关闭通知</span>
             <Icon glyph="icon-fontello-cog-1" style={{fontSize: 24}} className="fg-darkgray"/>
           </div>
           <div style={{position:'relative',cursor:'pointer'}}>
