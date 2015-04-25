@@ -79,6 +79,7 @@
 
 <!-- COMMON -->
 <share '分享'>
+<ok '确定'>
 <cancel '取消'>
 <delete '删除'>
 <modify '修改'>
@@ -87,3 +88,4 @@
 <expand '展开'>
 <close '关闭'>
 <join '加入'>
+<yesOrNo '是否确定?'>

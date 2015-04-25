@@ -42,7 +42,7 @@ var Body = React.createClass({
         stream[index] = [<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />];
     }
     return (
-      <Container id='body' className='social'>
+      <Container id='body' className='social dropdown'>
         <Grid>
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>

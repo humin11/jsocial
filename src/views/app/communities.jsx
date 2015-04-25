@@ -120,7 +120,7 @@ var Body = React.createClass({
 
 var Communities = React.createClass({
   mixins: [StoreMixin,SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
-  componentWillMount: function(){
+  componentWillMount: function() {
 
   },
   componentDidMount: function() {
