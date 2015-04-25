@@ -9,7 +9,52 @@ var StoreMixin = require('../../mixins/store_mixin');
 var NewPost = require('../posts/new_post.jsx');
 var SinglePost = require('../posts/post.jsx');
 
-var CategoryList = React.createClass({
+var CommunityMember = React.createClass({
+  render: function () {
+    var stream = [];
+    for(var i=0;i<24;i++) {
+      var index = i % 6;
+      if(stream[index])
+        stream[index].push(<img src="/imgs/avatars/avatar3.png" width="30" height="30"/>);
+      else
+        stream[index] = [<img src="/imgs/avatars/avatar3.png" width="30" height="30"/>];
+    }
+    return (
+      <Grid className="community-members">
+        <Row>
+          <Col sm={6} className="text-left">
+            所有成员
+          </Col>
+          <Col sm={6} className="text-right">
+            634,232 个成员
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={2}>
+            {stream[0]}
+          </Col>
+          <Col sm={2}>
+            {stream[1]}
+          </Col>
+          <Col sm={2}>
+            {stream[2]}
+          </Col>
+          <Col sm={2}>
+            {stream[3]}
+          </Col>
+          <Col sm={2}>
+            {stream[4]}
+          </Col>
+          <Col sm={2}>
+            {stream[5]}
+          </Col>
+        </Row>
+      </Grid>
+    )
+  }
+});
+
+var CommunityCategory = React.createClass({
   render: function () {
     return (
       <div className="category-list">
@@ -70,7 +115,8 @@ var CommunityDetail = React.createClass({
             </div>
           </div>
         </PanelBody>
-        <CategoryList />
+        <CommunityCategory />
+        <CommunityMember />
       </PanelContainer>
     );
   }
