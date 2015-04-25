@@ -15,9 +15,9 @@ var CommunityMember = React.createClass({
     for(var i=0;i<24;i++) {
       var index = i % 6;
       if(stream[index])
-        stream[index].push(<img src="/imgs/avatars/avatar3.png" width="30" height="30"/>);
+        stream[index].push(<img src="/imgs/avatars/avatar3.png" width="33" height="33"/>);
       else
-        stream[index] = [<img src="/imgs/avatars/avatar3.png" width="30" height="30"/>];
+        stream[index] = [<img src="/imgs/avatars/avatar3.png" width="33" height="33"/>];
     }
     return (
       <Grid className="community-members">
