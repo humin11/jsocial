@@ -5,7 +5,7 @@ var Comments = require('./comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
 var Authentication = require('../../mixins/auth_mixin.jsx');
 var ConfirmDialog = require('../../common/confirm_dialog.jsx');
-var PostAction = require('../../actions/post_action.jsx');
+var PostsAction = require('../../actions/posts_action.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;
@@ -87,7 +87,7 @@ var Post = React.createClass({
       vex.dialog.open({
         afterOpen: function($vexContent) {
           vexContent = $vexContent;
-          return React.render(<ConfirmDialog id={$vexContent.data().vex.id} handler={PostAction.delete.bind(this,data,height)}/>, $vexContent.get(0));
+          return React.render(<ConfirmDialog id={$vexContent.data().vex.id} handler={PostsAction.delete.bind(this,data,height)}/>, $vexContent.get(0));
         },
         afterClose: function() {
           React.unmountComponentAtNode(vexContent);

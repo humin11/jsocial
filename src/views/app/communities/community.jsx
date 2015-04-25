@@ -104,9 +104,8 @@ var CommunityDetail = React.createClass({
       <PanelContainer noControls className="community-detail">
         <PanelBody style={{ paddingLeft:'12.5px'}}>
           <h3 style={{marginTop:0,fontWeight:'normal'}}>就爱吃草莓</h3>
-          <div style={{color:'#aaa',marginBottom:'20px'}}>草莓有的是~</div>
+          <div style={{color:'#aaa',marginBottom:'10px'}}>草莓有的是~</div>
           <div className="pull-right community-toolbar">
-            <span style={{marginRight:'120px',color:'#ccc',fontSize:'16px',textDecoration: 'underline'}}>已关闭通知</span>
             <Icon glyph="icon-fontello-cog-1" style={{fontSize: 24}} className="fg-darkgray"/>
           </div>
           <div style={{position:'relative',cursor:'pointer'}}>
