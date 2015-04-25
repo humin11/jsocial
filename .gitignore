@@ -4,4 +4,5 @@ prebuild/scaffold
 public/css/app
 public/css/fonts
 public/video
-public/js/common/*/*
+public/js/common/react
+public/js/common/react-bootstrap

@@ -184,7 +184,7 @@ var Community = React.createClass({
   },
   render: function() {
     var classes = classSet({
-      'container-open': false
+      'container-open': this.state.open
     });
     return (
       <Container id='container' className={classes}>
