@@ -1,7 +1,6 @@
 .navbar {
   li > a {
-    padding: $line-height-computed;
-
+    //padding: $line-height-computed;
     &:hover, &:focus, &:active {
       border: none;
     }

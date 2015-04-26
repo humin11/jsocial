@@ -7,17 +7,13 @@ var ApplicationSidebar = React.createClass({
         <Grid>
           <Row>
             <Col xs={12}>
-              <div className='sidebar-header'>PAGES</div>
+              <div className='sidebar-header'></div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-pixelvicon-photo-gallery' name={<Entity entity='sidebarCircle'/>} href='/circle' />
-                  <SidebarNavItem glyph='icon-feather-share' name='Social' href='/posts' />
-                  <SidebarNavItem glyph='icon-stroke-gap-icons-Blog' name={<span>Blog <BLabel className='bg-darkcyan fg-white'>2</BLabel></span>}>
-                    <SidebarNav>
-                      <SidebarNavItem glyph='icon-feather-layout' name='Blogs' href='/blogs' />
-                      <SidebarNavItem glyph='icon-feather-paper' name='Single Blog' href='/blog' />
-                    </SidebarNav>
-                  </SidebarNavItem>
+                  <SidebarNavItem glyph='icon-fontello-home-1' name={<Entity entity='sidebarHome'/>} href='/posts' />
+                  <SidebarNavItem glyph='icon-fontello-network' name={<Entity entity='sidebarCircle'/>} href='/circle' />
+                  <SidebarNavItem glyph='icon-fontello-feather-1' name={<Entity entity='sidebarCommunities'/>} href='/communities' />
+                  <SidebarNavItem glyph='icon-fontello-article-alt-1' name={<Entity entity='sidebarBlog'/>} href='/blogs' />
                 </SidebarNav>
               </div>
             </Col>
@@ -27,12 +23,11 @@ var ApplicationSidebar = React.createClass({
         <Grid gutterBottom>
           <Row>
             <Col xs={12}>
-              <div className='sidebar-header'>EXTRAS</div>
+              <div className='sidebar-header'></div>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem glyph='icon-ikons-login' name={<Entity entity='login'/>} href='/login' />
-                  <SidebarNavItem glyph='icon-simple-line-icons-users' name={<Entity entity='signup'/>}  href='/signup' />
-                  <SidebarNavItem glyph='icon-ikons-lock' name='Lock Page' href='/lock' />
+                  <SidebarNavItem glyph='icon-fontello-login-2' name={<Entity entity='login'/>} href='/login' />
+                  <SidebarNavItem glyph='icon-fontello-user-add' name={<Entity entity='signup'/>}  href='/signup' />
                 </SidebarNav>
               </div>
             </Col>

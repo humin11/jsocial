@@ -19,13 +19,13 @@
       color $primary-color
     ),
     header (
-      bg #273135,
+      bg #f5f5f5,
       color $primary-color,
-      hover-color #ffffff,
+      hover-color #70ACB2,
 
       logout (
         bg get($list, logout, bg),
-        color #ffffff,
+        color #fff,
         hover-bg get($list, logout, hover-bg)
       ),
 
@@ -36,7 +36,8 @@
       ),
 
       divider (
-        color rgba(59, 70, 72, 0.45)
+        //color rgba(59, 70, 72, 0.45)
+        color #f5f5f5
       )
     ),
     sidebar (

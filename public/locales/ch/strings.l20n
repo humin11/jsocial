@@ -56,13 +56,30 @@
 <circleName '合作社名称'>
 <circleDescription '合作社描述'>
 
+<!-- COMMUNITY -->
+<communityJoined '你加入的合作社'>
+<communityInterest '你可能喜欢的合作社'>
+<communityMemberCount '{{$num}} 个成员'>
+<communityPostCount '{{$num}} 条消息'>
+<communityAllPost '所有信息'>
+<communityTextPost 'Text 纯文字'>
+<communityImagePost 'Image 图片'>
+<communityGIFPost 'GIF 动图'>
+<communityVideoPost 'Video 视频'>
+<communityEvent '活动'>
+<communityPhoto '照片'>
+
 <!-- SIDEBAR -->
 <sidebarChat '聊天'>
 <sidebarPost '微博'>
-<sidebarCircle '合作社'>
+<sidebarCircle '圈子'>
+<sidebarCommunities '合作社'>
+<sidebarHome '首页'>
+<sidebarBlog '博客'>
 
 <!-- COMMON -->
 <share '分享'>
+<ok '确定'>
 <cancel '取消'>
 <delete '删除'>
 <modify '修改'>
@@ -70,3 +87,5 @@
 <collapse '收起'>
 <expand '展开'>
 <close '关闭'>
+<join '加入'>
+<yesOrNo '是否确定?'>

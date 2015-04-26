@@ -42,18 +42,18 @@ var Body = React.createClass({
         stream[index] = [<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />];
     }
     return (
-      <Container id='body' className='social'>
+      <Container id='body' className='social dropdown'>
         <Grid>
           <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
-            <Col sm={4} collapseRight>
+            <Col sm={4} collapseRight >
               <NewPost models={this.props.models} stores={this.props.stores}></NewPost>
-              {stream[0]}
-            </Col>
-            <Col sm={4} collapseRight>
               {stream[1]}
             </Col>
-            <Col sm={4} collapseRight>
+            <Col sm={4} collapseRight >
+              {stream[0]}
+            </Col>
+            <Col sm={4} collapseRight >
               <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
               {stream[2]}
             </Col>
@@ -72,9 +72,7 @@ var Posts = React.createClass({
 
   },
   componentDidMount: function() {
-    //AppDispatcher.dispatch({
-    //  type: ActionTypes.USERS_INIT
-    //});
+
   },
   render: function() {
     var classes = classSet({

@@ -4,6 +4,8 @@ var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
 var Authentication = require('../../mixins/auth_mixin.jsx');
+var ConfirmDialog = require('../../common/confirm_dialog.jsx');
+var PostsAction = require('../../actions/posts_action.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;
@@ -75,13 +77,21 @@ var Post = React.createClass({
   },
   _handleMenu: function(){
     this.refs.postmenu.show();
+
   },
   _onPostMenuClick: function(props){
     if(props.action == "delete"){
-      AppDispatcher.dispatch({
-        type: ActionTypes.POSTS_DELETE,
-        data:{_id:this.props.post._id},
-        height: $(this.refs.post.getDOMNode()).height()
+      var data = {_id:this.props.post._id};
+      var height = $(this.refs.post.getDOMNode()).height();
+      var vexContent;
+      vex.dialog.open({
+        afterOpen: function($vexContent) {
+          vexContent = $vexContent;
+          return React.render(<ConfirmDialog id={$vexContent.data().vex.id} handler={PostsAction.delete.bind(this,data,height)}/>, $vexContent.get(0));
+        },
+        afterClose: function() {
+          React.unmountComponentAtNode(vexContent);
+        }
       });
     }
   },
@@ -135,10 +145,10 @@ var Post = React.createClass({
               <img src={this.props.post.author.avatar} width='40' height='40' style={{borderRadius: '20px'}}/>
               <div className='inbox-avatar-name'>
                 <div className='fg-darkgrayishblue75'>{this.props.post.author.name}</div>
-                <div className='fg-text'><small>{create_at}</small></div>
+                <div className='fg-text' style={{marginTop:'8px'}}><small>{create_at}</small></div>
               </div>
               <div className='post-toolbar hidden-sm hidden-xs fg-text text-right'>
-                <div style={{position: 'relative', top: 0}} className="dropdown">
+                <div style={{position: 'relative', top: 0}}>
                   <Icon ref="toolbtn" glyph='icon-ikons-arrow-down' onClick={this._handleMenu} />
                   <Menu alignRight ref='postmenu' className='post-menu' alwaysInactive onItemSelect={this._onPostMenuClick}>
                     <MenuItem href='#' action="delete">

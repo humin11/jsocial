@@ -46,7 +46,7 @@
     .navbar-nav > li {
       > a {
         border: none;
-        padding: 25px;
+        padding: 5px 25px 25px 25px;
         display: block;
       }
 
@@ -69,7 +69,7 @@
 
       &.active > a, > a {
         height: $navbar-height;
-        font-size: 26px;
+        font-size: 14px;
         background: none;
         text-align: center;
         color: get($list, header, color);
@@ -84,8 +84,8 @@
       }
 
       &.logout > a, &.sidebar-btn > a {
-        width: 80px;
-        font-size: 30px;
+        width: 50px;
+        font-size: 14px;
         padding-left: 0;
         padding-right: 0;
       }
@@ -117,7 +117,7 @@
       }
 
       &.small-font > a {
-        font-size: 20px;
+        //font-size: 20px;
       }
 
       .notification-badge {
