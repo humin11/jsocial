@@ -147,7 +147,7 @@ var Post = React.createClass({
                 <div className='fg-darkgrayishblue75'>{this.props.post.author.name}</div>
                 <div className='fg-text' style={{marginTop:'8px'}}><small>{create_at}</small></div>
               </div>
-              <div className='post-toolbar hidden-sm hidden-xs fg-text text-right'>
+              <div className='post-menubar hidden-sm hidden-xs fg-text text-right'>
                 <div style={{position: 'relative', top: 0}}>
                   <Icon ref="toolbtn" glyph='icon-ikons-arrow-down' onClick={this._handleMenu} />
                   <Menu alignRight ref='postmenu' className='post-menu' alwaysInactive onItemSelect={this._onPostMenuClick}>
@@ -175,11 +175,11 @@ var Post = React.createClass({
               {img}
             </div>
           </PanelBody>
-          <PanelFooter noRadius className='fg-black75 bg-white' style={{padding: '10px 10px', margin: 0, borderTop:0}}>
+          <PanelFooter noRadius className='fg-black75 bg-white post-toolbar' style={{padding: '10px 10px', margin: 0, borderTop:0}}>
             <Grid style={{paddingLeft:'0',paddingRight:'0'}}>
               <Row style={{marginLeft:'0',marginRight:'5px'}}>
                 <Col xs={2} style={{paddingLeft:'0',paddingRight:'0'}}>
-                  <Button style={{borderWidth:'1px'}} xs ref='likeCount' outlined bsStyle='orange65' active={this.state.likeActive} onClick={this._handleLike}>
+                  <Button style={{borderWidth:'1px'}} xs ref='likeCount' outlined bsStyle='default' active={this.state.likeActive} onClick={this._handleLike}>
                     <Icon glyph='icon-fontello-thumbs-up-1' />
                     <span style={{marginLeft:'5px'}}>{this.props.post.like_count}</span>
                   </Button>

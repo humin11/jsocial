@@ -15,18 +15,18 @@ var CommunityMember = React.createClass({
     for(var i=0;i<24;i++) {
       var index = i % 6;
       if(stream[index])
-        stream[index].push(<img src="/imgs/avatars/avatar3.png" width="33" height="33"/>);
+        stream[index].push(<img key={"member"+i} src="/imgs/avatars/avatar3.png" width="35" height="35"/>);
       else
-        stream[index] = [<img src="/imgs/avatars/avatar3.png" width="33" height="33"/>];
+        stream[index] = [<img key={"member"+i} src="/imgs/avatars/avatar3.png" width="35" height="35"/>];
     }
     return (
       <Grid className="community-members">
         <Row>
           <Col sm={6} xs={6} className="text-left">
-            所有成员
+            成员 ( 634,232 人)
           </Col>
           <Col sm={6} xs={6} className="text-right">
-            634,232 个成员
+            显示所有成员
           </Col>
         </Row>
         <Row>
