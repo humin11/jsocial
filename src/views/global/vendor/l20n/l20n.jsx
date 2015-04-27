@@ -3563,7 +3563,7 @@ var Entity = React.createClass({
   propTypes: {
     data: React.PropTypes.object,
     entity: React.PropTypes.string,
-    dangerouslySetInnerHTML: React.PropTypes.bool,
+    dangerouslySetInnerHTML: React.PropTypes.bool
   },
   getDefaultProps: function() {
     return {
@@ -3579,6 +3579,9 @@ var Entity = React.createClass({
     this.setState({
       entity: ctx.getSync(this.props.entity, this.props.data)
     });
+    if (this.props.onRef){
+      this.props.onRef(this.props.bindRef,this.props.bindProperty,this.state.entity);
+    }
   },
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('ctx:'+this.props.entity, this.handler);
@@ -3595,9 +3598,9 @@ var Entity = React.createClass({
       entity: null
     }, this.props);
 
-    if(ComponentClass === 'input') {
+    if(ComponentClass === 'Input') {
       return (
-        <ComponentClass {...props} value={this.state.entity} />
+        <ComponentClass {...props} placeholder={this.state.entity} />
       );
     }
     if(this.props.dangerouslySetInnerHTML) {

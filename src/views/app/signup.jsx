@@ -57,7 +57,7 @@ var Body = React.createClass({
                     <Panel>
                       <PanelBody style={{padding: 0}}>
                         <div className='text-center bg-darkblue fg-white'>
-                          <h3 style={{margin: 0, padding: 25}}>Sign up</h3>
+                          <h3 style={{margin: 0, padding: 25}}><Entity entity='signupNew'/></h3>
                         </div>
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
@@ -67,7 +67,7 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-user' />
                                   </InputGroupAddon>
-                                  <Input autoFocus type='text' ref='username' className='border-focus-blue' placeholder='Username' />
+                                  <Entity componentClass='Input' autoFocus type='text' ref='username' className='form-control border-focus-blue' entity='signupUsername'/>
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -75,7 +75,7 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-mail' />
                                   </InputGroupAddon>
-                                  <Input type='text' ref='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
+                                  <Entity componentClass='Input' autoFocus type='text' ref='email' className='form-control border-focus-blue' entity='signupEmail'/>
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -83,14 +83,16 @@ var Body = React.createClass({
                                   <InputGroupAddon>
                                     <Icon glyph='icon-fontello-key' />
                                   </InputGroupAddon>
-                                  <Input type='password' ref='password' className='border-focus-blue' placeholder='password' />
+                                  <Entity componentClass='Input' autoFocus type='text' ref='password' className='form-control border-focus-blue' entity='signupPassword'/>
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
                                 <Grid>
                                   <Row>
                                     <Col xs={12} collapseLeft collapseRight>
-                                      <Button type='submit' outlined lg bsStyle='blue' block>Create account</Button>
+                                      <Button type='submit' outlined lg bsStyle='blue' block>
+                                        <Entity entity='signupCreateAccount'/>
+                                      </Button>
                                     </Col>
                                   </Row>
                                 </Grid>
@@ -99,7 +101,7 @@ var Body = React.createClass({
                             {this.renderErrorBlock()}
                           </div>
                           <div className='bg-hoverblue fg-black50 text-center' style={{padding: 25, paddingTop: 12.5}}>
-                            <div style={{marginBottom: 12.5}}>SIGN UP WITH</div>
+                            <div style={{marginBottom: 12.5}}><Entity entity='signupWith'/></div>
                             <Grid>
                               <Row>
                                 <Col xs={12} sm={6} className='facebook-container' smCollapseLeft smCollapseRight>
@@ -117,7 +119,7 @@ var Body = React.createClass({
                               </Row>
                             </Grid>
                             <div style={{marginTop: 25}}>
-                              Already have an account? <Link to='/login'>Login</Link>
+                              <Entity entity='signupHaveAccount'/><Link to='/login'><Entity entity='login'/></Link>
                             </div>
                           </div>
                         </div>

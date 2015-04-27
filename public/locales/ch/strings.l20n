@@ -23,6 +23,15 @@
 <notificationsMenuHeading '您的通知'>
 <notificationsTimeFirst '一个小时前'>
 
+<!-- Signup -->
+<signupUsername '用户名'>
+<signupEmail '邮箱@mail.com'>
+<signupPassword '密码'>
+<signupCreateAccount '创建'>
+<signupNew '创建新用户'>
+<signupHaveAccount '已有一个账户'>
+<signupWith '使用其他登录'>
+
 <!-- USER -->
 <login '登录'>
 <signup '注册'>
