@@ -6,6 +6,7 @@ var classSet = React.addons.classSet;
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
 var StoreMixin = require('../mixins/store_mixin');
+var NewCommunityDialog = require('./communities/new_community.jsx');
 
 var MyCommunity = React.createClass({
   mixins: [ReactRouter.State, ReactRouter.Navigation],
@@ -61,6 +62,8 @@ var InterestCommunity = React.createClass({
   }
 });
 
+
+
 var Body = React.createClass({
   componentDidMount: function() {
     $('html').addClass('communities');
@@ -70,11 +73,26 @@ var Body = React.createClass({
   },
   _onChange: function() {
   },
+  _handleCreate: function() {
+    var vexContent;
+    vex.dialog.open({
+      overlayClosesOnClick:false,
+      afterOpen: function($vexContent) {
+        vexContent = $vexContent;
+        $(vexContent).width(700);
+        return React.render(<NewCommunityDialog id={$vexContent.data().vex.id} />, $vexContent.get(0));
+      },
+      afterClose: function() {
+        React.unmountComponentAtNode(vexContent);
+      }
+    });
+  },
   render: function() {
     return (
       <Container id='body' className='communities'>
-        <Grid>
-          <Row >
+        <div className="container-fluid communities-toolbar"><Button ref='newBtn' bsStyle='darkblue' onClick={this._handleCreate}><Entity entity='communityCreate'/></Button></div>
+        <Grid style={{marginTop:'20px'}}>
+          <Row>
             <Col sm={12}>
               <h3><Entity entity='communityJoined'/></h3>
             </Col>
