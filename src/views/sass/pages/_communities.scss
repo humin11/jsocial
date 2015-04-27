@@ -99,6 +99,7 @@ html.communities body .sidebar-nav > li.active:after {
   }
 }
 .community-detail{
+  box-shadow: 1px 1px 3px rgba(0,0,0,.1);
   .community-toolbar {
     top:60px;
     right:20px;
@@ -129,21 +130,28 @@ html.communities body .sidebar-nav > li.active:after {
     }
   }
   .community-members {
-    padding: 10px 25px 10px 25px;
-    .col-sm-6 {
-      padding: 10px 10px;
-      color:#427fed;
-      cursor:pointer;
-      &:last-of-type {
-        &:hover, &:focus {
-          text-decoration: underline;
+    padding: 15px 35px 15px 40px;
+    .row {
+      .col-sm-6 {
+        padding: 5px 0 5px 0;
+        cursor:pointer;
+        &:first-of-type {
+          color: #aaa;
+        }
+        &:last-of-type {
+          color:#427fed;
+          &:hover, &:focus {
+            text-decoration: underline;
+          }
         }
       }
-    }
-    .col-sm-2 {
-      padding: 5px 5px;
-      img {
-        margin-top: 5px;
+      .col-sm-2 {
+        padding: 0 0;
+        img {
+          margin-top: 5px;
+          margin-right: 5px;
+          border-radius: 2px;
+        }
       }
     }
   }
