@@ -4,9 +4,10 @@ var Footer = require('../common/footer.jsx');
 var UsersStore = require('../stores/users_store.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
+var EntityMixin = require('../mixins/entity_mixin.jsx');
 
 var Body = React.createClass({
-  mixins: [ReactRouter.State, ReactRouter.Navigation],
+  mixins: [ReactRouter.State, ReactRouter.Navigation,EntityMixin],
   getInitialState: function () {
     return {
       error: false
@@ -59,6 +60,7 @@ var Body = React.createClass({
                         <div className='text-center bg-darkblue fg-white'>
                           <h3 style={{margin: 0, padding: 25}}>Sign up</h3>
                         </div>
+                        <Entity style={{display:'none'}} entity='inputNewComment' onRef={this.EntityRef} bindRef='username' bindProperty='placeholder' />
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                             <Form onSubmit={this._handleSubmit}>
