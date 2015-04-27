@@ -3586,7 +3586,6 @@ var Entity = React.createClass({
   componentDidMount: function() {
     ReactBootstrap.Dispatcher.on('ctx:'+this.props.entity, this.handler);
     Entities.registerEntity(this.props.entity);
-    console.log(this.refs);
   },
   componentWillUnmount: function() {
     ReactBootstrap.Dispatcher.off('ctx:'+this.props.entity, this.handler);
