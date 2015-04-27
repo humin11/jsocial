@@ -77,7 +77,7 @@ var NewComment = React.createClass({
     var expandedClass = classSet({
       'hide': !this.props.expanded
     });
-    var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
+    var okBtn = <Button ref='okBtn' bsStyle='success' onClick={this._handleOk}><Entity on entity='submitComment'/></Button>;
     if(this.state.disabledOkBtn) {
       okBtn = <Button ref='okBtn' disabled bsStyle='success' onClick={this._handleOk}><Entity entity='submitComment'/></Button>;
     }

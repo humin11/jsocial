@@ -19,13 +19,11 @@
   height:150px;
   width:150px;
   border:20px solid #999999;
-  -moz-border-radius: 100px;
-  -webkit-border-radius: 100px;
+  border-radius: 100px;
   img{
     width:20px;
     height:20px;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
+    border-radius: 20px;
     display: none;
   }
   &:hover{

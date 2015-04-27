@@ -44,12 +44,35 @@ var secured = function(req, res, next) {
   res.redirect('/login');
 };
 
+
+
 module.exports = function(app, passport) {
   fs.readdir("./src/controllers", function(err,files) {
     files.forEach(function(file) {
       require("../src/controllers/" + file).binding(app);
     });
   });
+
+  app.get('/auth/qq',
+    passport.authenticate('qq'),
+    function(req, res){
+      // The request will be redirected to qq for authentication, so this
+      // function will not be called.
+    });
+
+  app.get('/auth/qq/callback',
+    passport.authenticate('qq', { failureRedirect: '/login' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/');
+    });
+
+  app.get('/auth/sina', passport.authenticate('sina'));
+
+  app.get('/auth/sina/callback', passport.authenticate(
+    'sina', { failureRedirect: '/aaa', successRedirect: '/'
+    }));
+
   app.post('/upload', function(req, res) {
     var form = new formidable.IncomingForm();
     form.uploadDir = "./public/tmp/";

@@ -3620,7 +3620,7 @@
 	  propTypes: {
 	    data: React.PropTypes.object,
 	    entity: React.PropTypes.string,
-	    dangerouslySetInnerHTML: React.PropTypes.bool,
+	    dangerouslySetInnerHTML: React.PropTypes.bool
 	  },
 	  getDefaultProps: function() {
 	    return {
@@ -3636,10 +3636,14 @@
 	    this.setState({
 	      entity: ctx.getSync(this.props.entity, this.props.data)
 	    });
+	    if (this.props.onRef){
+	      this.props.onRef(this.props.bindRef,this.props.bindProperty,this.state.entity);
+	    }
 	  },
 	  componentDidMount: function() {
 	    ReactBootstrap.Dispatcher.on('ctx:'+this.props.entity, this.handler);
 	    Entities.registerEntity(this.props.entity);
+	    console.log(this.refs);
 	  },
 	  componentWillUnmount: function() {
 	    ReactBootstrap.Dispatcher.off('ctx:'+this.props.entity, this.handler);
@@ -3652,9 +3656,9 @@
 	      entity: null
 	    }, this.props);
 
-	    if(ComponentClass === 'input') {
+	    if(ComponentClass === 'Input') {
 	      return (
-	        React.createElement(ComponentClass, React.__spread({},  props, {value: this.state.entity}))
+	        React.createElement(ComponentClass, React.__spread({},  props, {placeholder: this.state.entity}))
 	      );
 	    }
 	    if(this.props.dangerouslySetInnerHTML) {

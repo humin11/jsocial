@@ -3599,9 +3599,9 @@ var Entity = React.createClass({
       entity: null
     }, this.props);
 
-    if(ComponentClass === 'input') {
+    if(ComponentClass === 'Input') {
       return (
-        <ComponentClass {...props} value={this.state.entity} />
+        <ComponentClass {...props} placeholder={this.state.entity} />
       );
     }
     if(this.props.dangerouslySetInnerHTML) {
