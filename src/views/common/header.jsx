@@ -543,8 +543,11 @@ var Navigation = React.createClass({
           </NavItem>
         </Nav>
         <Nav>
+          <DirectNavItem glyph='mail-3' path='/app/mailbox/inbox' />
+        </Nav>
+        <Nav>
           <NavItem className='logout' href='#' onClick={this.handleLogout}>
-            <Icon bundle='fontello' glyph='off-1' />
+            <img src='/imgs/avatars/avatar4.png' width='25' height='25' />
           </NavItem>
         </Nav>
       </NavContent>
@@ -564,9 +567,9 @@ var Header = React.createClass({
                   <Col xs={3} visible='xs'>
                     <SidebarBtn />
                   </Col>
-                  <Col xs={6} sm={4}>
+                  <Col xs={3} sm={4}>
                   </Col>
-                  <Col xs={3} sm={8}>
+                  <Col xs={6} sm={8}>
                     <Navigation pressed={this.props.pressed} />
                   </Col>
                 </Row>

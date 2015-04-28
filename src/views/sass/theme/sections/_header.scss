@@ -93,7 +93,11 @@
       &.logout > a {
         color: get($list, header, logout, color);
         background: get($list, header, logout, bg);
-
+        img {
+          border-radius: 20px;
+          margin-top: -3px;
+          margin-right: -10px;
+        }
         &:hover {
           background: get($list, header, logout, hover-bg);
         }

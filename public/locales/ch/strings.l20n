@@ -68,6 +68,20 @@
 <circlesHave '个圈子'>
 
 <!-- COMMUNITY -->
+<communityCreate '创建合作社'>
+<communityWhich '您要创建哪种合作社?'>
+<communityPublic '公开'>
+<communityPublicInfo '您的合作社将向全世界所有人开放'>
+<communityPrivate '不公开'>
+<communityPrivateInfo '只有收到邀请的人才能加入此合作社并查看其中分享的内容'>
+<communityNamed '为这个合作社起个名字'>
+<communityFreeJoin '其他人加入是否需要获得批准？'>
+<communityFreeJoinYes '不需要，任何人都可以加入'>
+<communityFreeJoinNo '是，任何人都可以申请加入'>
+<communityAllowSearch '允许其他人搜索你的社群吗？'>
+<communityAllowSearchYes '允许，人们可以搜索到该社群并申请加入'>
+<communityAllowSearchNo '不允许，将其从搜索结果中隐藏'>
+<communityHideInfo '允许其他人搜索你的社群吗？'>
 <communityJoined '你加入的合作社'>
 <communityInterest '你可能喜欢的合作社'>
 <communityMemberCount '{{$num}} 个成员'>

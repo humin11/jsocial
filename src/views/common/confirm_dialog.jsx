@@ -1,4 +1,9 @@
 var ConfirmDialog = React.createClass({
+  getDefaultProps:function(){
+    return {
+      handler: function(){}
+    };
+  },
   _handleOk: function(e) {
     e.preventDefault();
     e.stopPropagation();
