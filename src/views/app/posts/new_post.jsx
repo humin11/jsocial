@@ -1,25 +1,62 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var Authentication = require('../../mixins/auth_mixin.jsx');
+var AuthMixin = require('../../mixins/auth_mixin.jsx');
 var classSet = React.addons.classSet;
 
+var NewPostTouchDialog = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Grid>
+          <Row>
+            <Col xs={12} className='text-left bg-white' >
+              <div className='fg-black' style={{fontSize: 24, lineHeight: 1, padding: '25px 10px'}}>
+
+              </div>
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    )
+  }
+});
+
+var NewPostTouch = React.createClass({
+  _handleClick: function(){
+    var vexContent;
+    vex.dialog.open({
+      overlayClosesOnClick:false,
+      afterOpen: function($vexContent) {
+        vexContent = $vexContent;
+        $(vexContent).height("100%");
+        $(vexContent).width("100%");
+        return React.render(<NewPostTouchDialog id={$vexContent.data().vex.id} />, $vexContent.get(0));
+      },
+      afterClose: function() {
+        React.unmountComponentAtNode(vexContent);
+      }
+    });
+  },
+  render: function(){
+    return (
+      <div className="newpost-touch visible-xs-inline-block">
+        <Button bsStyle='danger' onClick={this._handleClick} >
+          <Icon glyph="icon-fontello-pencil-1" />
+        </Button>
+      </div>
+    );
+  }
+});
+
 var NewPost = React.createClass({
-  mixins:[Authentication],
+  mixins:[AuthMixin],
   getInitialState: function() {
     return {
-      postHolder: '',
-      uploadHolder: '',
       disabledOkBtn: true,
       hideUpload: true
     };
   },
   componentDidMount: function() {
-    l20n.ctx.localize(['inputNewPost','uploadImage'], function(l) {
-      this.setState({
-        postHolder: l20n.ctx.getSync('inputNewPost'),
-        uploadHolder: l20n.ctx.getSync('uploadImage')
-      });
-    }.bind(this));
     if(!Modernizr.touch) {
       $("#postContent").perfectScrollbar({
         suppressScrollX: true
@@ -83,32 +120,37 @@ var NewPost = React.createClass({
       'hide': !this.state.disabledOkBtn,
       'content-holder': true
     });
+    var postHolder = l20n.ctx.getSync('inputNewPost');
+    var uploadHolder= l20n.ctx.getSync('uploadImage');
     return (
-      <PanelContainer noControls className="newpost">
-        <PanelBody style={{padding: 12.5}} className="newpost-main">
-          <div className={contentHolder} >{this.state.postHolder}</div>
-          <div id="postContent" onKeyUp={this._handleChange} contentEditable className="newpost-editor"></div>
-          <div className={uploadClass} id="uploadImg">
-            <div className="dz-default dz-message">
-              <span>{this.state.uploadHolder}</span>
+      <div>
+        <PanelContainer noControls className="newpost hidden-xs">
+          <PanelBody style={{padding: 12.5}} className="newpost-main">
+            <div className={contentHolder} >{postHolder}</div>
+            <div id="postContent" onKeyUp={this._handleChange} contentEditable className="newpost-editor"></div>
+            <div className={uploadClass} id="uploadImg">
+              <div className="dz-default dz-message">
+                <span>{uploadHolder}</span>
+              </div>
             </div>
-          </div>
-          <div className="hide" id="uploadFileName"></div>
-        </PanelBody>
-        <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
-          <Grid>
-            <Row>
-              <Col xs={6} collapseLeft collapseRight>
-                <a href='#' onClick={this._onClickUpload} style={{border: 'none'}}><Icon glyph='icon-dripicons-camera icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
-                <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-calendar icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
-              </Col>
-              <Col xs={6} className='text-right' collapseLeft collapseRight>
-                {btn}
-              </Col>
-            </Row>
-          </Grid>
-        </PanelFooter>
-      </PanelContainer>
+            <div className="hide" id="uploadFileName"></div>
+          </PanelBody>
+          <PanelFooter className='fg-black75 bg-gray' style={{padding: '12.5px 25px'}}>
+            <Grid>
+              <Row>
+                <Col xs={6} collapseLeft >
+                  <a href='#' onClick={this._onClickUpload} style={{border: 'none'}}><Icon glyph='icon-dripicons-camera icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
+                  <a href='#' style={{border: 'none'}}><Icon glyph='icon-dripicons-calendar icon-1-and-quarter-x fg-text' style={{marginRight: 25}} /></a>
+                </Col>
+                <Col xs={6} className='text-right' collapseLeft collapseRight>
+                  {btn}
+                </Col>
+              </Row>
+            </Grid>
+          </PanelFooter>
+        </PanelContainer>
+        <NewPostTouch />
+      </div>
     )
   }
 });

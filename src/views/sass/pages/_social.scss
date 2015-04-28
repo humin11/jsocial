@@ -223,7 +223,6 @@ html.social body .sidebar-nav > li.active:after {
     .post-menu {
       border-radius: 2px;
       box-shadow: 0 2px 40px rgba(0,0,0,.4);
-      -webkit-box-shadow: 0 2px 40px rgba(0,0,0,.4);
       color: #333;
       font-size: 13px;
     }
@@ -323,6 +322,19 @@ html.social body .sidebar-nav > li.active:after {
     border: 2px dashed #0087F7;
     border-radius: 5px;
     background: white;
+  }
+}
+
+.newpost-touch {
+  z-index: 9999999;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+
+  > button {
+    height: 50px !important;
+    border-radius: 40px;
+    box-shadow: 0 2px 40px rgba(0,0,0,.4);
   }
 }
 

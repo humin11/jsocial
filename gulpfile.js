@@ -413,7 +413,7 @@ gulp.task('express', function() {
     if(m === 'CONNECTED' && !browserSyncConnected) {
       gutil.log(gutil.colors.bgMagenta(gutil.colors.white('Server spawned! Starting proxy...')));
       browserSync({
-        proxy: 'localhost:3000',
+        proxy: whost+':3000',
         port: port
       }, function() {
         browserSyncConnected = true;

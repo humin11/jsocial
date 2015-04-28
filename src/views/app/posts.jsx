@@ -54,7 +54,6 @@ var Body = React.createClass({
               {stream[0]}
             </Col>
             <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
-              <Recommend className="hidden-sm hidden-xs" />
               {stream[2]}
             </Col>
           </Row>
