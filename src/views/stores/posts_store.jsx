@@ -37,6 +37,18 @@ AppDispatcher.register(function(action) {
       if(_initCalled) {
         return;
       }
+      $.ajax({
+        url: "/posts/find",
+        type: "POST",
+        contentType: "application/json",
+        success: function(obj){
+          if (obj) {
+            _posts.set(obj);
+            _initCalled = true;
+            PostStore.emitChange();
+          }
+        }
+      });
       break;
     case ActionTypes.POSTS_REFRESH:
       $.ajax({

@@ -12,6 +12,7 @@ var Recommend = require('./user/recommend_people.jsx');
 var NewPost = require('./posts/new_post.jsx');
 var SinglePost = require('./posts/post.jsx');
 var StoreMixin = require('../mixins/store_mixin');
+var PostsStore = require('../stores/posts_store.jsx');
 
 
 var Body = React.createClass({
@@ -72,7 +73,12 @@ var Posts = React.createClass({
 
   },
   componentDidMount: function() {
-
+    AppDispatcher.dispatch({
+      type: ActionTypes.USERS_INIT
+    });
+    AppDispatcher.dispatch({
+      type: ActionTypes.POSTS_INIT
+    });
   },
   render: function() {
     var classes = classSet({
