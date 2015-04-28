@@ -44,16 +44,15 @@ var Body = React.createClass({
     return (
       <Container id='body' className='social dropdown'>
         <Grid>
-          <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
-            <Col sm={4} collapseRight >
+            <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
               <NewPost models={this.props.models} stores={this.props.stores}></NewPost>
               {stream[1]}
             </Col>
-            <Col sm={4} collapseRight >
+            <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
               {stream[0]}
             </Col>
-            <Col sm={4} collapseRight >
+            <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
               <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
               {stream[2]}
             </Col>

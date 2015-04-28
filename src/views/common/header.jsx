@@ -564,7 +564,7 @@ var Header = React.createClass({
             <NavBar fixedTop id='rubix-nav-header'>
               <Container fluid>
                 <Row>
-                  <Col xs={3} visible='xs'>
+                  <Col xs={3}>
                     <SidebarBtn />
                   </Col>
                   <Col xs={3} sm={4}>

@@ -196,7 +196,6 @@ var Post = React.createClass({
                          style={{border: '1px solid #d8d8d8'}} />
                 </Col>
                 <Col xs={2} hidden-xs hidden-sm style={{paddingLeft:'35px',paddingRight:'0'}}>
-                  <img src='/imgs/avatars/avatar1.png' width='25' height='25' />
                 </Col>
               </Row>
             </Grid>
