@@ -40,7 +40,7 @@ var DirectNavItem = React.createClass({
     return (
       <NavItem className={classes.trim()} {...this.props}>
         <Link to={this.props.path}>
-          <Icon bundle={this.props.bundle || 'fontello'} glyph={this.props.glyph} />
+          <Icon bundle={this.props.bundle || 'fontello'} glyph={this.props.glyph} style={{fontSize: 20}} />
         </Link>
       </NavItem>
     );
@@ -112,7 +112,7 @@ var Navigation = React.createClass({
         </Nav>
         <Nav>
           <NavItem className='logout' href='#' onClick={this.handleLogout}>
-            <img src='/imgs/avatars/avatar4.png' width='25' height='25' />
+            <img src='/imgs/avatars/avatar4.png' width='28' height='28' />
           </NavItem>
         </Nav>
       </NavContent>

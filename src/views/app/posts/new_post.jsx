@@ -28,6 +28,8 @@ var NewPostTouch = React.createClass({
       overlayClosesOnClick:false,
       afterOpen: function($vexContent) {
         vexContent = $vexContent;
+        $(vexContent).parent().css('margin-top',0);
+        $(vexContent).parent().css('margin-bottom',0);
         $(vexContent).height("100%");
         $(vexContent).width("100%");
         return React.render(<NewPostTouchDialog id={$vexContent.data().vex.id} />, $vexContent.get(0));
@@ -41,7 +43,7 @@ var NewPostTouch = React.createClass({
     return (
       <div className="newpost-touch visible-xs-inline-block">
         <Button bsStyle='danger' onClick={this._handleClick} >
-          <Icon glyph="icon-fontello-pencil-1" />
+          <Icon glyph="icon-fontello-pencil-1" style={{fontSize:25}}/>
         </Button>
       </div>
     );
