@@ -64,6 +64,8 @@
 <circleCreate '创建合作社'>
 <circleName '合作社名称'>
 <circleDescription '合作社描述'>
+<circlesNoHave '朋友'>
+<circlesHave '个圈子'>
 
 <!-- COMMUNITY -->
 <communityJoined '你加入的合作社'>

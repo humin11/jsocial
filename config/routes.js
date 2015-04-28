@@ -26,15 +26,7 @@ var renderApp = function(req, res, cb) {
       cb({notFound: true}, React.renderToStaticMarkup(React.createElement(Handler)));
       return;
     }
-    if (state.routes.length>1){
-      var name = state.routes[1].handler.displayName.toLowerCase() + '_renderer';
-      try{
-        require("../src/renderers/" + name)(Handler,req,cb);
-      }catch(err){
-        cb(null, React.renderToStaticMarkup(React.createElement(Handler, {server: true, req: req})));
-      }
-    }
-
+    cb(null, React.renderToStaticMarkup(React.createElement(Handler, {server: true, req: req})));
   });
 };
 
@@ -88,8 +80,8 @@ module.exports = function(app, passport) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With');
     var isRTL = req.cookies.rubix_dir === 'rtl' ? true : false;
-    renderApp(req, res, function(err, h, script) {
-      h = html(isRTL).replace(new RegExp('{container}', 'g'), h || '').replace(new RegExp('{storescript}', 'g'), script || '');
+    renderApp(req, res, function(err, h) {
+      h = html(isRTL).replace(new RegExp('{container}', 'g'), h || '');
       if (!err) {
         res.sendHTML(h);
       } else if (err.redirect) {
