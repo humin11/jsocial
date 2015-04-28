@@ -10,8 +10,6 @@ var FOLLOWED_CHANGE = 'followed';
 var _followed = new FollowedModel();
 
 var FollowedStore = assign(new EventEmitter2({maxListeners: 99999}),{
-  modelName : "followed",
-  name : "FollowedStore",
   set:function(followed) {
     _followed.set(followed);
   },

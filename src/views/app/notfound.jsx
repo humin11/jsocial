@@ -1,7 +1,6 @@
 var Header = require('../common/header.jsx');
 var Sidebar = require('../common/sidebar.jsx');
 var Footer = require('../common/footer.jsx');
-var StoreMixin = require('../mixins/store_mixin');
 
 var Body = React.createClass({
   render: function() {
@@ -36,12 +35,7 @@ var Body = React.createClass({
 
 var classSet = React.addons.classSet;
 var PageNotFound = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
-  getDefaultProps:function(){
-    return {
-      useStores:["users_store"]
-    };
-  },
+  mixins: [SidebarMixin],
   render: function() {
     var classes = classSet({
       'container-open': this.state.open

@@ -4,16 +4,14 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var UsersStore = require('../../stores/users_store.jsx');
-var ReactDom = require('../../mixins/data_mixin.jsx');
 
 var Follow = React.createClass({
-  mixins: [ReactDom],
   getInitialState: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.FOLLOW_INIT
     });
     return {
-      followed: this.getData("followed","hasFollowed",false,this.props.person._id)
+      followed: null
     };
   },
   _handleFollow: function(){
@@ -36,11 +34,8 @@ var Follow = React.createClass({
     this.removeChangeListener("FollowedStore",this._onChange);
   },
   _onChange: function(){
-    console.log("_onChange");
-    console.log(this.state.followed);
-    console.log(this.getData("followed","hasFollowed",false,this.props.person._id));
     this.setState({
-      followed: this.getData("followed","hasFollowed",false,this.props.person._id)
+      followed: null
     });
   },
   render: function(){

@@ -5,9 +5,9 @@ var classSet = React.addons.classSet;
 
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var StoreMixin = require('../../mixins/store_mixin');
 var NewPost = require('../posts/new_post.jsx');
 var SinglePost = require('../posts/post.jsx');
+var PostsStore = require('../../stores/posts_store.jsx');
 
 var CommunityMember = React.createClass({
   render: function () {
@@ -126,19 +126,19 @@ var CommunityDetail = React.createClass({
 var Body = React.createClass({
   getInitialState: function () {
     return {
-      data: this.props.models.posts.get()
+      data: PostsStore.get()
     };
   },
   componentDidMount: function () {
     $('html').addClass('communities');
-    this.props.stores.PostsStore.addChangeListener(this._onChange);
+    PostsStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function () {
     $('html').removeClass('communities');
-    this.props.stores.PostsStore.removeChangeListener(this._onChange);
+    PostsStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({data: this.props.models.posts.get()});
+    this.setState({data: PostsStore.get()});
   },
   render: function () {
     var stream = [];
@@ -146,23 +146,22 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 2;
       if(stream[index])
-        stream[index].push(<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />);
+        stream[index].push(<SinglePost key={obj._id} post={obj} />);
       else
-        stream[index] = [<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />];
+        stream[index] = [<SinglePost key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='communities'>
         <Grid>
-          <Row><Col sm={4} collapseRight ></Col></Row>
           <Row>
-            <Col sm={3} collapseRight >
+            <Col sm={3} collapseRight style={{padding:"5px 5px"}} >
               <CommunityDetail />
             </Col>
-            <Col sm={4} collapseRight >
-              <NewPost models={this.props.models} stores={this.props.stores}></NewPost>
+            <Col sm={4} collapseRight style={{padding:"5px 5px"}} >
+              <NewPost ></NewPost>
               {stream[0]}
             </Col>
-            <Col sm={4} collapseRight >
+            <Col sm={4} collapseRight style={{padding:"5px 5px"}} >
               {stream[1]}
             </Col>
           </Row>
@@ -174,7 +173,7 @@ var Body = React.createClass({
 });
 
 var Community = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   componentWillMount: function(){
 
   },

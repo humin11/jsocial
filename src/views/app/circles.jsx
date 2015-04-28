@@ -7,8 +7,6 @@ var Footer = require('../common/footer.jsx');
 var UserInfo = require('./user/base_info.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var StoreMixin = require('../mixins/store_mixin');
-var ReactDom = require('../mixins/data_mixin.jsx');
 
 var classSet = React.addons.classSet;
 
@@ -21,7 +19,7 @@ function circlesColor(index){
 var select=0;
 
 var Person = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   getInitialState: function () {
     var followed = this.props.followed;
     var circles = this.getData('CirclesStore','getFollowed',[],followed._id);
@@ -45,14 +43,13 @@ var Person = React.createClass({
 })
 
 var Body = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   _handleCirclesSelect:function(){
     console.log(this.props);
   },
   _handleCirclesSet:function(){
     console.log(this.props);
   },
-  mixins: [ReactDom],
   render: function() {
     //var panname="circles1";
     var person={};
@@ -71,7 +68,7 @@ var Body = React.createClass({
 });
 
 var Circles = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   render: function () {
     var classes = classSet({
       'container-open': this.state.open

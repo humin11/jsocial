@@ -1,27 +1,30 @@
-var AuthMixin = {
+var UsersStore = require("../stores/users_store.jsx");
+var LoginPage = require("../app/login.jsx");
+
+var AuthMixin = {//statics: {
+  //  willTransitionTo: function (transition) {
+  //    if (!UsersStore.isLoggedIn()) {
+  //      LoginPage.attemptedTransition = transition;
+  //      transition.redirect("/login");
+  //    }
+  //  }
+  //}
   getInitialState: function () {
-    var user = this.props.models ? this.props.models.user : null;
-    var store = this.props.stores ? this.props.stores.UsersStore : null;
-    var islogin = user ? user.isLoggedIn():false;
-    var _user = user ? user.get():false;
     return {
-      user: _user,
-      store: store,
-      isLoggedIn: islogin
+      user: UsersStore.get().get(),
+      isLoggedIn: UsersStore.get().isLoggedIn()
     };
   },
-  componentDidMount: function () {
-    if (this.props.store)
-      this.props.store.addChangeListener(this._onLogin);
+  componentDidMount: function() {
+    UsersStore.addChangeListener(this._onLogin);
   },
-  componentWillUnmount: function () {
-    if (this.props.store)
-      this.props.store.removeChangeListener(this._onLogin);
+  componentWillUnmount: function() {
+    UsersStore.removeChangeListener(this._onLogin);
   },
-  _onLogin: function (user, store) {
+  _onLogin: function(){
     this.setState({
-      user: user,
-      store: store
+      user: UsersStore.get().get(),
+      isLoggedIn: UsersStore.get().isLoggedIn()
     });
   }
 };

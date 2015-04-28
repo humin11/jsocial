@@ -5,7 +5,6 @@ var classSet = React.addons.classSet;
 
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var StoreMixin = require('../mixins/store_mixin');
 var NewCommunityDialog = require('./communities/new_community.jsx');
 
 var MyCommunity = React.createClass({
@@ -137,7 +136,7 @@ var Body = React.createClass({
 });
 
 var Communities = React.createClass({
-  mixins: [StoreMixin,SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
+  mixins: [SidebarMixin,ReactRouter.State, ReactRouter.Navigation],
   componentWillMount: function() {
 
   },

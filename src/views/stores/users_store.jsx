@@ -7,8 +7,6 @@ var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
 var UserStore = assign(new EventEmitter2({maxListeners: 99999}), {
-  modelName : "user",
-  name : "UsersStore",
   set: function (user) {
     _user.set(user);
     this.emitChange();
@@ -29,6 +27,22 @@ var UserStore = assign(new EventEmitter2({maxListeners: 99999}), {
 
 AppDispatcher.register(function(action) {
   switch(action.type) {
+    case ActionTypes.USERS_INIT:
+      if(_initCalled) {
+        return;
+      }
+      _initCalled = true;
+      $.ajax({
+        url: "/users/getUser",
+        type: "POST",
+        contentType: "application/json",
+        success: function(obj) {
+          if(obj.user){
+            UserStore.set(obj.user);
+          }
+        }
+      });
+      break;
     case ActionTypes.USERS_SIGNUP:
       $.ajax({
         url: "/users/insert",

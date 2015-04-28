@@ -7,30 +7,30 @@ moment.locale('zh-cn');
 
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-
 var Recommend = require('./user/recommend_people.jsx');
 var NewPost = require('./posts/new_post.jsx');
 var SinglePost = require('./posts/post.jsx');
-var StoreMixin = require('../mixins/store_mixin');
 var PostsStore = require('../stores/posts_store.jsx');
-
 
 var Body = React.createClass({
   getInitialState: function () {
     return {
-      data: this.props.models.posts.get()
+      data: PostsStore.get().get()
     };
   },
   componentDidMount: function() {
     $('html').addClass('social');
-    this.props.stores.PostsStore.addChangeListener(this._onChange);
+    PostsStore.addChangeListener(this._onChange);
+    AppDispatcher.dispatch({
+      type: ActionTypes.POSTS_INIT
+    });
   },
   componentWillUnmount: function() {
     $('html').removeClass('social');
-    this.props.stores.PostsStore.removeChangeListener(this._onChange);
+    PostsStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState({data: this.props.models.posts.get()});
+    this.setState({data: PostsStore.get().get()});
   },
   render: function() {
     var stream = [];
@@ -38,23 +38,23 @@ var Body = React.createClass({
       var obj = this.state.data[i];
       var index = i % 3;
       if(stream[index])
-        stream[index].push(<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />);
+        stream[index].push(<SinglePost key={obj._id} post={obj} />);
       else
-        stream[index] = [<SinglePost models={this.props.models} stores={this.props.stores} key={obj._id} post={obj} />];
+        stream[index] = [<SinglePost key={obj._id} post={obj} />];
     }
     return (
       <Container id='body' className='social dropdown'>
         <Grid>
           <Row>
             <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
-              <NewPost models={this.props.models} stores={this.props.stores}></NewPost>
+              <NewPost />
               {stream[1]}
             </Col>
             <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
               {stream[0]}
             </Col>
             <Col sm={4} collapseRight style={{padding:"5px 5px"}}>
-              <Recommend models={this.props.models} stores={this.props.stores} className="hidden-sm hidden-xs"></Recommend>
+              <Recommend className="hidden-sm hidden-xs" />
               {stream[2]}
             </Col>
           </Row>
@@ -67,16 +67,13 @@ var Body = React.createClass({
 
 
 var Posts = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   componentWillMount: function(){
 
   },
   componentDidMount: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.USERS_INIT
-    });
-    AppDispatcher.dispatch({
-      type: ActionTypes.POSTS_INIT
     });
   },
   render: function() {

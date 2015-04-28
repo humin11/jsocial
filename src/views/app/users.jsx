@@ -7,14 +7,11 @@ var Footer = require('../common/footer.jsx');
 var UserInfo = require('./user/base_info.jsx');
 var AppDispatcher = require('../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../constants/constants.jsx');
-var StoreMixin = require('../mixins/store_mixin');
-var ReactDom = require('../mixins/data_mixin.jsx');
 var AllFollowed = require('./user/all_followed.jsx');
 
 var classSet = React.addons.classSet;
 
 var Body = React.createClass({
-  mixins: [ReactDom],
   render: function() {
     return (
       <Container id='body' className='users'>
@@ -28,7 +25,6 @@ var Body = React.createClass({
           </Col></Row>
           <Row>
             <Col sm={4} collapseRight>
-              {this.getDefaultValue("user.username","")}
               <UserInfo {...this.props}/>
             </Col>
           </Row>
@@ -40,7 +36,7 @@ var Body = React.createClass({
 });
 
 var Users = React.createClass({
-  mixins: [StoreMixin,SidebarMixin],
+  mixins: [SidebarMixin],
   render: function () {
     var classes = classSet({
       'container-open': this.state.open

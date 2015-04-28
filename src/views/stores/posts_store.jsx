@@ -12,8 +12,6 @@ var _initCalled = false;
 var CHANGE_EVENT = 'change';
 
 var PostsStore = assign(new EventEmitter2({maxListeners: 99999}), {
-  modelName : "posts",
-  name : "PostsStore",
   get: function(){
     return _posts;
   },
@@ -45,7 +43,7 @@ AppDispatcher.register(function(action) {
           if (obj) {
             _posts.set(obj);
             _initCalled = true;
-            PostStore.emitChange();
+            PostsStore.emitChange();
           }
         }
       });

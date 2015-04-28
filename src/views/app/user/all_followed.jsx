@@ -1,9 +1,7 @@
 var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
-var ReactDom = require('../../mixins/data_mixin.jsx');
 
 var Followed = React.createClass({
-  mixins: [ReactDom],
   render: function(){
     return (
       <PanelContainer noControls >
@@ -18,7 +16,7 @@ var Followed = React.createClass({
               <strong>{this.props.followed.name}</strong>
               <Icon glyph='icon-mfizz-ruby' />
               <div>
-                {this.props.followed.introduce}
+                {0}
               </div>
               <ButtonGroup>
                 <Button xs outlined>
@@ -40,12 +38,8 @@ var Followed = React.createClass({
 });
 
 var AllFollowed = React.createClass({
-  mixins: [ReactDom],
   render: function(){
-    var result = this.reactList("user.followed",4,
-      function(data){return <Followed followed = {data}/>;},
-      function(col){return <Col sm={3} collapseRight>{col}</Col>;}
-    );
+    var result = [];
     return (
         <Grid id="allfollowed">
           <Row>

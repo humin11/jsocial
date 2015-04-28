@@ -6,25 +6,24 @@ var AppDispatcher = require('../../dispatcher/dispatcher.jsx');
 var ActionTypes = require('../../constants/constants.jsx');
 var RecommendStore = require('../../stores/recommend_store.jsx');
 var AuthMixin = require('../../mixins/auth_mixin.jsx');
-var DataMixin = require('../../mixins/data_mixin.jsx');
 
 var Recommend = React.createClass({
-  mixins:[AuthMixin,DataMixin],
+  mixins:[AuthMixin],
   getInitialState: function() {
     return {
-      people: this.props.models.recommend.get()
+      people: RecommendStore.get()
     };
   },
   componentDidMount: function() {
-    this.addChangeListener("RecommendStore",this._onChange);
+    RecommendStore.addChangeListener(this._onChange);
     AppDispatcher.dispatch({ type: ActionTypes.RECOMMEND_PEOPLE });
   },
   componentWillUnmount: function() {
-    this.removeChangeListener("RecommendStore",this._onChange);
+    RecommendStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
     this.setState({
-      people: this.props.models.recommend.get()
+      people: RecommendStore.get()
     });
   },
   render: function(){

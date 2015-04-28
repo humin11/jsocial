@@ -3,15 +3,16 @@ var ActionTypes = require('../../constants/constants.jsx');
 var NewComment = require('./new_comment.jsx');
 var Comments = require('./comments.jsx');
 var CollapsibleContent = require('./collapsible_content.jsx');
-var Authentication = require('../../mixins/auth_mixin.jsx');
+var AuthMixin = require('../../mixins/auth_mixin.jsx');
 var ConfirmDialog = require('../../common/confirm_dialog.jsx');
 var PostsAction = require('../../actions/posts_action.jsx');
+var PostsStore = require('../../stores/posts_store.jsx');
 var moment = require('moment');
 moment.locale('zh-cn');
 var classSet = React.addons.classSet;
 
 var Post = React.createClass({
-  mixins:[Authentication],
+  mixins:[AuthMixin],
   propTypes: {
     post: React.PropTypes.object
   },
@@ -96,8 +97,8 @@ var Post = React.createClass({
     }
   },
   _handleRefresh: function(){
-    this.props.models.posts.removePost(this.props.post._id);
-    this.props.stores.PostsStore.emitChange();
+    PostsStore.get().removePost(this.props.post._id);
+    PostsStore.emitChange();
   },
   render: function() {
     var create_at = moment(this.props.post.create_at, "YYYY-MM-DD HH:mm:ss").fromNow();
@@ -200,8 +201,8 @@ var Post = React.createClass({
               </Row>
             </Grid>
           </PanelFooter>
-          <Comments models={this.props.models} stores={this.state.stores} post={this.props.post} />
-          <NewComment models={this.props.models} stores={this.state.stores} source={{_id: this.props.post._id, type: 'post'}}
+          <Comments post={this.props.post} />
+          <NewComment source={{_id: this.props.post._id, type: 'post'}}
                       expanded={this.state.newCommentExpanded}
                       hideHolder={!hideCommentHolder} />
         </div>
