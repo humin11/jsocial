@@ -521,31 +521,7 @@ var SidebarSection = React.createClass({
     var userSection = this.props.models.user.isLoggedIn() ? <LoggedIn {...this.props} />:<NoLoggedIn />;
     return (
       <div id='sidebar' {...this.props}>
-        {userSection}
-        <SidebarControls>
-          <SidebarControlBtn bundle='fontello' glyph='docs' sidebar={0} />
-          <SidebarControlBtn bundle='fontello' glyph='chat-1' sidebar={1} />
-          <SidebarControlBtn bundle='fontello' glyph='chart-pie-2' sidebar={2} />
-          <SidebarControlBtn bundle='fontello' glyph='th-list-2' sidebar={3} />
-          <SidebarControlBtn bundle='fontello' glyph='bell-5' sidebar={4} />
-        </SidebarControls>
-        <div id='sidebar-container'>
-          <Sidebar sidebar={0} active>
-            <ApplicationSidebar />
-          </Sidebar>
-          <Sidebar sidebar={1}>
-            <ChatComponent />
-          </Sidebar>
-          <Sidebar sidebar={2}>
-            <StatisticsComponent />
-          </Sidebar>
-          <Sidebar sidebar={3}>
-            <TimelineComponent />
-          </Sidebar>
-          <Sidebar sidebar={4}>
-            <NotificationComponent />
-          </Sidebar>
-        </div>
+        <ApplicationSidebar />
       </div>
     );
   }

@@ -83,7 +83,6 @@ var Posts = React.createClass({
         <Sidebar {...this.state}/>
         <Header pressed />
         <Body {...this.state}/>
-        <Footer />
       </Container>
     );
   }
